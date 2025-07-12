@@ -3,3 +3,16 @@
 body {
   @apply bg-gradient-to-b from-[#1a1a2e] to-[#16213e] text-gray-300 font-sans min-h-screen flex flex-col;
 }
+
+.spin-animation {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

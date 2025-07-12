@@ -23,6 +23,12 @@ export default class App extends Component<AppProps, AppState> {
     };
   }
 
+  componentDidMount(): void {
+    if (this.state.searchTerm) {
+      this.handleSearch();
+    }
+  }
+
   handleSearch = () => {
     const trimmedTerm = this.state.searchTerm.trim();
     if (!trimmedTerm) return;
@@ -32,15 +38,17 @@ export default class App extends Component<AppProps, AppState> {
     this.setState({
       isLoading: true,
     });
-    searchMovies(trimmedTerm)
-      .then((data) =>
-        this.setState({
-          movies: data.results,
+
+    // setTimeout is used to simulate a slow connection
+    setTimeout(() => {
+      searchMovies(trimmedTerm)
+        .then((data) => {
+          this.setState({ movies: data.results });
         })
-      )
-      .finally(() => {
-        this.setState({ isLoading: false });
-      });
+        .finally(() => {
+          this.setState({ isLoading: false });
+        });
+    }, 1000);
   };
 
   handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,6 +65,7 @@ export default class App extends Component<AppProps, AppState> {
             onSearch={this.handleSearch}
             onInputChange={this.handleInputChange}
             searchTerm={this.state.searchTerm}
+            isLoading={this.state.isLoading}
           />
           {this.state.movies.length > 0 ? (
             <div>
