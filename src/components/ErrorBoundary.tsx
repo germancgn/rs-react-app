@@ -35,7 +35,7 @@ export default class ErrorBoundary extends Component<
     if (this.state.hasError) {
       return (
         this.props.fallback ?? (
-          <div className="flex items-center justify-center h-full">
+          <div className="flex items-center justify-center h-full mt-4">
             <div className="bg-red-100 text-red-800 p-6 rounded-lg shadow-md text-center">
               <h1 className="text-xl font-bold mb-4">An error occurred</h1>
               <p>Please reload the page or try again later.</p>
