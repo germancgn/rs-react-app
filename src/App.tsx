@@ -2,9 +2,8 @@ import { Component } from 'react';
 import Header from './components/Header';
 import ErrorBoundary from './components/ErrorBoundary';
 import { type Movie } from './types/movies/Movie';
-import { searchMovies } from './services/movie-service';
-import FeaturedMovies from './components/FeaturedMovies';
-import MovieCard from './components/MovieCard';
+import { fetchPopularMovies, searchMovies } from './services/movie-service';
+import MoviesList from './components/MoviesList';
 
 type AppProps = Record<string, never>;
 type AppState = {
@@ -24,9 +23,10 @@ export default class App extends Component<AppProps, AppState> {
   }
 
   componentDidMount(): void {
-    if (this.state.searchTerm) {
-      this.handleSearch();
-    }
+    this.setState({ isLoading: true });
+    fetchPopularMovies()
+      .then((data) => this.setState({ movies: data.results }))
+      .finally(() => this.setState({ isLoading: false }));
   }
 
   handleSearch = () => {
@@ -67,17 +67,10 @@ export default class App extends Component<AppProps, AppState> {
             searchTerm={this.state.searchTerm}
             isLoading={this.state.isLoading}
           />
-          {this.state.movies.length > 0 ? (
-            <div>
-              <h2>Search Results</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
-                {this.state.movies.map((movie) => (
-                  <MovieCard key={movie.id} movie={movie} />
-                ))}
-              </div>
-            </div>
+          {this.state.isLoading ? (
+            <div>loading</div>
           ) : (
-            <FeaturedMovies />
+            <MoviesList movies={this.state.movies} />
           )}
         </div>
       </ErrorBoundary>
