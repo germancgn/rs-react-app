@@ -3,10 +3,12 @@ import type { ReactNode } from 'react';
 
 type ErrorBoundaryProps = {
   children: ReactNode;
+  fallback?: ReactNode;
 };
 
 type ErrorBoundaryState = {
   hasError: boolean;
+  errorMessage?: string;
 };
 
 export default class ErrorBoundary extends Component<
@@ -17,11 +19,12 @@ export default class ErrorBoundary extends Component<
     super(props);
     this.state = {
       hasError: false,
+      errorMessage: undefined,
     };
   }
 
-  static getDerivedStateFromError(): ErrorBoundaryState {
-    return { hasError: true };
+  static getDerivedStateFromError(error: Error): ErrorBoundaryState {
+    return { hasError: true, errorMessage: error.message };
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
@@ -31,19 +34,16 @@ export default class ErrorBoundary extends Component<
   render() {
     if (this.state.hasError) {
       return (
-        <div className="flex flex-col items-center justify-center h-screen bg-red-100 text-red-800 text-center">
-          <h1 className="text-2xl font-bold">Something went wrong.</h1>
-          <p className="text-lg">
-            Please try refreshing the page or contact support if the issue
-            persists.
-          </p>
-          <button
-            onClick={() => window.location.reload()}
-            className="py-2 px-4 bg-red-500 text-white rounded-lg hover:bg-red-700"
-          >
-            Reload Page
-          </button>
-        </div>
+        this.props.fallback ?? (
+          <div className="flex items-center justify-center h-full">
+            <div className="bg-red-100 text-red-800 p-6 rounded-lg shadow-md text-center">
+              <h1 className="text-xl font-bold mb-4">An error occurred</h1>
+              <p>Please reload the page or try again later.</p>
+              <br />
+              <code>{this.state.errorMessage}</code>
+            </div>
+          </div>
+        )
       );
     }
 

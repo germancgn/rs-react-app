@@ -37,7 +37,7 @@ export default class Header extends Component<HeaderProps> {
           ) : (
             <button
               onClick={onSearch}
-              className="py-2 px-4 bg-[#e94560] text-white rounded-lg hover:bg-[#d13450]"
+              className="py-2 px-4 bg-[#e94560] text-white rounded-lg hover:bg-[#d13450] hover:cursor-pointer"
             >
               Search
             </button>

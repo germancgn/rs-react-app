@@ -57,6 +57,12 @@ export default class App extends Component<AppProps, AppState> {
     });
   };
 
+  fetchWrongData = () => {
+    this.setState({
+      movies: {} as Movie[],
+    });
+  };
+
   render() {
     return (
       <ErrorBoundary>
@@ -67,10 +73,20 @@ export default class App extends Component<AppProps, AppState> {
             searchTerm={this.state.searchTerm}
             isLoading={this.state.isLoading}
           />
+          <div className="flex justify-center mt-4">
+            <button
+              onClick={this.fetchWrongData}
+              className="py-2 px-4 bg-red-500 text-white rounded-lg hover:bg-red-700 shadow-md transition-all hover:cursor-pointer"
+            >
+              Fetch WRONG data
+            </button>
+          </div>
           {this.state.isLoading ? (
             <div>loading</div>
           ) : (
-            <MoviesList movies={this.state.movies} />
+            <ErrorBoundary>
+              <MoviesList movies={this.state.movies} />
+            </ErrorBoundary>
           )}
         </div>
       </ErrorBoundary>
