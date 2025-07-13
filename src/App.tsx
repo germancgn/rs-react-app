@@ -24,7 +24,12 @@ export default class App extends Component<AppProps, AppState> {
 
   componentDidMount(): void {
     this.setState({ isLoading: true });
-    fetchPopularMovies()
+    const searchTerm = this.state.searchTerm;
+    const fetchData = searchTerm
+      ? searchMovies(searchTerm)
+      : fetchPopularMovies();
+
+    fetchData
       .then((data) => this.setState({ movies: data.results }))
       .finally(() => this.setState({ isLoading: false }));
   }
@@ -52,6 +57,7 @@ export default class App extends Component<AppProps, AppState> {
   };
 
   handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    localStorage.setItem('searchItem', e.target.value);
     this.setState({
       searchTerm: e.target.value,
     });
