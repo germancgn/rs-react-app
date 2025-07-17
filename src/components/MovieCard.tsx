@@ -12,7 +12,7 @@ export default class MovieCard extends Component<MovieCardProps> {
       <div className="rounded-lg border border-gray-700 overflow-hidden shadow-md hover:border-pink-500 hover:shadow-pink-500 hover:cursor-pointer transition-all">
         <img
           src={`https://image.tmdb.org/t/p/w780/${movie.poster_path}`}
-          alt=""
+          alt={movie.title}
           className="w-full h-auto"
         />
         <div className="p-4">
