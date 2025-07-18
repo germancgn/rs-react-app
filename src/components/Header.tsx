@@ -31,7 +31,7 @@ export default class Header extends Component<HeaderProps> {
             >
               Search{' '}
               {isLoading && (
-                <span className="spin-animation">
+                <span className="spin-animation" data-testid="spinner">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
