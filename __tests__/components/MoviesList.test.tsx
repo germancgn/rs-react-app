@@ -24,4 +24,12 @@ describe('MoviesList', () => {
     const movieCards = screen.getAllByTestId('movie-card');
     expect(movieCards).toHaveLength(mockMovies.length);
   });
+
+  it('renders all MovieCard components in the document', () => {
+    render(<MoviesList movies={mockMovies} />);
+    mockMovies.forEach((movie) => {
+      const movieCard = screen.getByText(movie.title);
+      expect(movieCard).toBeInTheDocument();
+    });
+  });
 });
