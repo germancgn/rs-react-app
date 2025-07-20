@@ -43,6 +43,25 @@ describe('movie-service', () => {
 
       await expect(fetchPopularMovies()).rejects.toThrowError(HttpError);
     });
+
+    it('should throw an Error when an unexpected error occurs', async () => {
+      globalThis.fetch = vi.fn(() => {
+        throw new Error('Unexpected Error');
+      });
+
+      const consoleErrorSpy = vi
+        .spyOn(console, 'error')
+        .mockImplementation(() => {});
+
+      await expect(fetchPopularMovies()).rejects.toThrow('Unexpected Error');
+
+      expect(consoleErrorSpy).toHaveBeenCalledWith(
+        'fetchPopularMovies - Unexpected Error:',
+        expect.any(Error)
+      );
+
+      consoleErrorSpy.mockRestore();
+    });
   });
 
   describe('searchMovies', () => {
@@ -72,6 +91,25 @@ describe('movie-service', () => {
       );
 
       await expect(searchMovies('Matrix')).rejects.toThrowError(HttpError);
+    });
+
+    it('should throw an Error when an unexpected error occurs', async () => {
+      globalThis.fetch = vi.fn(() => {
+        throw new Error('Unexpected Error');
+      });
+
+      const consoleErrorSpy = vi
+        .spyOn(console, 'error')
+        .mockImplementation(() => {});
+
+      await expect(searchMovies('Matrix')).rejects.toThrow('Unexpected Error');
+
+      expect(consoleErrorSpy).toHaveBeenCalledWith(
+        'searchMovies - Unexpected Error:',
+        expect.any(Error)
+      );
+
+      consoleErrorSpy.mockRestore();
     });
   });
 
@@ -103,6 +141,25 @@ describe('movie-service', () => {
 
       await expect(discoverMovies(2)).rejects.toThrowError(HttpError);
     });
+
+    it('should throw an Error when an unexpected error occurs', async () => {
+      globalThis.fetch = vi.fn(() => {
+        throw new Error('Unexpected Error');
+      });
+
+      const consoleErrorSpy = vi
+        .spyOn(console, 'error')
+        .mockImplementation(() => {});
+
+      await expect(discoverMovies(2)).rejects.toThrow('Unexpected Error');
+
+      expect(consoleErrorSpy).toHaveBeenCalledWith(
+        'discoverMovies - Unexpected Error:',
+        expect.any(Error)
+      );
+
+      consoleErrorSpy.mockRestore();
+    });
   });
 
   describe('trendingMovies', () => {
@@ -128,6 +185,24 @@ describe('movie-service', () => {
       );
 
       await expect(trendingMovies()).rejects.toThrowError(HttpError);
+    });
+
+    it('should throw an Error when an unexpected error occurs', async () => {
+      globalThis.fetch = vi.fn(() => {
+        throw new Error('Unexpected Error');
+      });
+      const consoleErrorSpy = vi
+        .spyOn(console, 'error')
+        .mockImplementation(() => {});
+
+      await expect(trendingMovies()).rejects.toThrow('Unexpected Error');
+
+      expect(consoleErrorSpy).toHaveBeenCalledWith(
+        'trendingMovies - Unexpected Error:',
+        expect.any(Error)
+      );
+
+      consoleErrorSpy.mockRestore();
     });
   });
 });
