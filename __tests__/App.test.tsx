@@ -80,4 +80,19 @@ describe('User Interaction Tests', () => {
     await user.click(searchButton);
     expect(localStorage.getItem('searchItem')).toBe(movieName.trim());
   });
+
+  it('sets isLoading to true and shows loading spinner when search button is clicked', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    const searchInput = screen.getByPlaceholderText('Search movies...');
+    const searchButton = screen.getByRole('button', { name: /search/i });
+    const movieName = 'The Edge of Tomorrow';
+
+    await user.type(searchInput, movieName);
+    await user.click(searchButton);
+
+    expect(searchButton).toBeDisabled();
+    expect(screen.getByTestId('loading-spinner')).toBeInTheDocument();
+  });
 });
