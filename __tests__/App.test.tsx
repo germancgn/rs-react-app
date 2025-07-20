@@ -7,7 +7,11 @@ import { mockMovies } from '../__mocks__/movies';
 
 vi.mock('../src/services/movie-service', () => ({
   fetchPopularMovies: vi.fn(() => Promise.resolve({ results: mockMovies })),
-  searchMovies: vi.fn(() => Promise.resolve({ results: mockMovies })),
+  searchMovies: vi.fn((movieName: string) =>
+    Promise.resolve({
+      results: mockMovies.filter((m) => m.title === movieName),
+    })
+  ),
   discoverMovies: vi.fn(() => Promise.resolve({ results: mockMovies })),
   trendingMovies: vi.fn(() => Promise.resolve({ results: mockMovies })),
 }));
@@ -95,5 +99,19 @@ describe('User Interaction Tests', () => {
 
     expect(searchButton).toBeDisabled();
     expect(screen.getByTestId('loading-spinner')).toBeInTheDocument();
+  });
+
+  it('render search results when user types in a movie name and clicks search button', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    const searchInput = screen.getByPlaceholderText('Search movies...');
+    const searchButton = screen.getByRole('button', { name: /search/i });
+    const movieName = 'How to Train Your Dragon';
+
+    await user.type(searchInput, movieName);
+    await user.click(searchButton);
+
+    expect(await screen.findByText(movieName)).toBeInTheDocument();
   });
 });
