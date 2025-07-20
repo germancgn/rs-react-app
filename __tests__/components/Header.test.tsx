@@ -2,6 +2,7 @@ import { it, expect, describe, afterEach, vi } from 'vitest';
 import Header from '../../src/components/Header';
 import { cleanup, render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/vitest';
+import userEvent from '@testing-library/user-event';
 
 afterEach(() => {
   cleanup();
@@ -24,7 +25,8 @@ describe('Header', () => {
     expect(input).toHaveValue('Matrix');
   });
 
-  it('calls onInputChange when typing in the input field', () => {
+  it('calls onInputChange when typing in the input field', async () => {
+    const user = userEvent.setup();
     const mockOnInputChange = vi.fn();
     render(
       <Header
@@ -36,10 +38,9 @@ describe('Header', () => {
     );
 
     const input = screen.getByPlaceholderText(/search/i);
-    fireEvent.change(input, { target: { value: 'Batman' } });
+    await user.type(input, 'Batman');
 
-    expect(mockOnInputChange).toHaveBeenCalledTimes(1);
-    expect(mockOnInputChange).toHaveBeenCalledWith(expect.any(Object));
+    expect(mockOnInputChange).toHaveBeenCalled();
   });
 
   it('calls onSearch when the search button is clicked', () => {

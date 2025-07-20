@@ -1,5 +1,5 @@
 import { it, expect, describe, afterEach, vi } from 'vitest';
-import { render, screen, cleanup, fireEvent } from '@testing-library/react';
+import { render, screen, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../src/App';
 import '@testing-library/jest-dom/vitest';
@@ -42,13 +42,14 @@ describe('App Rendering Tests', () => {
 });
 
 describe('User Interaction Tests', () => {
-  it('updates input value when user types', () => {
+  it('updates input value when user types', async () => {
+    const user = userEvent.setup();
     render(<App />);
     const searchInput = screen.getByPlaceholderText('Search movies...');
     const movieName = 'The Edge of Tomorrow';
-    fireEvent.change(searchInput, {
-      target: { value: movieName },
-    });
+
+    await user.type(searchInput, movieName);
+
     expect(searchInput).toHaveValue(movieName);
   });
 
