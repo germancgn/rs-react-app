@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import App from '../src/App';
 import '@testing-library/jest-dom/vitest';
 import { mockMovies } from '../__mocks__/movies';
+import { searchMovies } from '../src/services/movie-service';
 
 vi.mock('../src/services/movie-service', () => ({
   fetchPopularMovies: vi.fn(() => Promise.resolve({ results: mockMovies })),
@@ -126,5 +127,20 @@ describe('User Interaction Tests', () => {
     await user.click(errorButton);
 
     expect(await screen.findByText('An error occurred')).toBeInTheDocument();
+  });
+
+  it('does not call searchMovies if searchTerm is empty or whitespace', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    const searchInput = screen.getByPlaceholderText('Search movies...');
+    const searchButton = screen.getByRole('button', { name: /search/i });
+
+    await user.type(searchInput, '   ');
+    await user.click(searchButton);
+
+    expect(searchMovies).not.toHaveBeenCalled();
+    expect(searchButton).not.toBeDisabled();
+    expect(screen.queryByTestId('loading-spinner')).not.toBeInTheDocument();
   });
 });
