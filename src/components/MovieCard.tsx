@@ -29,7 +29,9 @@ export default function MovieCard({ movie }: MovieCardProps) {
           <span className="text-yellow-400">
             <Icon.StarSolid size={16} />
           </span>
-          <span>{movie.vote_average.toFixed(1)}</span>
+          <span className="text-base font-semibold">
+            {movie.vote_average.toFixed(1)}
+          </span>
           <span className="text-sm font-semibold text-gray-400 truncate max-w-full">
             {genres.join(' • ')}
           </span>
