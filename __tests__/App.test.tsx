@@ -8,10 +8,15 @@ import { searchMovies } from '../src/services/movie-service';
 
 vi.mock('../src/services/movie-service', () => ({
   fetchPopularMovies: vi.fn(() => Promise.resolve({ results: mockMovies })),
-  searchMovies: vi.fn((movieName: string) =>
-    Promise.resolve({
-      results: mockMovies.filter((m) => m.title === movieName),
-    })
+  searchMovies: vi.fn(
+    (movieName: string) =>
+      new Promise((resolve) => {
+        setTimeout(() => {
+          resolve({
+            results: mockMovies.filter((m) => m.title === movieName),
+          });
+        }, 50);
+      })
   ),
   discoverMovies: vi.fn(() => Promise.resolve({ results: mockMovies })),
   trendingMovies: vi.fn(() => Promise.resolve({ results: mockMovies })),
