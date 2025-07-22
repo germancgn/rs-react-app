@@ -17,3 +17,17 @@ body {
     transform: rotate(360deg);
   }
 }
+
+.header-hero {
+  background-image:
+    radial-gradient(ellipse at center, transparent, #07070d 75%),
+    url(images/hero.jpeg);
+  background-size: cover;
+  background-position: center;
+  aspect-ratio: 16/9;
+  box-shadow:
+    inset 10px 24px 40px 0px #07070d,
+    inset -10px -24px 40px 0px #07070d,
+    inset 20px -10px 40px 0px #07070d,
+    inset -20px 10px 40px 0px #07070d;
+}
