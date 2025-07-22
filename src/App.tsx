@@ -32,16 +32,13 @@ export default function App() {
 
     setIsLoading(true);
 
-    // setTimeout is used to simulate a slow connection
-    setTimeout(() => {
-      searchMovies(trimmedTerm)
-        .then((data) => {
-          setMovies(data.results);
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-    }, 1000);
+    searchMovies(trimmedTerm)
+      .then((data) => {
+        setMovies(data.results);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
