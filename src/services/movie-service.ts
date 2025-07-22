@@ -80,7 +80,7 @@ export async function discoverMovies(page = 1): Promise<MovieResponse> {
 export async function trendingMovies(): Promise<MovieResponse> {
   try {
     const response = await fetch(
-      `${BASE_URL}/trending/movie/day?api_key=${API_KEY}`
+      `${BASE_URL}/trending/movie/week?api_key=${API_KEY}`
     );
     if (!response.ok) {
       throw new HttpError(
