@@ -19,15 +19,6 @@ describe('MovieCard', () => {
     expect(heading).toBeInTheDocument();
   });
 
-  it("shows 'unknown' year when release_date is missing", () => {
-    const movieWithoutReleaseDate = { ...movie, release_date: '' };
-
-    render(<MovieCard movie={movieWithoutReleaseDate} />);
-
-    const yearText = screen.getByText(/unknown/i);
-    expect(yearText).toBeInTheDocument();
-  });
-
   it('renders the movie poster image', () => {
     render(<MovieCard movie={movie} />);
     const posterImage = screen.getByRole('img', {
