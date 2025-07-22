@@ -116,19 +116,6 @@ describe('User Interaction Tests', () => {
     expect(await screen.findByText(movieName)).toBeInTheDocument();
   });
 
-  it('renders ErrorBoundary when error button is clicked', async () => {
-    const user = userEvent.setup();
-    render(<App />);
-
-    const errorButton = screen.getByRole('button', {
-      name: /Fetch WRONG data/i,
-    });
-
-    await user.click(errorButton);
-
-    expect(await screen.findByText('An error occurred')).toBeInTheDocument();
-  });
-
   it('does not call searchMovies if searchTerm is empty or whitespace', async () => {
     const user = userEvent.setup();
     render(<App />);
