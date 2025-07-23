@@ -19,6 +19,8 @@ body {
 }
 
 .header-hero {
+  --box-shadow-inset: 10px;
+  position: relative;
   background-image:
     radial-gradient(ellipse at center, transparent, #07070d 75%),
     url(images/hero.jpeg);
@@ -26,8 +28,21 @@ body {
   background-position: center;
   aspect-ratio: 16/9;
   box-shadow:
-    inset 10px 24px 40px 0px #07070d,
-    inset -10px -24px 40px 0px #07070d,
-    inset 20px -10px 40px 0px #07070d,
-    inset -20px 10px 40px 0px #07070d;
+    inset 10px 0px 40px var(--box-shadow-inset) #07070d,
+    inset -10px 0px 40px var(--box-shadow-inset) #07070d,
+    inset 0px 10px 40px var(--box-shadow-inset) #07070d,
+    inset 0px -10px 40px var(--box-shadow-inset) #07070d;
+  animation: decreaseFadeRadius 2000ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@property --fade-radius {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 100px;
+}
+
+@keyframes decreaseFadeRadius {
+  100% {
+    --fade-radius: 800px;
+  }
 }

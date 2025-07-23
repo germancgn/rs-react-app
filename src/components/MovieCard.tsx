@@ -13,18 +13,16 @@ export default function MovieCard({ movie }: MovieCardProps) {
 
   return (
     <div
-      className="rounded-2xl border border-gray-700 overflow-hidden shadow-md hover:border-pink-500 hover:shadow-pink-500 hover:cursor-pointer transition-all"
+      className="rounded-2xl border border-gray-700 overflow-hidden shadow-md hover:border-pink-500 hover:shadow-pink-500 hover:cursor-pointer transition-all p-4"
       data-testid="movie-card"
     >
       <img
         src={`https://image.tmdb.org/t/p/w780/${movie.poster_path}`}
         alt={movie.title}
-        className="w-full h-auto"
+        className="w-full h-auto rounded-xl"
       />
-      <div className="p-4">
-        <h3 className="text-lg font-semibold truncate block mb-2">
-          {movie.title}
-        </h3>
+      <div className="flex flex-col gap-2 pt-4 pb-2">
+        <h3 className="text-lg font-semibold truncate">{movie.title}</h3>
         <div className="flex gap-2 items-center">
           <span className="text-yellow-400">
             <Icon.StarSolid size={16} />
