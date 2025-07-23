@@ -11,40 +11,22 @@ type HeaderProps = {
   isLoading: boolean;
 };
 
-const defaultMovie: Movie = {
-  adult: false,
-  backdrop_path: '/SPkEiZGxq5aHWQ2Zw7AITwSEo2.jpg',
-  genre_ids: [12, 28, 878],
-  id: 181812,
-  original_language: 'en',
-  original_title: 'Star Wars: The Rise of Skywalker',
-  overview:
-    'The surviving Resistance faces the First Order once again as the journey of Rey, Finn and Poe Dameron continues. With the power and knowledge of generations behind them, the final battle begins.',
-  popularity: 9.2901,
-  poster_path: '/db32LaOibwEliAmSL2jjDF6oDdj.jpg',
-  release_date: '2019-12-18',
-  title: 'Star Wars: The Rise of Skywalker',
-  video: false,
-  vote_average: 6.289,
-  vote_count: 10274,
-  media_type: 'movie',
-};
-
 export default function Header({
   searchTerm,
   onInputChange,
   onSearch,
   isLoading,
 }: HeaderProps) {
-  const [selectedMovie, setSelectedMovie] = useState<Movie>(defaultMovie);
+  const [selectedMovie, setSelectedMovie] = useState<Movie | undefined>();
   const [movies, setMovies] = useState<Movie[]>([]);
 
   useEffect(() => {
     trendingMovies().then((data) => {
       setMovies(data.results);
-      setSelectedMovie(data.results[0] ?? defaultMovie);
+      setSelectedMovie(data.results[0]);
     });
   }, []);
+
   return (
     <header>
       <div
@@ -52,7 +34,7 @@ export default function Header({
         style={
           {
             '--fade-radius': '50%',
-            backgroundImage: `radial-gradient(circle, transparent, rgb(7, 7, 13) var(--fade-radius)), url(https://image.tmdb.org/t/p/w1280/${selectedMovie.backdrop_path})`,
+            backgroundImage: `radial-gradient(circle, transparent, rgb(7, 7, 13) var(--fade-radius)), url(https://image.tmdb.org/t/p/w1280/${selectedMovie?.backdrop_path})`,
           } as React.CSSProperties
         }
       >
@@ -84,10 +66,10 @@ export default function Header({
         </nav>
         <div className="flex flex-col sm:w-1/2 h-[auto] md:pb-[200px] p-4 gap-4">
           <h2 className="text-[min(10vw,48px)] text-white  font-bold mt-4">
-            {selectedMovie.title}
+            {selectedMovie?.title}
           </h2>
           <p className="text-gray-300 break-words">
-            {selectedMovie.overview.slice(0, 150)}
+            {selectedMovie?.overview.slice(0, 150)}
           </p>
 
           <div className="flex gap-4 mt-auto pb-4">

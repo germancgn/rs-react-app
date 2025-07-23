@@ -20,10 +20,6 @@ body {
 
 .header-hero {
   --box-shadow-inset: 10px;
-  position: relative;
-  background-image:
-    radial-gradient(ellipse at center, transparent, #07070d 75%),
-    url(images/hero.jpeg);
   background-size: cover;
   background-position: center;
   aspect-ratio: 16/9;
