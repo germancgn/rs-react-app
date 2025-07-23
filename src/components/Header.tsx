@@ -104,7 +104,7 @@ export default function Header({
         <h2 className="text-xl lg:text-2xl text-white font-bold mb-4">
           Trending movies
         </h2>
-        <div className="flex p-4 gap-4 bg-blue-950/10 backdrop-blur-md border border-white/10 rounded-2xl">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 p-4 gap-4 bg-blue-950/10 backdrop-blur-md border border-white/10 rounded-2xl">
           {movies.slice(0, 5).map((movie) => (
             <FeaturedMovieCard
               onHover={() => setSelectedMovie(movie)}
