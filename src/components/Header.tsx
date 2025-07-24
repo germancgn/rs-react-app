@@ -38,7 +38,7 @@ export default function Header({
           } as React.CSSProperties
         }
       >
-        <nav className="flex flex-col m-auto sm:flex-row items-center justify-between gap-4 p-4 rounded-lg">
+        <nav className="flex flex-col max-w-6xl m-auto sm:flex-row items-center justify-between gap-4 p-4 rounded-lg">
           <ul className="flex gap-8">
             <li>
               <a href="">Home</a>
@@ -64,25 +64,26 @@ export default function Header({
             </button>
           </div>
         </nav>
-        <div className="flex flex-col sm:w-1/2 h-[auto] md:pb-[200px] p-4 gap-4">
-          <h2 className="text-[min(10vw,48px)] text-white  font-bold mt-4">
-            {selectedMovie?.title}
-          </h2>
-          <p className="text-gray-300 break-words">
-            {selectedMovie?.overview.slice(0, 150)}
-          </p>
-
-          <div className="flex gap-4 mt-auto pb-4">
-            <button className="cursor-pointer text-white font-semibold bg-blue-500 py-2 px-4 rounded-md">
-              Watch now
-            </button>
-            <button className="cursor-pointer text-gray-300 font-semibold border-2 border-gray-300 py-2 px-4 rounded-md">
-              More info
-            </button>
+        <div className="max-w-6xl m-auto lg:mt-[150px] p-4 flex items-center">
+          <div className="flex flex-col md:max-w-1/2">
+            <h2 className="text-[min(10vw,48px)] text-white font-bold">
+              {selectedMovie?.title}
+            </h2>
+            <p className="text-gray-300 break-words line-clamp-2">
+              {selectedMovie?.overview}
+            </p>
+            <div className="flex gap-4 mt-4">
+              <button className="cursor-pointer text-white font-semibold bg-blue-500 py-2 px-4 rounded-md">
+                Watch now
+              </button>
+              <button className="cursor-pointer text-gray-300 font-semibold border-2 border-gray-300 py-2 px-4 rounded-md">
+                More info
+              </button>
+            </div>
           </div>
         </div>
       </div>
-      <div className="m-auto max-w-7xl p-4 md:-translate-y-[200px] md:mb-[-200px]">
+      <div className="m-auto max-w-6xl p-4 md:-translate-y-[200px] md:mb-[-200px]">
         <h2 className="text-xl lg:text-2xl text-white font-bold mb-4">
           Trending movies
         </h2>
