@@ -4,7 +4,6 @@ import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 import { type Movie } from './types/movies/Movie';
 import { fetchPopularMovies, searchMovies } from './services/movie-service';
 import MoviesList from './components/Movies/MoviesList';
-import { Spinner } from './components/Shared/Spinner';
 import { useSearch } from './hooks/useSearch';
 
 export default function App() {
@@ -53,18 +52,9 @@ export default function App() {
           searchTerm={searchTerm}
           isLoading={isLoading}
         />
-        {isLoading ? (
-          <div
-            className="flex items-center justify-center h-screen"
-            data-testid="loading-spinner"
-          >
-            <Spinner size={64} />
-          </div>
-        ) : (
-          <ErrorBoundary>
-            <MoviesList movies={movies} />
-          </ErrorBoundary>
-        )}
+        <ErrorBoundary>
+          <MoviesList movies={movies} isLoading={isLoading} />
+        </ErrorBoundary>
       </div>
     </ErrorBoundary>
   );
