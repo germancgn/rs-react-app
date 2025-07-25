@@ -1,8 +1,9 @@
 import { it, expect, describe, afterEach } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/vitest';
-import ErrorBoundary from '../../src/components/ErrorBoundary';
-import { JSX } from 'react';
+
+import { type JSX } from 'react';
+import ErrorBoundary from './ErrorBoundary';
 
 afterEach(() => {
   cleanup();

@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
-import { Spinner } from './Spinner';
-import { trendingMovies } from '../services/movie-service';
-import { type Movie } from '../types/movies/Movie';
-import FeaturedMovieCard from './FeaturedMovieCard';
+import { useState, useEffect } from 'react';
+import { trendingMovies } from '../../services/movie-service';
+import type { Movie } from '../../types/movies/Movie';
+import FeaturedMovieCard from '../Movies/FeaturedMovieCard';
+import { Spinner } from '../Shared/Spinner';
 
 type HeaderProps = {
   searchTerm: string;

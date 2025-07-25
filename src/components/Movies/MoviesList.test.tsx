@@ -1,8 +1,8 @@
 import { it, expect, describe, afterEach } from 'vitest';
-import MoviesList from '../../src/components/MoviesList';
+import MoviesList from './MoviesList';
 import { cleanup, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/vitest';
-import { mockMovies } from '../../__mocks__/movies';
+import { mockMovies } from '../../../__mocks__/movies';
 
 afterEach(() => {
   cleanup();

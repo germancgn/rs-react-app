@@ -1,5 +1,5 @@
-import { genreMap } from '../../src/constants/genres';
-import { getGenreNameById } from '../../src/utils/genreUtils';
+import { genreMap } from '../constants/genres';
+import { getGenreNameById } from './genreUtils';
 import { describe, it, expect } from 'vitest';
 
 describe('genreUtils', () => {

@@ -10,7 +10,7 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     setupFiles: './src/setupTests.ts',
-    include: ['./__tests__/**/*.test.{js,jsx,ts,tsx}'],
+    include: ['./src/**/*.test.{js,jsx,ts,tsx}'],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html', 'clover', 'json'],

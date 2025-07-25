@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import Header from './components/Header';
-import ErrorBoundary from './components/ErrorBoundary';
+import Header from './components/Header/Header';
+import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 import { type Movie } from './types/movies/Movie';
 import { fetchPopularMovies, searchMovies } from './services/movie-service';
-import MoviesList from './components/MoviesList';
-import { Spinner } from './components/Spinner';
+import MoviesList from './components/Movies/MoviesList';
+import { Spinner } from './components/Shared/Spinner';
 
 export default function App() {
   const [movies, setMovies] = useState<Movie[]>([]);

@@ -1,6 +1,6 @@
-import type { Movie } from '../types/movies/Movie';
-import { getGenreNameById } from '../utils/genreUtils';
-import * as Icon from './Icon';
+import type { Movie } from '../../types/movies/Movie';
+import { getGenreNameById } from '../../utils/genreUtils';
+import { StarSolid } from '../Shared/Icon';
 
 type MovieCardProps = {
   movie: Movie;
@@ -25,7 +25,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
         <h3 className="text-lg font-semibold truncate">{movie.title}</h3>
         <div className="flex gap-2 items-center">
           <span className="text-yellow-400">
-            <Icon.StarSolid size={16} />
+            <StarSolid size={16} />
           </span>
           <span className="text-base font-semibold">
             {movie.vote_average.toFixed(1)}

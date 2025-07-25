@@ -1,5 +1,5 @@
 import { it, expect, describe, afterEach, vi } from 'vitest';
-import Header from '../../src/components/Header';
+import Header from './Header';
 import { cleanup, render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/vitest';
 import userEvent from '@testing-library/user-event';
