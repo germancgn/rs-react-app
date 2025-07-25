@@ -59,32 +59,4 @@ describe('Header', () => {
 
     expect(mockOnSearch).toHaveBeenCalledTimes(1);
   });
-
-  it('shows a spinner when isLoading is true', () => {
-    render(
-      <Header
-        searchTerm=""
-        onSearch={() => {}}
-        onInputChange={() => {}}
-        isLoading={true}
-      />
-    );
-
-    const spinner = screen.getByTestId('spinner');
-    expect(spinner).toBeInTheDocument();
-  });
-
-  it('does not show a spinner when isLoading is false', () => {
-    render(
-      <Header
-        searchTerm=""
-        onSearch={vi.fn()}
-        onInputChange={vi.fn()}
-        isLoading={false}
-      />
-    );
-
-    const spinner = screen.queryByTestId('spinner');
-    expect(spinner).not.toBeInTheDocument();
-  });
 });

@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { trendingMovies } from '../../services/movie-service';
 import type { Movie } from '../../types/movies/Movie';
 import FeaturedMovieCard from '../Movies/FeaturedMovieCard';
-import { Spinner } from '../Shared/Spinner';
 
 type HeaderProps = {
   searchTerm: string;
@@ -60,7 +59,7 @@ export default function Header({
               className="py-2 px-4 bg-[#e94560] text-white rounded-lg hover:bg-[#d13450] hover:cursor-pointer flex items-center gap-2"
               disabled={isLoading}
             >
-              Search {isLoading && <Spinner size={16} />}
+              Search
             </button>
           </div>
         </nav>

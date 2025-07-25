@@ -107,7 +107,6 @@ describe('User Interaction Tests', () => {
     await user.click(searchButton);
 
     expect(searchButton).toBeDisabled();
-    expect(screen.getByTestId('loading-spinner')).toBeInTheDocument();
   });
 
   it('render search results when user types in a movie name and clicks search button', async () => {
@@ -136,6 +135,6 @@ describe('User Interaction Tests', () => {
 
     expect(searchMovies).not.toHaveBeenCalled();
     expect(searchButton).not.toBeDisabled();
-    expect(screen.queryByTestId('loading-spinner')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('spinner')).not.toBeInTheDocument();
   });
 });
