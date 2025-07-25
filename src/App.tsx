@@ -5,20 +5,18 @@ import { type Movie } from './types/movies/Movie';
 import { fetchPopularMovies, searchMovies } from './services/movie-service';
 import MoviesList from './components/Movies/MoviesList';
 import { Spinner } from './components/Shared/Spinner';
+import { useSearch } from './hooks/useSearch';
 
 export default function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [searchTerm, setSearchTerm] = useState(
-    localStorage.getItem('searchItem') ?? ''
-  );
+  const [searchTerm, setSearchTerm] = useSearch('searchTerm', '');
 
   useEffect(() => {
     setIsLoading(true);
-    const fetchData =
-      (localStorage.getItem('searchItem') ?? '')
-        ? searchMovies(localStorage.getItem('searchItem') ?? '')
-        : fetchPopularMovies();
+    const fetchData = searchTerm
+      ? searchMovies(searchTerm)
+      : fetchPopularMovies();
 
     fetchData
       .then((data) => setMovies(data.results))
@@ -29,7 +27,7 @@ export default function App() {
     const trimmedTerm = searchTerm.trim();
     if (!trimmedTerm) return;
 
-    localStorage.setItem('searchItem', trimmedTerm);
+    setSearchTerm(trimmedTerm);
 
     setIsLoading(true);
 
@@ -43,7 +41,6 @@ export default function App() {
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    localStorage.setItem('searchItem', e.target.value);
     setSearchTerm(e.target.value);
   };
 

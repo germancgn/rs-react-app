@@ -37,8 +37,11 @@ describe('App Rendering Tests', () => {
 
   it('displays previously saved search term from localStorage on mount', () => {
     const movieName = 'The Lord of the Rings';
-    localStorage.setItem('searchItem', movieName);
+
+    localStorage.setItem('searchTerm', movieName);
+
     render(<App />);
+
     expect(screen.getByDisplayValue(movieName)).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Search movies...')).toHaveValue(
       movieName
@@ -77,7 +80,7 @@ describe('User Interaction Tests', () => {
 
     await user.click(searchButton);
 
-    expect(localStorage.getItem('searchItem')).toBe(movieName);
+    expect(localStorage.getItem('searchTerm')).toBe(movieName);
   });
 
   it('trims whitespace from search input before saving', async () => {
@@ -89,7 +92,7 @@ describe('User Interaction Tests', () => {
     await user.type(searchInput, movieName);
     expect(searchInput).toHaveValue(movieName);
     await user.click(searchButton);
-    expect(localStorage.getItem('searchItem')).toBe(movieName.trim());
+    expect(localStorage.getItem('searchTerm')).toBe(movieName.trim());
   });
 
   it('sets isLoading to true and shows loading spinner when search button is clicked', async () => {
