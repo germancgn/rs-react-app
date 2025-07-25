@@ -2,11 +2,13 @@ import { useState, useEffect } from 'react';
 import { trendingMovies } from '../../services/movie-service';
 import type { Movie } from '../../types/movies/Movie';
 import FeaturedMovieCard from '../Movies/FeaturedMovieCard';
+import { X } from '../Shared/Icon';
 
 type HeaderProps = {
   searchTerm: string;
   onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onSearch: () => void;
+  onClearInput: () => void;
   isLoading: boolean;
 };
 
@@ -15,6 +17,7 @@ export default function Header({
   onInputChange,
   onSearch,
   isLoading,
+  onClearInput,
 }: HeaderProps) {
   const [selectedMovie, setSelectedMovie] = useState<Movie | undefined>();
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -47,13 +50,26 @@ export default function Header({
             </li>
           </ul>
           <div className="flex max-sm:w-full sm:items-center gap-2">
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={onInputChange}
-              placeholder="Search movies..."
-              className="w-full sm:w-64 p-2 bg-blue-950/10 backdrop-blur-md border border-gray-700 text-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#e94560]"
-            />
+            <div className="relative">
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={onInputChange}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    onSearch();
+                  }
+                }}
+                placeholder="Search movies..."
+                className="w-full sm:w-64 p-2 bg-blue-950/10 backdrop-blur-md border border-gray-700 text-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#e94560]"
+              />
+              <span
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-400 hover:text-gray-200"
+                onClick={onClearInput}
+              >
+                {searchTerm && <X size={14} />}
+              </span>
+            </div>
             <button
               onClick={onSearch}
               className="py-2 px-4 bg-[#e94560] text-white rounded-lg hover:bg-[#d13450] hover:cursor-pointer flex items-center gap-2"

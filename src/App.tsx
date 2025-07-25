@@ -7,40 +7,46 @@ import MoviesList from './components/Movies/MoviesList';
 import { useSearch } from './hooks/useSearch';
 
 export default function App() {
-  const [movies, setMovies] = useState<Movie[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [popularMovies, setPopularMovies] = useState<Movie[]>([]);
+  const [isLoadingPopular, setIsLoadingPopular] = useState(false);
+  const [moviesSearchResults, setMoviesSearchResults] = useState<Movie[]>([]);
+  const [isLoadingSearch, setIsLoadingSearch] = useState(false);
   const [searchTerm, setSearchTerm] = useSearch('searchTerm', '');
+  const [showSearchResults, setShowSearchResults] = useState(false);
 
   useEffect(() => {
-    setIsLoading(true);
-    const fetchData = searchTerm
-      ? searchMovies(searchTerm)
-      : fetchPopularMovies();
-
-    fetchData
-      .then((data) => setMovies(data.results))
-      .finally(() => setIsLoading(false));
-  }, []);
+    if (!searchTerm.trim()) {
+      setShowSearchResults(false);
+      setIsLoadingPopular(true);
+      fetchPopularMovies()
+        .then((data) => setPopularMovies(data.results))
+        .finally(() => setIsLoadingPopular(false));
+    }
+  }, [searchTerm]);
 
   const handleSearch = () => {
     const trimmedTerm = searchTerm.trim();
     if (!trimmedTerm) return;
 
+    setShowSearchResults(true);
     setSearchTerm(trimmedTerm);
-
-    setIsLoading(true);
+    setIsLoadingSearch(true);
 
     searchMovies(trimmedTerm)
       .then((data) => {
-        setMovies(data.results);
+        setMoviesSearchResults(data.results);
       })
       .finally(() => {
-        setIsLoading(false);
+        setIsLoadingSearch(false);
       });
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
+  };
+
+  const handleClearSearchInput = () => {
+    setSearchTerm('');
   };
 
   return (
@@ -50,10 +56,23 @@ export default function App() {
           onSearch={handleSearch}
           onInputChange={handleInputChange}
           searchTerm={searchTerm}
-          isLoading={isLoading}
+          isLoading={isLoadingSearch}
+          onClearInput={handleClearSearchInput}
         />
         <ErrorBoundary>
-          <MoviesList movies={movies} isLoading={isLoading} />
+          {showSearchResults && searchTerm.trim() ? (
+            <MoviesList
+              movies={moviesSearchResults}
+              isLoading={isLoadingSearch}
+              title="Search results"
+            />
+          ) : (
+            <MoviesList
+              movies={popularMovies}
+              isLoading={isLoadingPopular}
+              title="Popular movies"
+            />
+          )}
         </ErrorBoundary>
       </div>
     </ErrorBoundary>

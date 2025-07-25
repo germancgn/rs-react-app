@@ -17,6 +17,7 @@ describe('Header', () => {
         onSearch={() => {}}
         onInputChange={() => {}}
         isLoading={false}
+        onClearInput={vi.fn()}
       />
     );
 
@@ -51,6 +52,7 @@ describe('Header', () => {
         onSearch={mockOnSearch}
         onInputChange={() => {}}
         isLoading={false}
+        onClearInput={vi.fn()}
       />
     );
 
