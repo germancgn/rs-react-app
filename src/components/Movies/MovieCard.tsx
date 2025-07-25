@@ -17,9 +17,13 @@ export default function MovieCard({ movie }: MovieCardProps) {
       data-testid="movie-card"
     >
       <img
-        src={`https://image.tmdb.org/t/p/w780/${movie.poster_path}`}
+        src={
+          movie.poster_path
+            ? `https://image.tmdb.org/t/p/w780/${movie.poster_path}`
+            : '/images/image-not-found.jpg'
+        }
         alt={movie.title}
-        className="w-full h-auto rounded-xl"
+        className="w-full aspect-[2/3] object-cover rounded-xl "
       />
       <div className="flex flex-col gap-2 pt-4 pb-2">
         <h3 className="text-lg font-semibold truncate">{movie.title}</h3>

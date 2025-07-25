@@ -1,40 +1,51 @@
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import Header from './components/Header/Header';
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
-import { type Movie } from './types/movies/Movie';
 import { fetchPopularMovies, searchMovies } from './services/movie-service';
 import MoviesList from './components/Movies/MoviesList';
 import { useSearch } from './hooks/useSearch';
+import type { MovieResponse } from './types/movies/MovieResponse';
 
 export default function App() {
-  const [popularMovies, setPopularMovies] = useState<Movie[]>([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const [popularMovies, setPopularMovies] = useState<MovieResponse>();
   const [isLoadingPopular, setIsLoadingPopular] = useState(false);
-  const [moviesSearchResults, setMoviesSearchResults] = useState<Movie[]>([]);
+  const [moviesSearchResults, setMoviesSearchResults] =
+    useState<MovieResponse>();
   const [isLoadingSearch, setIsLoadingSearch] = useState(false);
   const [searchTerm, setSearchTerm] = useSearch('searchTerm', '');
   const [showSearchResults, setShowSearchResults] = useState(false);
+  const [searchPage, setSearchPage] = useState(() =>
+    parseInt(searchParams.get('searchPage') || '1', 10)
+  );
+  const [popularPage, setPopularPage] = useState(() =>
+    parseInt(searchParams.get('popularPage') || '1', 10)
+  );
 
   useEffect(() => {
     if (!searchTerm.trim()) {
       setShowSearchResults(false);
       setIsLoadingPopular(true);
-      fetchPopularMovies()
-        .then((data) => setPopularMovies(data.results))
+      fetchPopularMovies(popularPage)
+        .then((data) => setPopularMovies(data))
         .finally(() => setIsLoadingPopular(false));
     }
-  }, [searchTerm]);
+  }, [searchTerm, popularPage]);
 
   const handleSearch = () => {
     const trimmedTerm = searchTerm.trim();
     if (!trimmedTerm) return;
 
+    setSearchPage(1);
     setShowSearchResults(true);
     setSearchTerm(trimmedTerm);
     setIsLoadingSearch(true);
 
-    searchMovies(trimmedTerm)
+    searchMovies(trimmedTerm, searchPage)
       .then((data) => {
-        setMoviesSearchResults(data.results);
+        setMoviesSearchResults(data);
       })
       .finally(() => {
         setIsLoadingSearch(false);
@@ -46,7 +57,56 @@ export default function App() {
   };
 
   const handleClearSearchInput = () => {
+    setSearchPage(1);
     setSearchTerm('');
+  };
+
+  const handleNextPage = () => {
+    if (showSearchResults) {
+      if (searchPage < (moviesSearchResults?.total_pages || 1)) {
+        const nextPage = searchPage + 1;
+        setSearchPage(nextPage);
+        setSearchParams({ searchPage: nextPage.toString() });
+        setIsLoadingSearch(true);
+        searchMovies(searchTerm, nextPage)
+          .then((data) => setMoviesSearchResults(data))
+          .finally(() => setIsLoadingSearch(false));
+      }
+    } else {
+      if (popularPage < (popularMovies?.total_pages || 1)) {
+        const nextPage = popularPage + 1;
+        setPopularPage(nextPage);
+        setSearchParams({ popularPage: nextPage.toString() });
+        setIsLoadingPopular(true);
+        fetchPopularMovies(nextPage)
+          .then((data) => setPopularMovies(data))
+          .finally(() => setIsLoadingPopular(false));
+      }
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (showSearchResults) {
+      if (searchPage > 1) {
+        const prevPage = searchPage - 1;
+        setSearchPage(prevPage);
+        setSearchParams({ searchPage: prevPage.toString() });
+        setIsLoadingSearch(true);
+        searchMovies(searchTerm, prevPage)
+          .then((data) => setMoviesSearchResults(data))
+          .finally(() => setIsLoadingSearch(false));
+      }
+    } else {
+      if (popularPage > 1) {
+        const prevPage = popularPage - 1;
+        setPopularPage(prevPage);
+        setSearchParams({ popularPage: prevPage.toString() });
+        setIsLoadingPopular(true);
+        fetchPopularMovies(prevPage)
+          .then((data) => setPopularMovies(data))
+          .finally(() => setIsLoadingPopular(false));
+      }
+    }
   };
 
   return (
@@ -60,18 +120,28 @@ export default function App() {
           onClearInput={handleClearSearchInput}
         />
         <ErrorBoundary>
-          {showSearchResults && searchTerm.trim() ? (
+          {showSearchResults && searchTerm.trim() && moviesSearchResults ? (
             <MoviesList
-              movies={moviesSearchResults}
+              movies={moviesSearchResults.results}
               isLoading={isLoadingSearch}
               title="Search results"
+              totalPages={moviesSearchResults.total_pages}
+              page={searchPage}
+              onNextPage={handleNextPage}
+              onPrevPage={handlePrevPage}
             />
           ) : (
-            <MoviesList
-              movies={popularMovies}
-              isLoading={isLoadingPopular}
-              title="Popular movies"
-            />
+            popularMovies && (
+              <MoviesList
+                movies={popularMovies.results}
+                isLoading={isLoadingPopular}
+                title="Popular movies"
+                totalPages={popularMovies.total_pages}
+                page={popularPage}
+                onNextPage={handleNextPage}
+                onPrevPage={handlePrevPage}
+              />
+            )
           )}
         </ErrorBoundary>
       </div>

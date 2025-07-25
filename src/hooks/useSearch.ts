@@ -8,7 +8,7 @@ export function useSearch(key: string, defaultValue: string): UseStorageReturn {
   useEffect(() => {
     const storedValue = localStorage.getItem(key);
     setValue(storedValue !== null ? storedValue : defaultValue);
-  }, []);
+  }, [key, defaultValue]);
 
   const updateValue = (newValue: string) => {
     setValue(newValue);

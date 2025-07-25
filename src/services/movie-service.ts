@@ -29,10 +29,13 @@ export async function fetchPopularMovies(page = 1): Promise<MovieResponse> {
   }
 }
 
-export async function searchMovies(name: string): Promise<MovieResponse> {
+export async function searchMovies(
+  name: string,
+  page = 1
+): Promise<MovieResponse> {
   try {
     const response = await fetch(
-      `${BASE_URL}/search/movie?query=${encodeURIComponent(name)}&api_key=${API_KEY}`
+      `${BASE_URL}/search/movie?query=${encodeURIComponent(name)}&page=${page}&api_key=${API_KEY}`
     );
     if (!response.ok) {
       throw new HttpError(
@@ -77,10 +80,10 @@ export async function discoverMovies(page = 1): Promise<MovieResponse> {
   }
 }
 
-export async function trendingMovies(): Promise<MovieResponse> {
+export async function trendingMovies(page = 1): Promise<MovieResponse> {
   try {
     const response = await fetch(
-      `${BASE_URL}/trending/movie/week?api_key=${API_KEY}`
+      `${BASE_URL}/trending/movie/week?page=${page}&api_key=${API_KEY}`
     );
     if (!response.ok) {
       throw new HttpError(
