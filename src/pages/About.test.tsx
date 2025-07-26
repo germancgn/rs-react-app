@@ -12,6 +12,6 @@ describe('About.tsx', () => {
     );
     const link = screen.getByRole('link', { name: /RS School React Course/i });
     expect(link).toBeInTheDocument();
-    expect(link).toHaveAttribute('href', 'https://rs.school/');
+    expect(link).toHaveAttribute('href', 'https://rs.school/courses/reactjs');
   });
 });
