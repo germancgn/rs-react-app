@@ -33,16 +33,31 @@ export default function MovieDetails() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    let isCancelled = false;
     setIsLoading(true);
-    new Promise((resolve) => {
-      setTimeout(resolve, 500);
-    })
-      .then(() => {
-        if (params.id) {
-          getMovieById(params.id).then((data) => setMovieDetails(data));
-        }
-      })
-      .finally(() => setIsLoading(false));
+    setMovieDetails(undefined);
+
+    // The timeout is used only to simulate a loading delay for demonstration purposes
+
+    const timeout = setTimeout(() => {
+      if (!params.id) return;
+      getMovieById(params.id)
+        .then((data) => {
+          if (!isCancelled) {
+            setMovieDetails(data);
+          }
+        })
+        .finally(() => {
+          if (!isCancelled) {
+            setIsLoading(false);
+          }
+        });
+    }, 500);
+
+    return () => {
+      isCancelled = true;
+      clearTimeout(timeout);
+    };
   }, [params]);
 
   if (isLoading) {
@@ -50,6 +65,7 @@ export default function MovieDetails() {
   }
 
   return (
+    !isLoading &&
     movieDetails && (
       <div className="flex flex-col">
         <div className="max-w-fit p-4 h-fit flex flex-col md:flex-row gap-8 bg-gray-900 text-white rounded-lg sticky top-4">
