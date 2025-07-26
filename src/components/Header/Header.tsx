@@ -3,6 +3,7 @@ import { trendingMovies } from '../../services/movie-service';
 import type { Movie } from '../../types/movies/Movie';
 import FeaturedMovieCard from '../Movies/FeaturedMovieCard';
 import { X } from '../Shared/Icon';
+import { Link } from 'react-router-dom';
 
 type HeaderProps = {
   searchTerm: string;
@@ -43,10 +44,10 @@ export default function Header({
         <nav className="flex flex-col max-w-6xl m-auto sm:flex-row items-center justify-between gap-4 p-4 rounded-lg">
           <ul className="flex gap-8">
             <li>
-              <a href="">Home</a>
+              <Link to="/">Home</Link>
             </li>
             <li>
-              <a href="">About</a>
+              <Link to="/about">About</Link>
             </li>
           </ul>
           <div className="flex max-sm:w-full sm:items-center gap-2">
