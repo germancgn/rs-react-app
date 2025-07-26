@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import Header from './components/Header/Header';
-import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
-import { fetchPopularMovies, searchMovies } from './services/movie-service';
-import MoviesList from './components/Movies/MoviesList';
-import { useSearch } from './hooks/useSearch';
-import type { MovieResponse } from './types/movies/MovieResponse';
+import Header from '../components/Header/Header';
+import ErrorBoundary from '../components/ErrorBoundary/ErrorBoundary';
+import { fetchPopularMovies, searchMovies } from '../services/movie-service';
+import MoviesList from '../components/Movies/MoviesList';
+import { useSearch } from '../hooks/useSearch';
+import type { MovieResponse } from '../types/movies/MovieResponse';
 
 export default function App() {
   const [searchParams, setSearchParams] = useSearchParams();

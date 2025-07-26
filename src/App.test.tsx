@@ -1,7 +1,7 @@
 import { it, expect, describe, afterEach, vi } from 'vitest';
 import { render, screen, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import App from './Home';
+import App from './pages/Home';
 import '@testing-library/jest-dom/vitest';
 import { mockMovies } from '../__mocks__/movies';
 import { searchMovies } from '../src/services/movie-service';
