@@ -4,6 +4,7 @@ import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './pages/Home.tsx';
 import About from './pages/About.tsx';
+import MovieDetails from './components/Movies/MovieDetails.tsx';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) throw new Error('Root element not found');
@@ -12,6 +13,7 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <Home />,
+    children: [{ path: '/details/:id', element: <MovieDetails /> }],
   },
   {
     path: '/about',

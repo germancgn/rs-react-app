@@ -1,5 +1,6 @@
 import HttpError from '../utils/HttpError';
 import type { MovieResponse } from '../types/movies/MovieResponse';
+import type { MovieDetails } from '../types/movies/MovieDetails';
 
 // API key is provided for convenience only. Will be deactivated after the cross-check.
 const API_KEY = '42f561b23ffd1830a30eaf91afadf039';
@@ -99,6 +100,30 @@ export async function trendingMovies(page = 1): Promise<MovieResponse> {
       );
     } else {
       console.error('trendingMovies - Unexpected Error:', error);
+    }
+    throw error;
+  }
+}
+
+export async function getMovieById(id: string): Promise<MovieDetails> {
+  try {
+    const response = await fetch(
+      `${BASE_URL}/movie/${id}?api_key=${API_KEY}&language=en`
+    );
+    if (!response.ok) {
+      throw new HttpError(
+        response.status,
+        `Error fetching movie by ID: ${response.statusText}`
+      );
+    }
+    return await response.json();
+  } catch (error) {
+    if (error instanceof HttpError) {
+      console.error(
+        `getMovieById - HTTP Error: ${error.status} - ${error.message}`
+      );
+    } else {
+      console.error('getMovieById - Unexpected Error:', error);
     }
     throw error;
   }

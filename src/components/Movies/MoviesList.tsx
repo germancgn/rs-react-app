@@ -1,3 +1,4 @@
+import { Outlet } from 'react-router-dom';
 import type { Movie } from '../../types/movies/Movie';
 import { Pagination } from '../Shared/Pagination';
 import MovieCard from './MovieCard';
@@ -11,12 +12,17 @@ function MovieGrid({
   isLoading: boolean;
 }) {
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-      {isLoading
-        ? Array.from({ length: 20 }).map((_, index) => (
-            <MovieCardSkeleton key={index} />
-          ))
-        : movies.map((movie) => <MovieCard key={movie.id} movie={movie} />)}
+    <div className="flex gap-4 relative">
+      <div className="grow">
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4 ">
+          {isLoading
+            ? Array.from({ length: 20 }).map((_, index) => (
+                <MovieCardSkeleton key={index} />
+              ))
+            : movies.map((movie) => <MovieCard key={movie.id} movie={movie} />)}
+        </div>
+      </div>
+      <Outlet />
     </div>
   );
 }
