@@ -20,15 +20,16 @@ body {
 
 .header-hero {
   --box-shadow-inset: 20px;
+  --fade-radius: 50px;
   background-size: cover;
   background-position: center;
-  aspect-ratio: 16/10;
+  aspect-ratio: 16/9;
   box-shadow:
     inset 10px 0px 80px var(--box-shadow-inset) #07070d,
     inset -10px 0px 80px var(--box-shadow-inset) #07070d,
     inset 0px 20px 80px var(--box-shadow-inset) #07070d,
     inset 0px -2px 80px var(--box-shadow-inset) #07070d;
-  animation: decreaseFadeRadius 2000ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  animation: decreaseFadeRadius 2500ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
 }
 
 @property --fade-radius {
