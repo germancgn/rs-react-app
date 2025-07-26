@@ -8,7 +8,7 @@ const BASE_URL = 'https://api.themoviedb.org/3';
 export async function fetchPopularMovies(page = 1): Promise<MovieResponse> {
   try {
     const response = await fetch(
-      `${BASE_URL}/movie/popular?page=${page}&api_key=${API_KEY}`
+      `${BASE_URL}/movie/popular?page=${page}&api_key=${API_KEY}&language=en`
     );
     if (!response.ok) {
       throw new HttpError(
@@ -35,7 +35,7 @@ export async function searchMovies(
 ): Promise<MovieResponse> {
   try {
     const response = await fetch(
-      `${BASE_URL}/search/movie?query=${encodeURIComponent(name)}&page=${page}&api_key=${API_KEY}`
+      `${BASE_URL}/search/movie?query=${encodeURIComponent(name)}&page=${page}&api_key=${API_KEY}&language=en`
     );
     if (!response.ok) {
       throw new HttpError(
@@ -59,7 +59,7 @@ export async function searchMovies(
 export async function discoverMovies(page = 1): Promise<MovieResponse> {
   try {
     const response = await fetch(
-      `${BASE_URL}/discover/movie?page=${page}&api_key=${API_KEY}`
+      `${BASE_URL}/discover/movie?page=${page}&api_key=${API_KEY}&language=en`
     );
     if (!response.ok) {
       throw new HttpError(
@@ -83,7 +83,7 @@ export async function discoverMovies(page = 1): Promise<MovieResponse> {
 export async function trendingMovies(page = 1): Promise<MovieResponse> {
   try {
     const response = await fetch(
-      `${BASE_URL}/trending/movie/week?page=${page}&api_key=${API_KEY}`
+      `${BASE_URL}/trending/movie/week?page=${page}&api_key=${API_KEY}&language=en`
     );
     if (!response.ok) {
       throw new HttpError(
