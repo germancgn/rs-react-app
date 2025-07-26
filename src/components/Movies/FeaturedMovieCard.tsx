@@ -8,7 +8,7 @@ type MovieCardProps = {
 export default function FeaturedMovieCard({ movie, onHover }: MovieCardProps) {
   return (
     <div
-      className="rounded-2xl border border-gray-700 overflow-hidden shadow-md hover:border-pink-500 hover:shadow-pink-500 hover:cursor-pointer hover:scale-110 transition-all"
+      className="flex-shrink-0 max-w-[200px] rounded-2xl border border-gray-700 overflow-hidden shadow-md hover:border-pink-500 hover:shadow-pink-500 hover:cursor-pointer hover:scale-110 transition-all"
       data-testid="movie-card-featured"
       onMouseEnter={onHover}
     >

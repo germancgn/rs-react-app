@@ -42,3 +42,9 @@ body {
     --fade-radius: 800px;
   }
 }
+
+.featured-cards-shadow {
+  box-shadow:
+    inset 10px 0px 10px 1px rgba(255, 255, 255, 0.05),
+    inset -10px 0px 10px 1px rgba(255, 255, 255, 0.05);
+}
