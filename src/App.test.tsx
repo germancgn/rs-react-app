@@ -3,8 +3,9 @@ import { render, screen, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './pages/Home';
 import '@testing-library/jest-dom/vitest';
-import { mockMovies } from '../__mocks__/movies';
+
 import { searchMovies } from '../src/services/movie-service';
+import { mockMovies } from './__mocks__/movies';
 
 vi.mock('../src/services/movie-service', () => ({
   fetchPopularMovies: vi.fn(() => Promise.resolve({ results: mockMovies })),
