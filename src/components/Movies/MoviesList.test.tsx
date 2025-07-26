@@ -3,6 +3,7 @@ import MoviesList from './MoviesList';
 import { cleanup, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/vitest';
 import { mockMovies } from '../../__mocks__/movies';
+import { MemoryRouter } from 'react-router-dom';
 
 afterEach(() => {
   cleanup();
@@ -11,15 +12,17 @@ afterEach(() => {
 describe('MoviesList', () => {
   it('passes the correct props to each MovieCard', () => {
     render(
-      <MoviesList
-        movies={mockMovies}
-        isLoading={false}
-        title=""
-        totalPages={1}
-        page={1}
-        onNextPage={vi.fn()}
-        onPrevPage={vi.fn()}
-      />
+      <MemoryRouter>
+        <MoviesList
+          movies={mockMovies}
+          isLoading={false}
+          title=""
+          totalPages={1}
+          page={1}
+          onNextPage={vi.fn()}
+          onPrevPage={vi.fn()}
+        />
+      </MemoryRouter>
     );
 
     mockMovies.forEach((movie) => {
@@ -30,15 +33,17 @@ describe('MoviesList', () => {
 
   it('renders the correct number of MovieCard components', () => {
     render(
-      <MoviesList
-        movies={mockMovies}
-        isLoading={false}
-        title=""
-        totalPages={1}
-        page={1}
-        onNextPage={vi.fn()}
-        onPrevPage={vi.fn()}
-      />
+      <MemoryRouter>
+        <MoviesList
+          movies={mockMovies}
+          isLoading={false}
+          title=""
+          totalPages={1}
+          page={1}
+          onNextPage={vi.fn()}
+          onPrevPage={vi.fn()}
+        />
+      </MemoryRouter>
     );
 
     const movieCards = screen.getAllByTestId('movie-card');
@@ -47,15 +52,17 @@ describe('MoviesList', () => {
 
   it('renders all MovieCard components in the document', () => {
     render(
-      <MoviesList
-        movies={mockMovies}
-        isLoading={false}
-        title=""
-        totalPages={1}
-        page={1}
-        onNextPage={vi.fn()}
-        onPrevPage={vi.fn()}
-      />
+      <MemoryRouter>
+        <MoviesList
+          movies={mockMovies}
+          isLoading={false}
+          title=""
+          totalPages={1}
+          page={1}
+          onNextPage={vi.fn()}
+          onPrevPage={vi.fn()}
+        />
+      </MemoryRouter>
     );
     mockMovies.forEach((movie) => {
       const movieCard = screen.getByText(movie.title);
