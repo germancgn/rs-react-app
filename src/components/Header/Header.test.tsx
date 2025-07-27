@@ -4,6 +4,13 @@ import { cleanup, render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/vitest';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
+import { mockMovies } from '../../__mocks__/movies';
+
+vi.mock('../../services/movie-service', () => ({
+  trendingMovies: vi.fn(() =>
+    Promise.resolve({ results: mockMovies.slice(0, 3) })
+  ),
+}));
 
 afterEach(() => {
   cleanup();
@@ -68,5 +75,47 @@ describe('Header', () => {
     fireEvent.click(button);
 
     expect(mockOnSearch).toHaveBeenCalledTimes(1);
+  });
+
+  it('calls onSearch when Enter key is pressed', async () => {
+    const mockOnSearch = vi.fn();
+    const user = userEvent.setup();
+
+    render(
+      <MemoryRouter>
+        <Header
+          searchTerm="test"
+          onSearch={mockOnSearch}
+          onInputChange={() => {}}
+          isLoading={false}
+          onClearInput={vi.fn()}
+        />
+      </MemoryRouter>
+    );
+
+    const input = screen.getByPlaceholderText(/search/i);
+    await user.type(input, '{enter}');
+
+    expect(mockOnSearch).toHaveBeenCalledTimes(1);
+  });
+
+  it('displays FeaturedMovieCard components for trending movies', async () => {
+    render(
+      <MemoryRouter>
+        <Header
+          searchTerm=""
+          onSearch={() => {}}
+          onInputChange={() => {}}
+          isLoading={false}
+          onClearInput={vi.fn()}
+        />
+      </MemoryRouter>
+    );
+
+    const movieCards = await screen.findAllByTestId('movie-card-featured');
+
+    expect(movieCards).toHaveLength(3);
+
+    expect(screen.getByText('Trending movies')).toBeInTheDocument();
   });
 });
