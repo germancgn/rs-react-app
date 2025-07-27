@@ -26,9 +26,14 @@ export default function Navbar() {
         </li>
 
         <li className="ml-auto">
-          <a href="" className="text-gray-400 hover:text-white">
+          <NavLink
+            to="/signin"
+            className={({ isActive }) =>
+              isActive ? 'text-white' : 'text-gray-400 hover:text-white'
+            }
+          >
             Sign in
-          </a>
+          </NavLink>
         </li>
       </ul>
     </nav>
