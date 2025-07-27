@@ -39,4 +39,20 @@ describe('MovieCard', () => {
       `https://image.tmdb.org/t/p/w780/${movie.poster_path}`
     );
   });
+
+  it('renders fallback image when poster_path is not provided', () => {
+    const movieWithoutPoster = { ...movie, poster_path: null };
+
+    render(
+      <MemoryRouter>
+        <MovieCard movie={movieWithoutPoster} />
+      </MemoryRouter>
+    );
+
+    const posterImage = screen.getByRole('img', {
+      name: new RegExp(movie.title),
+    });
+    expect(posterImage).toBeInTheDocument();
+    expect(posterImage).toHaveAttribute('src', '/images/image-not-found.jpg');
+  });
 });
