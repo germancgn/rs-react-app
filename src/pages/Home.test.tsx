@@ -1,14 +1,13 @@
 import { it, expect, describe, afterEach, vi } from 'vitest';
 import { render, screen, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import App from './pages/Home';
 import '@testing-library/jest-dom/vitest';
-
-import { searchMovies } from '../src/services/movie-service';
-import { mockMovies } from './__mocks__/movies';
 import { MemoryRouter } from 'react-router-dom';
+import { mockMovies } from '../__mocks__/movies';
+import { searchMovies } from '../services/movie-service';
+import App from './Home';
 
-vi.mock('../src/services/movie-service', () => ({
+vi.mock('../services/movie-service', () => ({
   fetchPopularMovies: vi.fn(() => Promise.resolve({ results: mockMovies })),
   searchMovies: vi.fn(
     (movieName: string) =>
@@ -171,7 +170,7 @@ describe('User Interaction Tests', () => {
     await user.type(searchInput, '   ');
     await user.click(searchButton);
 
-    expect(searchMovies).not.toHaveBeenCalled();
+    expect(vi.mocked(searchMovies)).not.toHaveBeenCalled();
     expect(searchButton).not.toBeDisabled();
     expect(screen.queryByTestId('spinner')).not.toBeInTheDocument();
   });
