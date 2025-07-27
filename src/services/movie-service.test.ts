@@ -3,9 +3,11 @@ import {
   searchMovies,
   discoverMovies,
   trendingMovies,
+  getMovieById,
 } from '../../src/services/movie-service';
 import { it, describe, vi, afterEach, expect } from 'vitest';
 import HttpError from '../../src/utils/HttpError';
+import { mockMovies } from '../__mocks__/movies';
 
 const mockResponse = {
   results: [
@@ -199,6 +201,64 @@ describe('movie-service', () => {
 
       expect(consoleErrorSpy).toHaveBeenCalledWith(
         'trendingMovies - Unexpected Error:',
+        expect.any(Error)
+      );
+
+      consoleErrorSpy.mockRestore();
+    });
+  });
+
+  describe('getMovieById', () => {
+    const movie = mockMovies[0];
+
+    afterEach(() => {
+      vi.restoreAllMocks();
+    });
+
+    it('should return movie details on a successful API call', async () => {
+      globalThis.fetch = vi.fn(() =>
+        Promise.resolve({
+          ok: true,
+          json: () => Promise.resolve(movie),
+        } as Response)
+      );
+
+      const response = await getMovieById(String(movie.id));
+      expect(response).toEqual(movie);
+      expect(globalThis.fetch).toHaveBeenCalledWith(
+        expect.stringContaining(`/movie/${movie.id}`)
+      );
+    });
+
+    it('should throw HttpError when API call returns an error response', async () => {
+      globalThis.fetch = vi.fn(() =>
+        Promise.resolve({
+          ok: false,
+          status: 404,
+          statusText: 'Not Found',
+        } as Response)
+      );
+
+      await expect(getMovieById(String(movie.id))).rejects.toThrowError(
+        HttpError
+      );
+    });
+
+    it('should throw an unexpected error and log it', async () => {
+      globalThis.fetch = vi.fn(() => {
+        throw new Error('Network Error');
+      });
+
+      const consoleErrorSpy = vi
+        .spyOn(console, 'error')
+        .mockImplementation(() => {});
+
+      await expect(getMovieById(String(movie.id))).rejects.toThrow(
+        'Network Error'
+      );
+
+      expect(consoleErrorSpy).toHaveBeenCalledWith(
+        'getMovieById - Unexpected Error:',
         expect.any(Error)
       );
 
