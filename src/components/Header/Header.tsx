@@ -59,6 +59,7 @@ export default function Header({
               </span>
 
               <span
+                data-testid="clear-input-button"
                 className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-400 hover:text-gray-200"
                 onClick={onClearInput}
               >
