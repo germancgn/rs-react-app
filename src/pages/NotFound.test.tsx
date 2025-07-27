@@ -7,15 +7,15 @@ afterEach(() => {
   cleanup();
 });
 
-describe('About.tsx', () => {
+describe('NotFound.tsx', () => {
   it('should render 404 page with the header text', () => {
     render(
       <MemoryRouter>
         <NotFound />
       </MemoryRouter>
     );
-    const link = screen.getByRole('heading', { name: /404 Not Found/i });
-    expect(link).toBeInTheDocument();
+    const heading = screen.getByRole('heading', { name: /404 Not Found/i });
+    expect(heading).toBeInTheDocument();
   });
 
   it('should render link for navigating to home page', () => {
