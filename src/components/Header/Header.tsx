@@ -81,14 +81,14 @@ export default function Header({
               >
                 {selectedMovie?.title}
               </h2>
-              <p className="text-gray-300 break-words line-clamp-2">
+              <p className="text-white break-words line-clamp-2">
                 {selectedMovie?.overview}
               </p>
               <div className="flex gap-4">
-                <button className="cursor-pointer text-white font-semibold bg-blue-500 py-2 px-4 rounded-md">
+                <button className="cursor-pointer text-white font-semibold bg-blue-500 hover:bg-blue-600 py-2 px-4 rounded-md transition-colors">
                   Watch now
                 </button>
-                <button className="cursor-pointer text-gray-300 font-semibold border-2 border-gray-300 py-2 px-4 rounded-md">
+                <button className="cursor-pointer text-gray-300 hover:text-gray-200 font-semibold border-2 border-gray-300 hover:border-gray-200 py-2 px-4 rounded-md">
                   More info
                 </button>
               </div>
