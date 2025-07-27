@@ -81,4 +81,4 @@ export function X({ size, ...props }: IconProps) {
   );
 }
 
-export { CaretLeft, CaretRight, KeyReturn, MagnifyingGlass, StarSolid };
+export { CaretLeft, CaretRight, MagnifyingGlass, StarSolid };
