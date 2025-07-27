@@ -17,6 +17,7 @@ export function Pagination({
     <div className="flex justify-center items-center space-x-4 mt-4 ">
       <div className="flex items-center bg-[#222240] rounded-xl">
         <button
+          data-testid="prev-page-button"
           onClick={onPrevPage}
           disabled={page === 1}
           className="p-4 text-white rounded-xl disabled:opacity-50 cursor-pointer hover:bg-[#303059]"
@@ -27,6 +28,7 @@ export function Pagination({
           {page} - {totalPages}
         </span>
         <button
+          data-testid="next-page-button"
           onClick={onNextPage}
           disabled={page === totalPages}
           className="p-4 text-white rounded-xl disabled:opacity-50 cursor-pointer hover:bg-[#303059]"

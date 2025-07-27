@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom/vitest';
 import { MemoryRouter } from 'react-router-dom';
 import { mockMovies } from '../__mocks__/movies';
-import { searchMovies } from '../services/movie-service';
+import { searchMovies, fetchPopularMovies } from '../services/movie-service';
 import App from './Home';
 
 vi.mock('../services/movie-service', () => ({
@@ -173,5 +173,140 @@ describe('User Interaction Tests', () => {
     expect(vi.mocked(searchMovies)).not.toHaveBeenCalled();
     expect(searchButton).not.toBeDisabled();
     expect(screen.queryByTestId('spinner')).not.toBeInTheDocument();
+  });
+
+  it('renders search results MoviesList with correct props when search is performed', async () => {
+    const user = userEvent.setup();
+
+    vi.mocked(searchMovies).mockResolvedValueOnce({
+      results: mockMovies.slice(0, 2),
+      total_pages: 5,
+      page: 1,
+    });
+
+    render(
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
+    );
+
+    const searchInput = screen.getByPlaceholderText('Search movies...');
+    const searchButton = screen.getByRole('button', { name: /search/i });
+    const movieName = 'How to Train Your Dragon';
+
+    await user.type(searchInput, movieName);
+    await user.click(searchButton);
+
+    expect(await screen.findByText('Search results')).toBeInTheDocument();
+
+    expect(screen.queryByText('Popular movies')).not.toBeInTheDocument();
+  });
+
+  it('clears search input when clear button is clicked', async () => {
+    const user = userEvent.setup();
+    render(
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
+    );
+
+    const searchInput = screen.getByPlaceholderText('Search movies...');
+
+    await user.type(searchInput, 'test movie');
+    expect(searchInput).toHaveValue('test movie');
+
+    const clearButton = screen.getByTestId('clear-input-button');
+    await user.click(clearButton);
+
+    expect(searchInput).toHaveValue('');
+  });
+
+  it('handles next page for search results', async () => {
+    const user = userEvent.setup();
+
+    vi.mocked(searchMovies)
+      .mockResolvedValueOnce({
+        results: mockMovies.slice(0, 2),
+        total_pages: 3,
+        page: 1,
+      })
+      .mockResolvedValueOnce({
+        results: mockMovies.slice(2, 4),
+        total_pages: 3,
+        page: 2,
+      });
+
+    render(
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
+    );
+
+    const searchInput = screen.getByPlaceholderText('Search movies...');
+    const searchButton = screen.getByRole('button', { name: /search/i });
+    await user.type(searchInput, 'test');
+    await user.click(searchButton);
+
+    await screen.findByText('Search results');
+    const nextButton = screen.getByTestId('next-page-button');
+    await user.click(nextButton);
+
+    expect(vi.mocked(searchMovies)).toHaveBeenCalled();
+  });
+
+  it('handles previous page for search results', async () => {
+    const user = userEvent.setup();
+
+    render(
+      <MemoryRouter initialEntries={['/?searchPage=2']}>
+        <App />
+      </MemoryRouter>
+    );
+
+    vi.mocked(searchMovies)
+      .mockResolvedValueOnce({
+        results: mockMovies.slice(2, 4),
+        total_pages: 3,
+        page: 2,
+      })
+      .mockResolvedValueOnce({
+        results: mockMovies.slice(0, 2),
+        total_pages: 3,
+        page: 1,
+      });
+
+    const searchInput = screen.getByPlaceholderText('Search movies...');
+    const searchButton = screen.getByRole('button', { name: /search/i });
+    await user.type(searchInput, 'test');
+    await user.click(searchButton);
+
+    await screen.findByText('Search results');
+    const prevButton = screen.getByTestId('next-page-button');
+    await user.click(prevButton);
+
+    expect(vi.mocked(searchMovies)).toHaveBeenCalled();
+  });
+
+  it('handles next page for popular movies', async () => {
+    const user = userEvent.setup();
+
+    vi.mocked(fetchPopularMovies).mockResolvedValueOnce({
+      results: mockMovies.slice(2, 4),
+      total_pages: 3,
+      page: 2,
+    });
+
+    render(
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
+    );
+
+    await screen.findByText('Popular movies');
+
+    const nextButton = screen.getByTestId('next-page-button');
+    await user.click(nextButton);
+
+    expect(vi.mocked(fetchPopularMovies)).toHaveBeenCalled();
   });
 });
