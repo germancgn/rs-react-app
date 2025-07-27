@@ -85,6 +85,7 @@ export default function MovieDetails() {
               </h1>
               <button
                 onClick={() => navigate('/')}
+                aria-label="Close"
                 className=" text-gray-400 hover:text-white transition cursor-pointer p-2 rounded-full hover:bg-white/10"
               >
                 <span>
