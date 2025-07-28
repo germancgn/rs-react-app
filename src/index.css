@@ -1,0 +1,51 @@
+@import 'tailwindcss';
+
+body {
+  @apply bg-gradient-to-b from-[#1a1a2e] to-[#16213e] text-gray-300 font-sans min-h-screen flex flex-col;
+}
+
+.spin-animation {
+  display: inline-block;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.header-hero {
+  --box-shadow-inset: 20px;
+  --fade-radius: 50px;
+  background-size: cover;
+  background-position: center;
+  aspect-ratio: 16/9;
+  box-shadow:
+    inset 10px 0px 80px var(--box-shadow-inset) #07070d,
+    inset -10px 0px 80px var(--box-shadow-inset) #07070d,
+    inset 0px 20px 80px var(--box-shadow-inset) #07070d,
+    inset 0px -2px 80px var(--box-shadow-inset) #07070d;
+  animation: decreaseFadeRadius 2500ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@property --fade-radius {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 100px;
+}
+
+@keyframes decreaseFadeRadius {
+  100% {
+    --fade-radius: 800px;
+  }
+}
+
+.featured-cards-shadow {
+  box-shadow:
+    inset 10px 0px 10px 1px rgba(255, 255, 255, 0.05),
+    inset -10px 0px 10px 1px rgba(255, 255, 255, 0.05);
+}
