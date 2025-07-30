@@ -39,7 +39,7 @@ export default function Header({
         }}
       >
         <Navbar />
-        <div className="max-w-6xl m-auto p-4 flex flex-col gap-4 h-full md:mb-[-200px] md:pb-[200px]">
+        <div className="rotate-0 max-w-6xl m-auto p-4 flex flex-col gap-4 h-full md:pb-[200px]">
           <div className="flex sm:items-center gap-2">
             <div className="relative w-full max-w-64">
               <input
@@ -98,7 +98,7 @@ export default function Header({
         </div>
       </div>
 
-      <div className="m-auto max-w-6xl p-4 ">
+      <div className="m-auto max-w-6xl p-4 md:mt-[-200px]">
         <h2 className="text-xl lg:text-2xl text-white font-bold mb-4">
           Trending movies
         </h2>
