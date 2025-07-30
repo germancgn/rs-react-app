@@ -110,6 +110,8 @@ export async function getMovieById(id: string): Promise<MovieDetails> {
     const response = await fetch(
       `${BASE_URL}/movie/${id}?api_key=${API_KEY}&language=en`
     );
+    // Simulated network delay for demonstration/testing purposes only
+    await new Promise((resolve) => setTimeout(resolve, 500));
     if (!response.ok) {
       throw new HttpError(
         response.status,

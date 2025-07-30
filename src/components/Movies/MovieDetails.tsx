@@ -6,7 +6,10 @@ import { X } from '../Shared/Icon';
 
 function MovieDetailsSkeleton() {
   return (
-    <div className="w-full p-4 h-fit flex flex-col md:flex-row gap-8 bg-gray-900 text-white rounded-lg sticky top-4 animate-pulse">
+    <div
+      data-testid="movie-details-skeleton"
+      className="w-full p-4 h-fit flex flex-col md:flex-row gap-8 bg-gray-900 text-white rounded-lg sticky top-4 animate-pulse"
+    >
       <div className="max-w-[200px] w-full aspect-2/3 bg-gray-700 rounded-lg" />
       <div className="flex-1 flex flex-col gap-4">
         <div className="flex justify-between items-start">
@@ -30,35 +33,29 @@ export default function MovieDetails() {
   const params = useParams();
   const navigate = useNavigate();
   const [movieDetails, setMovieDetails] = useState<MovieDetails>();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    if (!params.id) return;
     let isCancelled = false;
     setIsLoading(true);
-    setMovieDetails(undefined);
 
-    // The timeout is used only to simulate a loading delay for demonstration purposes
-
-    const timeout = setTimeout(() => {
-      if (!params.id) return;
-      getMovieById(params.id)
-        .then((data) => {
-          if (!isCancelled) {
-            setMovieDetails(data);
-          }
-        })
-        .finally(() => {
-          if (!isCancelled) {
-            setIsLoading(false);
-          }
-        });
-    }, 500);
+    getMovieById(params.id)
+      .then((data) => {
+        if (!isCancelled) {
+          setMovieDetails(data);
+        }
+      })
+      .finally(() => {
+        if (!isCancelled) {
+          setIsLoading(false);
+        }
+      });
 
     return () => {
       isCancelled = true;
-      clearTimeout(timeout);
     };
-  }, [params]);
+  }, [params.id]);
 
   if (isLoading) {
     return <MovieDetailsSkeleton />;
@@ -80,9 +77,7 @@ export default function MovieDetails() {
           />
           <div className="flex-1 flex flex-col gap-4">
             <div className="flex justify-between items-start">
-              <h1 className="text-3xl font-bold">
-                {movieDetails.title || 'No Title Available'}
-              </h1>
+              <h1 className="text-3xl font-bold">{movieDetails.title}</h1>
               <button
                 onClick={() => navigate('/')}
                 aria-label="Close"
@@ -107,13 +102,13 @@ export default function MovieDetails() {
                 <strong>Runtime:</strong>{' '}
                 {movieDetails.runtime ? `${movieDetails.runtime} min` : 'N/A'}
               </span>
-              <span>
+              <span data-testid="movie-details-genres">
                 <strong>Genres:</strong>{' '}
                 {movieDetails.genres && movieDetails.genres.length > 0
                   ? movieDetails.genres.map((g) => g.name).join(', ')
                   : 'N/A'}
               </span>
-              <span>
+              <span data-testid="movie-details-rating">
                 <strong>Rating:</strong>{' '}
                 {movieDetails.vote_average
                   ? `${movieDetails.vote_average} / 10`
