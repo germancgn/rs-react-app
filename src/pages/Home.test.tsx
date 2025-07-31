@@ -120,7 +120,7 @@ describe('User Interaction Tests', () => {
     expect(localStorage.getItem('searchTerm')).toBe(movieName.trim());
   });
 
-  it('sets isLoading to true and shows loading spinner when search button is clicked', async () => {
+  it('sets isLoading to true when search button is clicked', async () => {
     const user = userEvent.setup();
     render(
       <MemoryRouter>
