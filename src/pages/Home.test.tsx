@@ -6,6 +6,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { mockMovies } from '../__mocks__/movies';
 import { searchMovies, fetchPopularMovies } from '../services/movie-service';
 import App from './Home';
+import { ThemeProvider } from '../contexts/ThemeProvider';
 
 vi.mock('../services/movie-service', () => ({
   fetchPopularMovies: vi.fn(() => Promise.resolve({ results: mockMovies })),
@@ -33,7 +34,9 @@ describe('App Rendering Tests', () => {
   it('renders search input and search button', () => {
     render(
       <MemoryRouter>
-        <App />
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
       </MemoryRouter>
     );
     expect(screen.getByPlaceholderText('Search movies...')).toBeInTheDocument();
@@ -47,7 +50,9 @@ describe('App Rendering Tests', () => {
 
     render(
       <MemoryRouter>
-        <App />
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
       </MemoryRouter>
     );
 
@@ -60,7 +65,9 @@ describe('App Rendering Tests', () => {
   it('shows empty input when no saved term exists', () => {
     render(
       <MemoryRouter>
-        <App />
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
       </MemoryRouter>
     );
     expect(screen.getByPlaceholderText('Search movies...')).toHaveValue('');
@@ -72,7 +79,9 @@ describe('User Interaction Tests', () => {
     const user = userEvent.setup();
     render(
       <MemoryRouter>
-        <App />
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
       </MemoryRouter>
     );
     const searchInput = screen.getByPlaceholderText('Search movies...');
@@ -88,7 +97,9 @@ describe('User Interaction Tests', () => {
 
     render(
       <MemoryRouter>
-        <App />
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
       </MemoryRouter>
     );
 
@@ -108,7 +119,9 @@ describe('User Interaction Tests', () => {
     const user = userEvent.setup();
     render(
       <MemoryRouter>
-        <App />
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
       </MemoryRouter>
     );
     const searchInput = screen.getByPlaceholderText('Search movies...');
@@ -124,7 +137,9 @@ describe('User Interaction Tests', () => {
     const user = userEvent.setup();
     render(
       <MemoryRouter>
-        <App />
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
       </MemoryRouter>
     );
 
@@ -142,7 +157,9 @@ describe('User Interaction Tests', () => {
     const user = userEvent.setup();
     render(
       <MemoryRouter>
-        <App />
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
       </MemoryRouter>
     );
 
@@ -160,7 +177,9 @@ describe('User Interaction Tests', () => {
     const user = userEvent.setup();
     render(
       <MemoryRouter>
-        <App />
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
       </MemoryRouter>
     );
 
@@ -186,7 +205,9 @@ describe('User Interaction Tests', () => {
 
     render(
       <MemoryRouter>
-        <App />
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
       </MemoryRouter>
     );
 
@@ -206,7 +227,9 @@ describe('User Interaction Tests', () => {
     const user = userEvent.setup();
     render(
       <MemoryRouter>
-        <App />
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
       </MemoryRouter>
     );
 
@@ -238,7 +261,9 @@ describe('User Interaction Tests', () => {
 
     render(
       <MemoryRouter>
-        <App />
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
       </MemoryRouter>
     );
 
@@ -259,7 +284,9 @@ describe('User Interaction Tests', () => {
 
     render(
       <MemoryRouter initialEntries={['/?searchPage=2']}>
-        <App />
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
       </MemoryRouter>
     );
 
@@ -298,7 +325,9 @@ describe('User Interaction Tests', () => {
 
     render(
       <MemoryRouter>
-        <App />
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
       </MemoryRouter>
     );
 
