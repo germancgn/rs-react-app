@@ -34,7 +34,26 @@ export default function Navbar() {
             onClick={toggleTheme}
             className="cursor-pointer text-gray-400 hover:text-white"
           >
-            {theme === 'dark' ? <Moon size={24} /> : <Sun size={24} />}
+            <div className="relative w-6 h-6">
+              <div
+                className={`absolute inset-0 transition-all duration-300 transform ${
+                  theme === 'dark'
+                    ? 'opacity-100 translate-y-0'
+                    : 'opacity-0 -translate-y-4'
+                }`}
+              >
+                <Moon size={24} />
+              </div>
+              <div
+                className={`absolute inset-0 transition-all duration-300 transform ${
+                  theme === 'light'
+                    ? 'opacity-100 translate-y-0'
+                    : 'opacity-0 translate-y-4'
+                }`}
+              >
+                <Sun size={24} />
+              </div>
+            </div>
           </button>
         </li>
         <li>
