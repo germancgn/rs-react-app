@@ -116,7 +116,7 @@ export default function App() {
       type: 'SET_PAGE',
       payload: { category: 'search', page: searchPageFromUrl },
     });
-  }, []);
+  }, [searchParams]);
 
   useEffect(() => {
     const newParams = new URLSearchParams();
