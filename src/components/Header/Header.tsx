@@ -42,29 +42,32 @@ export default function Header({
         <div className="rotate-0 max-w-6xl m-auto p-4 flex flex-col gap-4 h-full md:pb-[200px]">
           <div className="flex sm:items-center gap-2">
             <div className="relative w-full max-w-64">
-              <input
-                type="text"
-                value={searchTerm}
-                onChange={onInputChange}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    onSearch();
-                  }
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  onSearch();
                 }}
-                placeholder="Search movies..."
-                className="w-full py-2 px-8 bg-blue-950/10 backdrop-blur-md border border-gray-700 text-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#e94560]"
-              />
-              <span className="absolute left-2 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-400 hover:text-gray-200">
-                <MagnifyingGlass size={20} />
-              </span>
-
-              <span
-                data-testid="clear-input-button"
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-400 hover:text-gray-200"
-                onClick={onClearInput}
               >
-                {searchTerm && <X size={14} />}
-              </span>
+                <input
+                  type="text"
+                  value={searchTerm}
+                  onChange={onInputChange}
+                  placeholder="Search movies..."
+                  className="w-full py-2 px-8 bg-blue-950/10 backdrop-blur-md border border-gray-700 text-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#e94560]"
+                />
+
+                <span className="absolute left-2 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-400 hover:text-gray-200">
+                  <MagnifyingGlass size={20} />
+                </span>
+
+                <span
+                  data-testid="clear-input-button"
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-400 hover:text-gray-200"
+                  onClick={onClearInput}
+                >
+                  {searchTerm && <X size={14} />}
+                </span>
+              </form>
             </div>
             <button
               onClick={onSearch}
