@@ -1,5 +1,7 @@
 @import 'tailwindcss';
 
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
 body {
   @apply bg-gradient-to-b from-[#1a1a2e] to-[#16213e] text-gray-300 font-sans min-h-screen flex flex-col;
 }
