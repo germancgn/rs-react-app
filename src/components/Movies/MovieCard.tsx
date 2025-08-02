@@ -41,7 +41,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
           ) : (
             <PlusCircle
               size={24}
-              className="text-white opacity-0 group-hover:opacity-100 transition duration-300"
+              className="text-white opacity-0 group-hover:opacity-75 hover:opacity-100 transition duration-300"
             />
           )}
         </label>
