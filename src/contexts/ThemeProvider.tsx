@@ -3,7 +3,7 @@ import { ThemeContext, type Theme } from './ThemeContext';
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>(() => {
-    return (localStorage.getItem('theme') as Theme) || 'light';
+    return (localStorage.getItem('theme') as Theme) || 'dark';
   });
 
   function toggleTheme() {
