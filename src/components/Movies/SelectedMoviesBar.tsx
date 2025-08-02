@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useMovieStore } from '../../stores/movieStore';
-import { downloadCSV } from '../../utils/csv';
-import { CaretDown, CaretUp } from '../Shared/Icon';
+import { objectToCSV } from '../../utils/csv/csv';
+import { downloadCSV } from '../../utils/files/download';
 
 export function SelectedMoviesBar() {
   const [isExpanded, setIsExpanded] = useState(true);
@@ -25,17 +25,20 @@ export function SelectedMoviesBar() {
           <div className="flex items-center space-x-4">
             <button
               onClick={() =>
-                downloadCSV(selected, [
-                  'id',
-                  'title',
-                  'adult',
-                  'overview',
-                  'popularity',
-                  'poster_path',
-                  'release_date',
-                  'vote_average',
-                  'vote_count',
-                ])
+                downloadCSV(
+                  objectToCSV(selected, [
+                    'id',
+                    'title',
+                    'adult',
+                    'overview',
+                    'popularity',
+                    'poster_path',
+                    'release_date',
+                    'vote_average',
+                    'vote_count',
+                  ]),
+                  `${selected.length}-movies.csv`
+                )
               }
               className="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md text-sm transition-colors"
             >
