@@ -6,6 +6,7 @@ import { fetchPopularMovies, searchMovies } from '../services/movie-service';
 import MoviesList from '../components/Movies/MoviesList';
 import { useSearch } from '../hooks/useSearch';
 import type { MovieResponse } from '../types/movies/MovieResponse';
+import { SelectedMoviesBar } from '../components/Movies/SelectedMoviesBar';
 
 type MovieCategoryState = {
   response: MovieResponse | null;
@@ -246,6 +247,7 @@ export default function App() {
             )
           )}
         </ErrorBoundary>
+        <SelectedMoviesBar />
       </div>
     </ErrorBoundary>
   );

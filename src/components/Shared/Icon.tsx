@@ -6,6 +6,21 @@ interface IconProps extends React.SVGAttributes<SVGSVGElement> {
   size?: number;
 }
 
+function CaretDown({ size = 16, ...props }: IconProps) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      fill="currentColor"
+      viewBox="0 0 256 256"
+      {...props}
+    >
+      <path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path>
+    </svg>
+  );
+}
+
 function CaretLeft({ size = 16, ...props }: IconProps) {
   return (
     <svg
@@ -36,6 +51,36 @@ function CaretRight({ size = 16, ...props }: IconProps) {
   );
 }
 
+function CaretUp({ size = 16, ...props }: IconProps) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      fill="currentColor"
+      viewBox="0 0 256 256"
+      {...props}
+    >
+      <path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path>
+    </svg>
+  );
+}
+
+function CheckCircleSolid({ size = 16, ...props }: IconProps) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      fill="currentColor"
+      viewBox="0 0 256 256"
+      {...props}
+    >
+      <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm45.66,85.66-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32Z"></path>
+    </svg>
+  );
+}
+
 function MagnifyingGlass({ size = 16, ...props }: IconProps) {
   return (
     <svg
@@ -62,6 +107,21 @@ function Moon({ size = 16, ...props }: IconProps) {
       {...props}
     >
       <path d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,104.84,104.84,0,0,0-52.91,37A104,104,0,0,0,136,224a103.09,103.09,0,0,0,62.52-20.88,104.84,104.84,0,0,0,37-52.91A8,8,0,0,0,233.54,142.23ZM188.9,190.34A88,88,0,0,1,65.66,67.11a89,89,0,0,1,31.4-26A106,106,0,0,0,96,56,104.11,104.11,0,0,0,200,160a106,106,0,0,0,14.92-1.06A89,89,0,0,1,188.9,190.34Z"></path>
+    </svg>
+  );
+}
+
+function PlusCircle({ size = 16, ...props }: IconProps) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      fill="currentColor"
+      viewBox="0 0 256 256"
+      {...props}
+    >
+      <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm48-88a8,8,0,0,1-8,8H136v32a8,8,0,0,1-16,0V136H88a8,8,0,0,1,0-16h32V88a8,8,0,0,1,16,0v32h32A8,8,0,0,1,176,128Z"></path>
     </svg>
   );
 }
@@ -111,4 +171,15 @@ export function X({ size, ...props }: IconProps) {
   );
 }
 
-export { CaretLeft, CaretRight, MagnifyingGlass, Moon, StarSolid, Sun };
+export {
+  CaretDown,
+  CaretLeft,
+  CaretRight,
+  CaretUp,
+  CheckCircleSolid,
+  MagnifyingGlass,
+  Moon,
+  PlusCircle,
+  StarSolid,
+  Sun,
+};

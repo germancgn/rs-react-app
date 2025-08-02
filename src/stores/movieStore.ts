@@ -6,6 +6,7 @@ type MovieStore = {
   add: (movie: Movie) => void;
   remove: (id: number) => void;
   clear: () => void;
+  hasItem: (id: number) => boolean;
 };
 
 export const useMovieStore = create<MovieStore>((set, get) => ({
@@ -21,4 +22,5 @@ export const useMovieStore = create<MovieStore>((set, get) => ({
       selected: state.selected.filter((movie) => movie.id !== id),
     })),
   clear: () => set({ selected: [] }),
+  hasItem: (id) => get().selected.some((movie) => movie.id === id),
 }));
