@@ -18,13 +18,13 @@ export function SelectedMoviesBar() {
   return (
     <div className="sticky bottom-0 w-full shadow-lg px-2 z-50">
       <div className="max-w-6xl mx-auto bg-gray-800 rounded-t-3xl border-t border-gray-700 px-4">
-        <div className="flex justify-between items-center py-4 border-b border-gray-700">
+        <div className="flex justify-between items-center py-4 border-b border-gray-700 gap-2">
           <div className="flex-1">
             <h3 className="text-[min(5vw,18px)] font-bold text-white">
               Selected Movies ({selected.length})
             </h3>
           </div>
-          <div className="flex-1 flex justify-center">
+          <div className=" flex justify-center">
             <button
               className="p-2 cursor-pointer transition rounded-full hover:bg-white/10"
               onClick={() => setIsExpanded((prev) => !prev)}
@@ -67,7 +67,7 @@ export function SelectedMoviesBar() {
               <span>
                 <SelectionSlash size={20} />
               </span>
-              <span className="max-sm:hidden shrink-0">Unselect All</span>
+              <span className="max-sm:hidden">Unselect All</span>
             </button>
           </div>
         </div>
@@ -78,7 +78,7 @@ export function SelectedMoviesBar() {
               : 'max-h-0 overflow-hidden'
           }`}
         >
-          <ul className="pr-2">
+          <ul className="pb-4">
             {selected.map((movie) => (
               <li
                 key={movie.id}
