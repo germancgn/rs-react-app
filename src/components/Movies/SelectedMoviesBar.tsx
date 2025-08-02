@@ -30,7 +30,10 @@ export function SelectedMoviesBar() {
               Download CSV
             </button>
             <button
-              onClick={clear}
+              onClick={() => {
+                setIsExpanded(true);
+                clear();
+              }}
               className="cursor-pointer bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-md text-sm transition-colors"
             >
               Unselect All
