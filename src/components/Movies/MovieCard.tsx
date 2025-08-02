@@ -16,7 +16,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
 
   return (
     <div
-      className="group relative rounded-2xl max-w-[250px] border border-gray-700 overflow-hidden shadow-md hover:border-pink-500 hover:shadow-pink-500 hover:cursor-pointer transition-all p-4"
+      className="group relative rounded-2xl max-w-[250px] border border-gray-700 overflow-hidden shadow-md hover:border-pink-500 hover:shadow-pink-500 hover:cursor-pointer transition-all p-2 md:p-4"
       data-testid="movie-card"
     >
       <div className="absolute top-2 right-2 p-4 flex items-center justify-center z-10">

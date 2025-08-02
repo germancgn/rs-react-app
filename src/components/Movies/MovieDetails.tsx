@@ -9,21 +9,26 @@ function MovieDetailsSkeleton() {
   return (
     <div
       data-testid="movie-details-skeleton"
-      className="w-full p-4 h-fit flex flex-col md:flex-row gap-8 bg-gray-900 text-white rounded-lg sticky top-4 animate-pulse"
+      className="bg-gray-900 text-white rounded-lg sticky top-4"
     >
-      <div className="max-w-[200px] w-full aspect-2/3 bg-gray-700 rounded-lg" />
-      <div className="flex-1 flex flex-col gap-4">
-        <div className="flex justify-between items-start">
-          <div className="h-8 w-2/3 bg-gray-700 rounded" />
-          <div className="h-8 w-8 bg-gray-700 rounded-full" />
-        </div>
-        <div className="h-4 w-1/2 bg-gray-600 rounded" />
-        <div className="h-20 w-full bg-gray-700 rounded" />
-        <div className="flex flex-wrap gap-4 text-sm text-gray-300">
-          <div className="h-4 w-24 bg-gray-600 rounded" />
-          <div className="h-4 w-24 bg-gray-600 rounded" />
-          <div className="h-4 w-32 bg-gray-600 rounded" />
-          <div className="h-4 w-20 bg-gray-600 rounded" />
+      <div className="w-full p-4 h-fit flex flex-col md:flex-row gap-8 animate-pulse">
+        <div className="max-w-[200px] w-full aspect-2/3 bg-gray-700 rounded-lg" />
+        <div className="flex-1 flex flex-col gap-4">
+          <div className="flex justify-between items-start">
+            <div className="h-8 w-2/3 bg-gray-700 rounded" />
+            <div className="h-8 w-8 bg-gray-700 rounded-full" />
+          </div>
+          <div className="h-4 w-1/2 bg-gray-600 rounded" />
+          <div className="h-20 w-full bg-gray-700 rounded" />
+          <div className="flex flex-wrap gap-4 text-sm text-gray-300">
+            <div className="h-4 w-24 bg-gray-600 rounded" />
+            <div className="h-4 w-24 bg-gray-600 rounded" />
+            <div className="h-4 w-32 bg-gray-600 rounded" />
+            <div className="h-4 w-20 bg-gray-600 rounded" />
+          </div>
+          <div className="flex justify-end">
+            <div className="bg-gray-600 h-8 w-24 rounded"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -59,14 +64,12 @@ export default function MovieDetails() {
     };
   }, [params.id]);
 
-  if (isLoading) {
-    return <MovieDetailsSkeleton />;
-  }
-
   return (
-    !isLoading &&
-    movieDetails && (
-      <div className="flex flex-col">
+    <div className="max-md:fixed max-md:w-full max-md:h-full max-md:inset-0 flex flex-col max-md:justify-center max-md:p-4 z-50 relative">
+      <div className="hidden max-md:block absolute inset-0 bg-black/70"></div>
+      {isLoading || !movieDetails ? (
+        <MovieDetailsSkeleton />
+      ) : (
         <div className="max-w-fit p-4 h-fit flex flex-col md:flex-row gap-8 bg-gray-900 text-white rounded-lg sticky top-4">
           <img
             src={
@@ -77,7 +80,7 @@ export default function MovieDetails() {
             alt={movieDetails.title || 'Movie Poster'}
             className="max-w-[200px] aspect-2/3 rounded-lg object-cover"
           />
-          <div className="flex flex-col justify-around gap-4">
+          <div className="flex flex-col justify-around gap-8">
             <div className="flex-1 flex flex-col gap-4">
               <div className="flex justify-between items-start">
                 <h1 className="text-3xl font-bold">{movieDetails.title}</h1>
@@ -133,7 +136,11 @@ export default function MovieDetails() {
               ) : (
                 <button
                   onClick={() =>
-                    add({ ...movieDetails, media_type: 'movie', genre_ids: [] })
+                    add({
+                      ...movieDetails,
+                      media_type: 'movie',
+                      genre_ids: [],
+                    })
                   }
                   className="flex items-center gap-2 py-2 px-4 text-sm rounded-full border border-gray-500 hover:border-gray-400 cursor-pointer"
                 >
@@ -146,7 +153,7 @@ export default function MovieDetails() {
             </div>
           </div>
         </div>
-      </div>
-    )
+      )}
+    </div>
   );
 }
