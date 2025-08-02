@@ -14,7 +14,7 @@ function MovieGrid({
   return (
     <div className="flex gap-4 relative">
       <div className="grow">
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(210px,1fr))] gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-[repeat(auto-fit,minmax(210px,1fr))] gap-4">
           {isLoading
             ? Array.from({ length: 20 }).map((_, index) => (
                 <MovieCardSkeleton key={index} />
