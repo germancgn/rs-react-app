@@ -1,28 +1,33 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useThemeContext } from '../../hooks/useTheme';
 import { Moon, Sun } from './Icon';
 
-const lightOnSound = new Audio('/sounds/light-on.mp3');
-const lightOffSound = new Audio('/sounds/light-off.mp3');
-
 export function ThemeToggleButton() {
   const { theme, toggleTheme } = useThemeContext();
+  const lightOnSound = useRef<HTMLAudioElement | null>(null);
+  const lightOffSound = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    lightOnSound.load();
-    lightOffSound.load();
+    lightOnSound.current = new Audio('/sounds/light-on.mp3');
+    lightOffSound.current = new Audio('/sounds/light-off.mp3');
+
+    lightOnSound.current.load();
+    lightOffSound.current.load();
   }, []);
 
-  function handleToggle() {
-    const sound = theme === 'dark' ? lightOffSound : lightOnSound;
-
-    sound.currentTime = 0;
-    sound.play().catch((e) => {
-      console.error('Failed to play toggle sound:', e);
-    });
-
+  const handleToggle = () => {
     toggleTheme();
-  }
+
+    const soundToPlay =
+      theme === 'dark' ? lightOffSound.current : lightOnSound.current;
+
+    if (soundToPlay) {
+      soundToPlay.currentTime = 0;
+      soundToPlay.play().catch((e) => {
+        console.error('Failed to play toggle sound:', e);
+      });
+    }
+  };
 
   return (
     <button
