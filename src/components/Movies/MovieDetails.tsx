@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getMovieById } from '../../services/movie-service';
 import type { MovieDetails } from '../../types/movies/MovieDetails';
-import { X } from '../Shared/Icon';
+import { CheckCircleSolid, PlusCircle, X } from '../Shared/Icon';
+import { useMovieStore } from '../../stores/movieStore';
 
 function MovieDetailsSkeleton() {
   return (
@@ -34,6 +35,7 @@ export default function MovieDetails() {
   const navigate = useNavigate();
   const [movieDetails, setMovieDetails] = useState<MovieDetails>();
   const [isLoading, setIsLoading] = useState(true);
+  const { add, remove, hasItem } = useMovieStore();
 
   useEffect(() => {
     if (!params.id) return;
@@ -75,45 +77,72 @@ export default function MovieDetails() {
             alt={movieDetails.title || 'Movie Poster'}
             className="max-w-[200px] aspect-2/3 rounded-lg object-cover"
           />
-          <div className="flex-1 flex flex-col gap-4">
-            <div className="flex justify-between items-start">
-              <h1 className="text-3xl font-bold">{movieDetails.title}</h1>
-              <button
-                onClick={() => navigate('/')}
-                aria-label="Close"
-                className=" text-gray-400 hover:text-white transition cursor-pointer p-2 rounded-full hover:bg-white/10"
-              >
+          <div className="flex flex-col justify-around gap-4">
+            <div className="flex-1 flex flex-col gap-4">
+              <div className="flex justify-between items-start">
+                <h1 className="text-3xl font-bold">{movieDetails.title}</h1>
+                <button
+                  onClick={() => navigate('/')}
+                  aria-label="Close"
+                  className=" text-gray-400 hover:text-white transition cursor-pointer p-2 rounded-full hover:bg-white/10"
+                >
+                  <span>
+                    <X size={24} />
+                  </span>
+                </button>
+              </div>
+              {movieDetails.tagline ? (
+                <p className="italic text-gray-400">{movieDetails.tagline}</p>
+              ) : (
+                <p className="italic text-gray-600">No tagline available</p>
+              )}
+              <p>{movieDetails.overview || 'No overview available.'}</p>
+              <div className="flex flex-wrap gap-4 text-sm text-gray-300">
                 <span>
-                  <X size={24} />
+                  <strong>Release:</strong> {movieDetails.release_date || 'N/A'}
                 </span>
-              </button>
+                <span>
+                  <strong>Runtime:</strong>{' '}
+                  {movieDetails.runtime ? `${movieDetails.runtime} min` : 'N/A'}
+                </span>
+                <span data-testid="movie-details-genres">
+                  <strong>Genres:</strong>{' '}
+                  {movieDetails.genres && movieDetails.genres.length > 0
+                    ? movieDetails.genres.map((g) => g.name).join(', ')
+                    : 'N/A'}
+                </span>
+                <span data-testid="movie-details-rating">
+                  <strong>Rating:</strong>{' '}
+                  {movieDetails.vote_average
+                    ? `${movieDetails.vote_average} / 10`
+                    : 'N/A'}
+                </span>
+              </div>
             </div>
-            {movieDetails.tagline ? (
-              <p className="italic text-gray-400">{movieDetails.tagline}</p>
-            ) : (
-              <p className="italic text-gray-600">No tagline available</p>
-            )}
-            <p>{movieDetails.overview || 'No overview available.'}</p>
-            <div className="flex flex-wrap gap-4 text-sm text-gray-300">
-              <span>
-                <strong>Release:</strong> {movieDetails.release_date || 'N/A'}
-              </span>
-              <span>
-                <strong>Runtime:</strong>{' '}
-                {movieDetails.runtime ? `${movieDetails.runtime} min` : 'N/A'}
-              </span>
-              <span data-testid="movie-details-genres">
-                <strong>Genres:</strong>{' '}
-                {movieDetails.genres && movieDetails.genres.length > 0
-                  ? movieDetails.genres.map((g) => g.name).join(', ')
-                  : 'N/A'}
-              </span>
-              <span data-testid="movie-details-rating">
-                <strong>Rating:</strong>{' '}
-                {movieDetails.vote_average
-                  ? `${movieDetails.vote_average} / 10`
-                  : 'N/A'}
-              </span>
+            <div className="self-end">
+              {hasItem(movieDetails.id) ? (
+                <button
+                  onClick={() => remove(movieDetails.id)}
+                  className="flex items-center gap-2 py-2 px-4 text-sm rounded-full border border-sky-500 hover:bg-sky-400 cursor-pointer bg-sky-500"
+                >
+                  <span>Selected</span>
+                  <span>
+                    <CheckCircleSolid size={18} />
+                  </span>
+                </button>
+              ) : (
+                <button
+                  onClick={() =>
+                    add({ ...movieDetails, media_type: 'movie', genre_ids: [] })
+                  }
+                  className="flex items-center gap-2 py-2 px-4 text-sm rounded-full border border-gray-500 hover:border-gray-400 cursor-pointer"
+                >
+                  <span>Select movie</span>
+                  <span>
+                    <PlusCircle size={18} />
+                  </span>
+                </button>
+              )}
             </div>
           </div>
         </div>
