@@ -53,7 +53,7 @@ export default function Header({
                   value={searchTerm}
                   onChange={onInputChange}
                   placeholder="Search movies..."
-                  className="w-full py-2 px-8 bg-blue-950/10 backdrop-blur-md border border-gray-700 text-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#e94560]"
+                  className="w-full py-2 px-8 bg-blue-950/10 backdrop-blur-md border border-gray-700 text-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#e94560]"
                 />
 
                 <span className="absolute left-2 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-400 hover:text-gray-200">
@@ -71,7 +71,7 @@ export default function Header({
             </div>
             <button
               onClick={onSearch}
-              className="py-2 px-4 bg-[#e94560] text-white rounded-lg hover:bg-[#d13450] hover:cursor-pointer flex items-center gap-2"
+              className="py-2 px-4 bg-[#e94560] text-white rounded-full hover:bg-[#d13450] hover:cursor-pointer flex items-center gap-2"
               disabled={isLoading}
             >
               Search
@@ -89,10 +89,10 @@ export default function Header({
                 {selectedMovie?.overview}
               </p>
               <div className="flex gap-4">
-                <button className="cursor-pointer text-white font-semibold bg-blue-500 hover:bg-blue-600 py-2 px-4 rounded-md transition-colors">
+                <button className="cursor-pointer text-white font-semibold bg-blue-500 hover:bg-blue-600 py-2 px-4 rounded-full transition-colors">
                   Watch now
                 </button>
-                <button className="cursor-pointer text-gray-300 hover:text-gray-200 font-semibold border-2 border-gray-300 hover:border-gray-200 py-2 px-4 rounded-md">
+                <button className="cursor-pointer text-gray-300 hover:text-gray-200 font-semibold border-1 border-gray-300 hover:border-gray-200 py-2 px-4 rounded-full">
                   More info
                 </button>
               </div>
