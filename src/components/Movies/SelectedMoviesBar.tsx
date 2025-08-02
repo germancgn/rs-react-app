@@ -12,7 +12,7 @@ export function SelectedMoviesBar() {
   return (
     <div className="sticky bottom-0 w-full shadow-lg px-4 z-50">
       <div className="max-w-6xl mx-auto bg-gray-800 rounded-t-3xl border-t border-gray-700 px-4 sm:px-6 lg:px-8 py-4">
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center px-4 py-2">
           <h3 className="text-lg font-bold text-white">
             Selected Movies ({selected.length})
           </h3>
@@ -24,7 +24,19 @@ export function SelectedMoviesBar() {
           </button>
           <div className="flex items-center space-x-4">
             <button
-              onClick={() => downloadCSV(selected)}
+              onClick={() =>
+                downloadCSV(selected, [
+                  'id',
+                  'title',
+                  'adult',
+                  'overview',
+                  'popularity',
+                  'poster_path',
+                  'release_date',
+                  'vote_average',
+                  'vote_count',
+                ])
+              }
               className="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md text-sm transition-colors"
             >
               Download CSV
@@ -47,11 +59,11 @@ export function SelectedMoviesBar() {
               : 'max-h-0 overflow-hidden'
           }`}
         >
-          <ul className="space-y-2 pr-2">
+          <ul className="pr-2">
             {selected.map((movie) => (
               <li
                 key={movie.id}
-                className="flex justify-between items-center bg-gray-800 p-2 rounded-md"
+                className="flex justify-between items-center hover:bg-gray-700 p-4 rounded-md"
               >
                 <span className="text-gray-300 text-sm">{movie.title}</span>
                 <button
