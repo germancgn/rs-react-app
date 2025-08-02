@@ -4,6 +4,8 @@ import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom/vitest';
 import FeaturedMovieCard from './FeaturedMovieCard';
 import { mockMovies } from '../../__mocks__/movies';
+import { ThemeProvider } from '../../contexts/ThemeProvider';
+import { BrowserRouter } from 'react-router-dom';
 
 const mockMovie = mockMovies[0];
 
@@ -15,7 +17,13 @@ describe('FeaturedMovieCard', () => {
   it('renders movie card with correct image and alt text', () => {
     const mockOnHover = vi.fn();
 
-    render(<FeaturedMovieCard movie={mockMovie} onHover={mockOnHover} />);
+    render(
+      <BrowserRouter>
+        <ThemeProvider>
+          <FeaturedMovieCard movie={mockMovie} onHover={mockOnHover} />
+        </ThemeProvider>
+      </BrowserRouter>
+    );
 
     const movieCard = screen.getByTestId('movie-card-featured');
     expect(movieCard).toBeInTheDocument();
@@ -32,7 +40,13 @@ describe('FeaturedMovieCard', () => {
     const user = userEvent.setup();
     const mockOnHover = vi.fn();
 
-    render(<FeaturedMovieCard movie={mockMovie} onHover={mockOnHover} />);
+    render(
+      <BrowserRouter>
+        <ThemeProvider>
+          <FeaturedMovieCard movie={mockMovie} onHover={mockOnHover} />
+        </ThemeProvider>
+      </BrowserRouter>
+    );
 
     const movieCard = screen.getByTestId('movie-card-featured');
 
