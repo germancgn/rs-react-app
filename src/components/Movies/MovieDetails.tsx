@@ -11,7 +11,7 @@ function MovieDetailsSkeleton() {
       data-testid="movie-details-skeleton"
       className="bg-gray-900 text-white rounded-lg sticky top-4"
     >
-      <div className="w-full p-4 h-fit flex flex-col md:flex-row gap-8 animate-pulse">
+      <div className="p-4 flex flex-col md:flex-row gap-8 animate-pulse w-full">
         <div className="max-w-[200px] w-full aspect-2/3 bg-gray-700 rounded-lg" />
         <div className="flex-1 flex flex-col gap-4">
           <div className="flex justify-between items-start">
@@ -65,7 +65,7 @@ export default function MovieDetails() {
   }, [params.id]);
 
   return (
-    <div className="max-md:fixed max-md:w-full max-md:h-full max-md:inset-0 flex flex-col max-md:justify-center max-md:p-4 z-50 relative">
+    <div className="max-md:fixed w-full max-md:h-full max-md:inset-0 flex flex-col max-md:justify-center max-md:p-4 z-50 relative">
       <div className="hidden max-md:block absolute inset-0 bg-black/70"></div>
       {isLoading || !movieDetails ? (
         <MovieDetailsSkeleton />
