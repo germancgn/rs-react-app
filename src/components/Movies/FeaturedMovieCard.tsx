@@ -17,30 +17,32 @@ export default function FeaturedMovieCard({ movie, onHover }: MovieCardProps) {
       data-testid="movie-card-featured"
       onMouseEnter={onHover}
     >
-      <div className="absolute top-2 right-2 flex items-center justify-center z-50">
-        {hasItem(movie.id) ? (
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              remove(movie.id);
+      <div className="absolute top-2 right-2 flex items-center justify-center z-10">
+        <label className="cursor-pointer transition">
+          <input
+            type="checkbox"
+            checked={hasItem(movie.id)}
+            onChange={(e) => {
+              if (e.target.checked) {
+                add(movie);
+              } else {
+                remove(movie.id);
+              }
             }}
-            className="cursor-pointer transition rounded-full text-blue-400 hover:text-blue-500 bg-white"
-          >
-            <CheckCircleSolid size={24} />
-          </button>
-        ) : (
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              add(movie);
-            }}
-            className="cursor-pointer transition rounded-full text-white opacity-0 group-hover:opacity-100"
-          >
-            <PlusCircle size={24} />
-          </button>
-        )}
+            className="sr-only"
+          />
+          {hasItem(movie.id) ? (
+            <CheckCircleSolid
+              size={24}
+              className="bg-white text-sky-400 rounded-full"
+            />
+          ) : (
+            <PlusCircle
+              size={24}
+              className="text-white opacity-0 group-hover:opacity-100 transition duration-300"
+            />
+          )}
+        </label>
       </div>
       <Link to={`/details/${movie.id}`}>
         <img
