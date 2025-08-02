@@ -15,12 +15,12 @@ export function Pagination({
 }: PaginationProps) {
   return (
     <div className="flex justify-center items-center space-x-4 mt-4 ">
-      <div className="flex items-center bg-[#222240] rounded-xl">
+      <div className="flex items-center bg-gray-800 rounded-xl">
         <button
           data-testid="prev-page-button"
           onClick={onPrevPage}
           disabled={page === 1}
-          className="p-4 text-white rounded-xl disabled:opacity-50 cursor-pointer hover:bg-[#303059]"
+          className="p-4 text-white rounded-xl disabled:opacity-50 cursor-pointer hover:bg-gray-700"
         >
           <CaretLeft size={20} />
         </button>
@@ -31,7 +31,7 @@ export function Pagination({
           data-testid="next-page-button"
           onClick={onNextPage}
           disabled={page === totalPages}
-          className="p-4 text-white rounded-xl disabled:opacity-50 cursor-pointer hover:bg-[#303059]"
+          className="p-4 text-white rounded-xl disabled:opacity-50 cursor-pointer hover:bg-gray-700"
         >
           <CaretRight size={20} />
         </button>
