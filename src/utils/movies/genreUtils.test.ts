@@ -1,4 +1,4 @@
-import { genreMap } from '../constants/genres';
+import { genreMap } from '../../constants/genres';
 import { getGenreNameById } from './genreUtils';
 import { describe, it, expect } from 'vitest';
 

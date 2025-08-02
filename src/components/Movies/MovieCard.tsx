@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import type { Movie } from '../../types/movies/Movie';
-import { getGenreNameById } from '../../utils/genreUtils';
+import { getGenreNameById } from '../../utils/movies/genreUtils';
 import { CheckCircleSolid, PlusCircle, StarSolid } from '../Shared/Icon';
 import { useMovieStore } from '../../stores/movieStore';
 

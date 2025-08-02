@@ -1,4 +1,4 @@
-import { genreMap } from '../constants/genres';
+import { genreMap } from '../../constants/genres';
 
 export const getGenreNameById = (id: number): string | undefined => {
   if (typeof id !== 'number' || isNaN(id)) {
