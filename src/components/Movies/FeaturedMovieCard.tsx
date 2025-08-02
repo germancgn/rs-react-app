@@ -17,7 +17,7 @@ export default function FeaturedMovieCard({ movie, onHover }: MovieCardProps) {
       data-testid="movie-card-featured"
       onMouseEnter={onHover}
     >
-      <div className="absolute top-2 right-2 p-4 flex items-center justify-center z-50">
+      <div className="absolute top-2 right-2 flex items-center justify-center z-50">
         {hasItem(movie.id) ? (
           <button
             onClick={(e) => {
