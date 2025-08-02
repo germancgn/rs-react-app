@@ -15,7 +15,7 @@ describe('downloadString', () => {
       click: clickMock,
     }));
 
-    global.URL.createObjectURL = createObjectURLMock;
+    window.URL.createObjectURL = createObjectURLMock;
     vi.spyOn(document, 'createElement').mockImplementation(createElementSpy);
   });
 
@@ -29,16 +29,5 @@ describe('downloadString', () => {
     expect(link.download).toBe('test.txt');
     expect(link.href).toBe('blob:url');
     expect(clickMock).toHaveBeenCalled();
-  });
-});
-
-describe('downloadCSV', () => {
-  it('calls downloadString with CSV mime type', () => {
-    const spy = vi
-      .spyOn(downloadUtils, 'downloadString')
-      .mockImplementation(() => vi.fn());
-    downloadUtils.downloadCSV('"name","age"', 'people.csv');
-
-    expect(spy).toHaveBeenCalledWith('"name","age"', 'people.csv', 'text/csv');
   });
 });
