@@ -33,7 +33,7 @@ export default function Header({
   return (
     <header>
       <div
-        className="header-hero m-auto max-w-7xl"
+        className="header-hero m-auto max-w-7xl md:aspect-[16/9]"
         style={{
           backgroundImage: `radial-gradient(circle, transparent, rgb(7, 7, 13) var(--fade-radius)), url(https://image.tmdb.org/t/p/w1280/${selectedMovie?.backdrop_path})`,
         }}
@@ -102,7 +102,7 @@ export default function Header({
       </div>
 
       <div className="m-auto max-w-6xl p-4 md:mt-[-200px]">
-        <h2 className="text-xl lg:text-2xl text-white font-bold mb-4">
+        <h2 className="text-xl lg:text-2xl text-white font-bold mb-8">
           Trending movies
         </h2>
         <div className="flex flex-nowrap overflow-x-auto p-4 gap-4 bg-blue-950/10 backdrop-blur-md border border-white/10 rounded-2xl featured-cards-shadow">

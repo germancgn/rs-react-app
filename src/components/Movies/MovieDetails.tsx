@@ -9,25 +9,27 @@ function MovieDetailsSkeleton() {
   return (
     <div
       data-testid="movie-details-skeleton"
-      className="bg-gray-900 text-white rounded-lg sticky top-4"
+      className="bg-white dark:bg-gray-900 text-white rounded-lg sticky top-4"
     >
       <div className="p-4 flex flex-col md:flex-row gap-8 animate-pulse w-full">
-        <div className="max-w-[200px] w-full aspect-2/3 bg-gray-700 rounded-lg" />
-        <div className="flex-1 flex flex-col gap-4">
-          <div className="flex justify-between items-start">
-            <div className="h-8 w-2/3 bg-gray-700 rounded" />
-            <div className="h-8 w-8 bg-gray-700 rounded-full" />
-          </div>
-          <div className="h-4 w-1/2 bg-gray-600 rounded" />
-          <div className="h-20 w-full bg-gray-700 rounded" />
-          <div className="flex flex-wrap gap-4 text-sm text-gray-300">
-            <div className="h-4 w-24 bg-gray-600 rounded" />
-            <div className="h-4 w-24 bg-gray-600 rounded" />
-            <div className="h-4 w-32 bg-gray-600 rounded" />
-            <div className="h-4 w-20 bg-gray-600 rounded" />
+        <div className="max-w-[200px] w-full aspect-2/3 bg-gray-300 dark:bg-gray-700 rounded-lg" />
+        <div className="flex flex-1 flex-col justify-between gap-4">
+          <div className="flex flex-col gap-4">
+            <div className="flex justify-between items-start">
+              <div className="h-8 w-2/3 bg-gray-300 dark:bg-gray-700 rounded" />
+              <div className="h-8 w-8 bg-gray-300 dark:bg-gray-700 rounded-full" />
+            </div>
+            <div className="h-4 w-1/2 bg-gray-200 dark:bg-gray-600 rounded" />
+            <div className="h-20 w-full bg-gray-300 dark:bg-gray-700 rounded" />
+            <div className="flex flex-wrap gap-4 text-sm text-gray-200">
+              <div className="h-4 w-24 bg-gray-200 dark:bg-gray-600 rounded" />
+              <div className="h-4 w-24 bg-gray-200 dark:bg-gray-600 rounded" />
+              <div className="h-4 w-32 bg-gray-200 dark:bg-gray-600 rounded" />
+              <div className="h-4 w-20 bg-gray-200 dark:bg-gray-600 rounded" />
+            </div>
           </div>
           <div className="flex justify-end">
-            <div className="bg-gray-600 h-8 w-24 rounded"></div>
+            <div className="bg-gray-200 dark:bg-gray-600 h-8 w-24 rounded-full"></div>
           </div>
         </div>
       </div>
@@ -70,7 +72,7 @@ export default function MovieDetails() {
       {isLoading || !movieDetails ? (
         <MovieDetailsSkeleton />
       ) : (
-        <div className="max-w-fit p-4 h-fit flex flex-col md:flex-row gap-8 bg-gray-900 text-white rounded-lg sticky top-4">
+        <div className="max-w-fit p-4 h-fit flex flex-col md:flex-row gap-8 bg-white dark:bg-gray-900 text-white rounded-lg sticky top-4">
           <img
             src={
               movieDetails.poster_path
@@ -83,7 +85,9 @@ export default function MovieDetails() {
           <div className="flex flex-col justify-around gap-8">
             <div className="flex-1 flex flex-col gap-4">
               <div className="flex justify-between items-start">
-                <h1 className="text-3xl font-bold">{movieDetails.title}</h1>
+                <h1 className="text-3xl font-bold text-gray-800 dark:text-white">
+                  {movieDetails.title}
+                </h1>
                 <button
                   onClick={() => navigate('/')}
                   aria-label="Close"
@@ -94,13 +98,15 @@ export default function MovieDetails() {
                   </span>
                 </button>
               </div>
-              {movieDetails.tagline ? (
-                <p className="italic text-gray-400">{movieDetails.tagline}</p>
-              ) : (
-                <p className="italic text-gray-600">No tagline available</p>
-              )}
-              <p>{movieDetails.overview || 'No overview available.'}</p>
-              <div className="flex flex-wrap gap-4 text-sm text-gray-300">
+
+              <p className="italic text-gray-400 dark:text-gray-600">
+                {movieDetails.tagline || 'No tagline available'}
+              </p>
+
+              <p className="text-gray-600 dark:text-gray-200">
+                {movieDetails.overview || 'No overview available.'}
+              </p>
+              <div className="flex flex-wrap gap-4 text-sm text-gray-600 dark:text-gray-300">
                 <span>
                   <strong>Release:</strong> {movieDetails.release_date || 'N/A'}
                 </span>
@@ -142,7 +148,7 @@ export default function MovieDetails() {
                       genre_ids: [],
                     })
                   }
-                  className="flex items-center gap-2 py-2 px-4 text-sm rounded-full border border-gray-500 hover:border-gray-400 cursor-pointer"
+                  className="flex items-center gap-2 py-2 px-4 text-sm rounded-full border border-gray-500 hover:border-gray-400 text-gray-800 dark:text-gray-200 cursor-pointer"
                 >
                   <span>Select movie</span>
                   <span>
