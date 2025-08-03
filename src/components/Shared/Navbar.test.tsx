@@ -33,7 +33,7 @@ describe('Navbar component', () => {
     );
 
     const homeLink = screen.getByRole('link', { name: /home/i });
-    expect(homeLink).toHaveClass('text-white');
+    expect(homeLink).toHaveClass('active');
   });
 
   it('applies active class to About link when on "/about" route', () => {
@@ -46,7 +46,7 @@ describe('Navbar component', () => {
     );
 
     const aboutLink = screen.getByRole('link', { name: /about/i });
-    expect(aboutLink).toHaveClass('text-white');
+    expect(aboutLink).toHaveClass('active');
   });
 
   it('applies inactive class to Home link when on "/about" route', () => {
@@ -59,6 +59,6 @@ describe('Navbar component', () => {
     );
 
     const homeLink = screen.getByRole('link', { name: /home/i });
-    expect(homeLink).toHaveClass('text-gray-300');
+    expect(homeLink).toHaveClass('navlink-style');
   });
 });
