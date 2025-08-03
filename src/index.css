@@ -58,3 +58,10 @@ body {
     inset 10px 0px 10px 1px rgba(255, 255, 255, 0.05),
     inset -10px 0px 10px 1px rgba(255, 255, 255, 0.05);
 }
+
+.custom-scrollbar {
+  @apply [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-transparent
+  [&::-webkit-scrollbar-thumb]:bg-black/10 hover:[&::-webkit-scrollbar-thumb]:bg-black/20
+  dark:[&::-webkit-scrollbar-track]:bg-transparent
+  dark:[&::-webkit-scrollbar-thumb]:bg-white/10 hover:dark:[&::-webkit-scrollbar-thumb]:bg-white/20 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:rounded-full;
+}

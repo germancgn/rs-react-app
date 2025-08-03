@@ -72,7 +72,7 @@ export function SelectedMoviesBar() {
           </div>
         </div>
         <div
-          className={`transition-all duration-300 ease-in-out ${
+          className={`transition-all duration-300 ease-in-out custom-scrollbar ${
             isExpanded
               ? 'max-h-[30vh] mt-4 overflow-y-auto'
               : 'max-h-0 overflow-hidden'
