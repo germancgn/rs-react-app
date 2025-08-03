@@ -99,7 +99,6 @@ function movieReducer(state: AppState, action: Action): AppState {
 export default function App() {
   const [searchTerm, setSearchTerm] = useSearch('searchTerm', '');
   const [activeSearchTerm, setActiveSearchTerm] = useState(searchTerm);
-  const [isSearching, setIsSearching] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const [state, dispatch] = useReducer(movieReducer, initialState);
 
@@ -152,7 +151,7 @@ export default function App() {
 
   useEffect(() => {
     const trimmedTerm = activeSearchTerm.trim();
-    if (isSearching && trimmedTerm) {
+    if (trimmedTerm) {
       dispatch({
         type: 'SET_LOADING',
         payload: { category: 'search', isLoading: true },
@@ -169,10 +168,9 @@ export default function App() {
             type: 'SET_LOADING',
             payload: { category: 'search', isLoading: false },
           });
-          setIsSearching(false);
         });
     }
-  }, [activeSearchTerm, searchState.page, isSearching]);
+  }, [activeSearchTerm, searchState.page]);
 
   const handleSearch = () => {
     const trimmedTerm = searchTerm.trim();
@@ -180,7 +178,6 @@ export default function App() {
     dispatch({ type: 'SET_PAGE', payload: { category: 'search', page: 1 } });
     setActiveSearchTerm(trimmedTerm);
     setSearchTerm(trimmedTerm);
-    setIsSearching(true);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
