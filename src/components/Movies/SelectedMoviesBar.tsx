@@ -58,6 +58,7 @@ export function SelectedMoviesBar() {
               <span className="max-sm:hidden">Download CSV</span>
             </button>
             <button
+              data-testid="button-unselect"
               onClick={() => {
                 setIsExpanded(true);
                 clear();

@@ -6,6 +6,7 @@ import FeaturedMovieCard from './FeaturedMovieCard';
 import { mockMovies } from '../../__mocks__/movies';
 import { ThemeProvider } from '../../contexts/ThemeProvider';
 import { BrowserRouter } from 'react-router-dom';
+import { useMovieStore } from '../../stores/movieStore';
 
 const mockMovie = mockMovies[0];
 
@@ -53,5 +54,21 @@ describe('FeaturedMovieCard', () => {
     await user.hover(movieCard);
 
     expect(mockOnHover).toHaveBeenCalledTimes(1);
+  });
+
+  it('should show check icon when movie is added to the store', () => {
+    const mockOnHover = vi.fn();
+
+    useMovieStore.getState().add(mockMovie);
+
+    render(
+      <BrowserRouter>
+        <ThemeProvider>
+          <FeaturedMovieCard movie={mockMovie} onHover={mockOnHover} />
+        </ThemeProvider>
+      </BrowserRouter>
+    );
+
+    expect(screen.getByTestId('icon-added')).toBeInTheDocument();
   });
 });

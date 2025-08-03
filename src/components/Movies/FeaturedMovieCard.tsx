@@ -33,11 +33,13 @@ export default function FeaturedMovieCard({ movie, onHover }: MovieCardProps) {
           />
           {hasItem(movie.id) ? (
             <CheckCircleSolid
+              data-testid="icon-added"
               size={24}
               className="bg-white text-sky-400 rounded-full"
             />
           ) : (
             <PlusCircle
+              data-testid="icon-add-movie"
               size={24}
               className="text-white opacity-0 group-hover:opacity-75 hover:opacity-100 transition duration-300"
             />
