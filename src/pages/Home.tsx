@@ -198,7 +198,7 @@ export default function App() {
 
   return (
     <ErrorBoundary>
-      <div className="min-h-screen mx-auto bg-gradient-to-b from-[#07070D] to-[#07070D] text-gray-300">
+      <div className="min-h-screen mx-auto bg-gray-200 dark:bg-gradient-to-b from-[#07070D] to-[#07070D] text-gray-300">
         <Header
           onSearch={handleSearch}
           onInputChange={handleInputChange}

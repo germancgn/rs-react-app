@@ -17,16 +17,16 @@ export function SelectedMoviesBar() {
 
   return (
     <div className="sticky bottom-0 w-full shadow-lg px-2 z-50">
-      <div className="max-w-6xl mx-auto bg-gray-800 rounded-t-3xl border-t border-gray-700 px-4">
-        <div className="flex justify-between items-center py-4 border-b border-gray-700 gap-2">
+      <div className="max-w-6xl mx-auto bg-white dark:bg-gray-800 rounded-t-3xl border-t border-gray-200 dark:border-gray-700 px-4">
+        <div className="flex justify-between items-center py-4 border-b border-gray-200 dark:border-gray-700 gap-2">
           <div className="flex-1">
-            <h3 className="text-[min(5vw,18px)] font-bold text-white">
+            <h3 className="text-[min(5vw,18px)] font-bold text-gray-800 dark:text-white">
               Selected Movies ({selected.length})
             </h3>
           </div>
           <div className=" flex justify-center">
             <button
-              className="p-2 cursor-pointer transition rounded-full hover:bg-white/10"
+              className="p-2 cursor-pointer transition rounded-full hover:bg-black/10 dark:hover:bg-white/10 text-gray-600 dark:text-gray-200"
               onClick={() => setIsExpanded((prev) => !prev)}
             >
               {isExpanded ? <CaretDown size={20} /> : <CaretUp size={20} />}
@@ -50,7 +50,7 @@ export function SelectedMoviesBar() {
                   `${selected.length}-movies.csv`
                 )
               }
-              className="flex items-center gap-2 cursor-pointer bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md text-xs transition-colors"
+              className="flex items-center gap-2 cursor-pointer bg-blue-400 hover:bg-blue-500 dark:bg-blue-500 dark:hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md text-xs transition-colors"
             >
               <span>
                 <DownloadSimple size={20} />
@@ -62,7 +62,7 @@ export function SelectedMoviesBar() {
                 setIsExpanded(true);
                 clear();
               }}
-              className="flex items-center gap-2 cursor-pointer bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded-md text-xs font-bold transition-colors"
+              className="flex items-center gap-2 cursor-pointer bg-gray-400 hover:bg-gray-500 dark:bg-gray-600 dark:hover:bg-gray-700 text-white py-2 px-4 rounded-md text-xs font-bold transition-colors"
             >
               <span>
                 <SelectionSlash size={20} />
@@ -82,7 +82,7 @@ export function SelectedMoviesBar() {
             {selected.map((movie) => (
               <li
                 key={movie.id}
-                className="flex justify-between items-center hover:bg-gray-700 p-4 rounded-md"
+                className="flex justify-between items-center hover:bg-gray-200 dark:hover:bg-gray-700 p-4 rounded-md"
               >
                 <div className="flex items-center gap-4 min-w-0">
                   <img
@@ -94,13 +94,13 @@ export function SelectedMoviesBar() {
                     alt=""
                     className="w-10 h-10 bg-cover object-cover rounded"
                   />
-                  <p className="text-gray-300 text-sm flex-1 truncate">
+                  <p className="text-gray-800 dark:text-gray-300 text-sm flex-1 truncate">
                     {movie.title}
                   </p>
                 </div>
                 <button
                   onClick={() => remove(movie.id)}
-                  className="cursor-pointer text-red-500 hover:text-red-400 font-semibold text-sm"
+                  className="cursor-pointer text-red-400 dark:text-red-500 hover:text-red-500 dark:hover:text-red-400 font-semibold text-sm"
                 >
                   Remove
                 </button>
