@@ -9,7 +9,7 @@ export default function Navbar() {
           <NavLink
             to="/"
             className={({ isActive }) =>
-              isActive ? 'text-white' : 'text-gray-300 hover:text-white'
+              'navlink-style' + (isActive ? ' active' : '')
             }
           >
             Home
@@ -19,21 +19,21 @@ export default function Navbar() {
           <NavLink
             to="/about"
             className={({ isActive }) =>
-              isActive ? 'text-white' : 'text-gray-400 hover:text-white'
+              'navlink-style' + (isActive ? ' active' : '')
             }
           >
             About
           </NavLink>
         </li>
 
-        <li className="ml-auto">
+        <li className="ml-auto navlink-style">
           <ThemeToggleButton />
         </li>
         <li>
           <NavLink
             to="/signin"
             className={({ isActive }) =>
-              isActive ? 'text-white' : 'text-gray-400 hover:text-white'
+              'navlink-style' + (isActive ? ' active' : '')
             }
           >
             Sign in

@@ -3,7 +3,11 @@
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 body {
-  @apply bg-gradient-to-b from-[#1a1a2e] to-[#16213e] text-gray-300 font-sans min-h-screen flex flex-col;
+  @apply font-sans min-h-screen;
+}
+
+#root {
+  min-height: 100vh;
 }
 
 .spin-animation {
@@ -31,6 +35,14 @@ body {
     inset 0px 20px 80px var(--box-shadow-inset) #07070d,
     inset 0px -2px 80px var(--box-shadow-inset) #07070d;
   animation: decreaseFadeRadius 2500ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.navlink-style {
+  @apply text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white [.header-hero_&]:text-gray-400 [.header-hero_&]:hover:text-white;
+}
+
+.navlink-style.active {
+  @apply text-black dark:text-white [.header-hero_&]:text-white;
 }
 
 [data-theme='light'] {

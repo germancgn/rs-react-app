@@ -30,10 +30,7 @@ export function ThemeToggleButton() {
   };
 
   return (
-    <button
-      onClick={handleToggle}
-      className="cursor-pointer text-gray-400 hover:text-white"
-    >
+    <button onClick={handleToggle} className="cursor-pointer">
       <div className="relative w-6 h-6">
         <div
           className={`absolute inset-0 transition-all duration-300 transform ${
