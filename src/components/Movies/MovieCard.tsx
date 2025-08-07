@@ -3,6 +3,7 @@ import type { Movie } from '../../types/movies/Movie';
 import { getGenreNameById } from '../../utils/movies/genreUtils';
 import { CheckCircleSolid, PlusCircle, StarSolid } from '../Shared/Icon';
 import { useMovieStore } from '../../stores/movieStore';
+import { useMemo } from 'react';
 
 type MovieCardProps = {
   movie: Movie;
@@ -10,9 +11,10 @@ type MovieCardProps = {
 
 export default function MovieCard({ movie }: MovieCardProps) {
   const { hasItem, add, remove } = useMovieStore();
-  const genres = movie.genre_ids
-    .map((id) => getGenreNameById(id))
-    .filter(Boolean);
+  const genres = useMemo(
+    () => movie.genre_ids.map((id) => getGenreNameById(id)).filter(Boolean),
+    [movie.genre_ids]
+  );
 
   return (
     <div
