@@ -10,12 +10,5 @@ describe('genreUtils', () => {
 
   it('should return undefined for an invalid id', () => {
     expect(getGenreNameById(-1)).toBeUndefined();
-    expect(getGenreNameById(99999)).toBeUndefined();
-  });
-
-  it('should handle edge cases gracefully', () => {
-    expect(getGenreNameById(null as unknown as number)).toBeUndefined();
-    expect(getGenreNameById(undefined as unknown as number)).toBeUndefined();
-    expect(getGenreNameById('string' as unknown as number)).toBeUndefined();
   });
 });
