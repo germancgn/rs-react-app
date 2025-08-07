@@ -7,6 +7,9 @@ import About from './pages/About.tsx';
 import MovieDetails from './components/Movies/MovieDetails.tsx';
 import NotFound from './pages/NotFound.tsx';
 import { ThemeProvider } from './contexts/ThemeProvider.tsx';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
 
 const rootElement = document.getElementById('root');
 if (!rootElement) throw new Error('Root element not found');
@@ -30,7 +33,9 @@ const router = createBrowserRouter([
 createRoot(rootElement).render(
   <StrictMode>
     <ThemeProvider>
-      <RouterProvider router={router} />
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
     </ThemeProvider>
   </StrictMode>
 );
