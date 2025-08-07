@@ -10,10 +10,7 @@ import HttpError from '../../src/utils/HttpError';
 import { mockMovies } from '../__mocks__/movies';
 
 const mockResponse = {
-  results: [
-    { id: 1, title: 'Title 1' },
-    { id: 2, title: 'Title 2' },
-  ],
+  results: [...mockMovies],
 };
 
 describe('movie-service', () => {
