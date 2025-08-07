@@ -49,7 +49,7 @@ export default function Header({
                 }}
               >
                 <input
-                  type="text"
+                  type="search"
                   value={searchTerm}
                   onChange={onInputChange}
                   placeholder="Search movies..."
