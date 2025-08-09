@@ -17,6 +17,7 @@ export async function fetchPopularMovies(page = 1): Promise<MovieResponse> {
         `Error fetching movies: ${response.statusText}`
       );
     }
+
     return await response.json();
   } catch (error) {
     if (error instanceof HttpError) {
@@ -38,6 +39,7 @@ export async function searchMovies(
     const response = await fetch(
       `${BASE_URL}/search/movie?query=${encodeURIComponent(name)}&page=${page}&api_key=${API_KEY}&language=en`
     );
+
     if (!response.ok) {
       throw new HttpError(
         response.status,
@@ -62,6 +64,7 @@ export async function discoverMovies(page = 1): Promise<MovieResponse> {
     const response = await fetch(
       `${BASE_URL}/discover/movie?page=${page}&api_key=${API_KEY}&language=en`
     );
+
     if (!response.ok) {
       throw new HttpError(
         response.status,
@@ -86,6 +89,7 @@ export async function trendingMovies(page = 1): Promise<MovieResponse> {
     const response = await fetch(
       `${BASE_URL}/trending/movie/week?page=${page}&api_key=${API_KEY}&language=en`
     );
+
     if (!response.ok) {
       throw new HttpError(
         response.status,
@@ -110,8 +114,7 @@ export async function getMovieById(id: string): Promise<MovieDetails> {
     const response = await fetch(
       `${BASE_URL}/movie/${id}?api_key=${API_KEY}&language=en`
     );
-    // Simulated network delay for demonstration/testing purposes only
-    await new Promise((resolve) => setTimeout(resolve, 500));
+
     if (!response.ok) {
       throw new HttpError(
         response.status,
