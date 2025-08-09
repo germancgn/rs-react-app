@@ -25,6 +25,7 @@ body {
 }
 
 .header-hero {
+  --animation-delay: 250ms;
   --box-shadow-inset: 20px;
   --fade-radius: 50px;
   background-size: cover;
@@ -35,6 +36,7 @@ body {
     inset 0px 20px 80px var(--box-shadow-inset) #07070d,
     inset 0px -2px 80px var(--box-shadow-inset) #07070d;
   animation: decreaseFadeRadius 2500ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  animation-delay: var(--animation-delay);
 }
 
 .navlink-style {
