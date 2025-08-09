@@ -4,6 +4,7 @@ import type { Movie } from '../../types/movies/Movie';
 import FeaturedMovieCard from '../Movies/FeaturedMovieCard';
 import { MagnifyingGlass, X } from '../Shared/Icon';
 import Navbar from '../Shared/Navbar';
+import FeaturedMovieSkeleton from '../Movies/FeaturedMovieSkeleton';
 
 type HeaderProps = {
   searchTerm: string;
@@ -106,13 +107,19 @@ export default function Header({
           Trending movies
         </h2>
         <div className="flex flex-nowrap p-4 gap-4 bg-blue-950/10 backdrop-blur-md border border-white/10 rounded-2xl featured-cards-shadow custom-scrollbar overflow-auto">
-          {movies.slice().map((movie) => (
-            <FeaturedMovieCard
-              onHover={() => setSelectedMovie(movie)}
-              key={movie.id}
-              movie={movie}
-            />
-          ))}
+          {movies.length > 0
+            ? movies
+                .slice()
+                .map((movie) => (
+                  <FeaturedMovieCard
+                    onHover={() => setSelectedMovie(movie)}
+                    key={movie.id}
+                    movie={movie}
+                  />
+                ))
+            : Array.from({ length: 10 }).map((_, i) => (
+                <FeaturedMovieSkeleton key={i} />
+              ))}
         </div>
       </div>
     </header>
