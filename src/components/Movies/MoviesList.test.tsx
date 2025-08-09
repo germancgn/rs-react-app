@@ -15,7 +15,7 @@ describe('MoviesList', () => {
       <MemoryRouter>
         <MoviesList
           movies={mockMovies}
-          isLoading={false}
+          isFetching={false}
           title=""
           totalPages={1}
           page={1}
@@ -36,7 +36,7 @@ describe('MoviesList', () => {
       <MemoryRouter>
         <MoviesList
           movies={mockMovies}
-          isLoading={false}
+          isFetching={false}
           title=""
           totalPages={1}
           page={1}
@@ -55,7 +55,7 @@ describe('MoviesList', () => {
       <MemoryRouter>
         <MoviesList
           movies={mockMovies}
-          isLoading={false}
+          isFetching={false}
           title=""
           totalPages={1}
           page={1}
