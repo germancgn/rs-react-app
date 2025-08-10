@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useMovieStore } from '../../stores/movieStore';
 import { objectToCSV } from '../../utils/csv/csv';
 import {
@@ -7,13 +7,41 @@ import {
   DownloadSimple,
   SelectionSlash,
 } from '../Shared/Icon';
-import { downloadCSV } from '../../utils/files/download';
+import { createBlob } from '../../utils/files/download';
 
 export function SelectedMoviesBar() {
   const [isExpanded, setIsExpanded] = useState(true);
   const { selected, remove, clear } = useMovieStore();
+  const downloadAnchorRef = useRef<HTMLAnchorElement | null>(null);
 
-  if (selected.length === 0) return null;
+  const selectedCount = selected.length;
+  if (selectedCount === 0) return null;
+
+  const handleDownload = () => {
+    if (!downloadAnchorRef.current) return;
+
+    const csvData = URL.createObjectURL(
+      createBlob(
+        objectToCSV(selected, [
+          'id',
+          'title',
+          'adult',
+          'overview',
+          'popularity',
+          'poster_path',
+          'release_date',
+          'vote_average',
+          'vote_count',
+        ])
+      )
+    );
+
+    if (downloadAnchorRef.current) {
+      downloadAnchorRef.current.href = csvData;
+      downloadAnchorRef.current.download = `${selectedCount}-movies.csv`;
+      downloadAnchorRef.current.click();
+    }
+  };
 
   return (
     <div className="sticky bottom-0 w-full shadow-lg px-2 z-50">
@@ -34,28 +62,18 @@ export function SelectedMoviesBar() {
           </div>
           <div className="flex-1 flex justify-end items-center space-x-4">
             <button
-              onClick={() =>
-                downloadCSV(
-                  objectToCSV(selected, [
-                    'id',
-                    'title',
-                    'adult',
-                    'overview',
-                    'popularity',
-                    'poster_path',
-                    'release_date',
-                    'vote_average',
-                    'vote_count',
-                  ]),
-                  `${selected.length}-movies.csv`
-                )
-              }
+              onClick={handleDownload}
               className="flex items-center gap-2 cursor-pointer bg-blue-400 hover:bg-blue-500 dark:bg-blue-500 dark:hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md text-xs transition-colors"
             >
               <span>
                 <DownloadSimple size={20} />
               </span>
               <span className="max-sm:hidden">Download CSV</span>
+              <a
+                ref={downloadAnchorRef}
+                className="hidden"
+                aria-hidden="true"
+              />
             </button>
             <button
               data-testid="button-unselect"
