@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, Link, useLocation } from 'react-router-dom';
 import { CheckCircleSolid, PlusCircle, X } from '../Shared/Icon';
 import { useMovieStore } from '../../stores/movieStore';
 import { useGetMovieById } from '../../queries/useGetMovieById';
@@ -36,17 +36,16 @@ function MovieDetailsSkeleton() {
 }
 
 function XButton() {
-  const navigate = useNavigate();
+  const location = useLocation();
   return (
-    <button
-      onClick={() => navigate('/')}
-      aria-label="Close"
+    <Link
+      to={{ pathname: '/', search: location.search }}
       className=" text-gray-400 hover:text-gray-800 dark:hover:text-gray-100 transition cursor-pointer p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10"
     >
       <span>
         <X size={24} />
       </span>
-    </button>
+    </Link>
   );
 }
 
