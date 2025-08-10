@@ -112,7 +112,7 @@ export default function Header({
         <h2 className="text-2xl text-white max-md:text-gray-800 dark:text-white font-bold mb-8">
           Trending movies
         </h2>
-        <div className="flex flex-nowrap p-4 gap-4 bg-blue-950/10 backdrop-blur-md border border-white/10 rounded-2xl featured-cards-shadow custom-scrollbar overflow-auto">
+        <div className="flex flex-nowrap p-4 gap-4 bg-blue-950/10 backdrop-blur-md border border-white/10 rounded-2xl featured-cards-shadow hidden-scrollbar overflow-auto">
           {isPending
             ? trendingSkeletons
             : movies.map((movie) => (
