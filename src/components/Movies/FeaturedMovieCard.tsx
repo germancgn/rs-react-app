@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useMovieStore } from '../../stores/movieStore';
 import type { Movie } from '../../types/movies/Movie';
 import { CheckCircleSolid, PlusCircle } from '../Shared/Icon';
@@ -10,6 +10,7 @@ type MovieCardProps = {
 
 export default function FeaturedMovieCard({ movie, onHover }: MovieCardProps) {
   const { add, remove, hasItem } = useMovieStore();
+  const location = useLocation();
 
   return (
     <div
@@ -46,7 +47,7 @@ export default function FeaturedMovieCard({ movie, onHover }: MovieCardProps) {
           )}
         </label>
       </div>
-      <Link to={`/details/${movie.id}`}>
+      <Link to={{ pathname: `/details/${movie.id}`, search: location.search }}>
         <img
           src={`https://image.tmdb.org/t/p/w780/${movie.poster_path}`}
           alt={movie.title}
