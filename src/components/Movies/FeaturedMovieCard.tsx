@@ -50,7 +50,7 @@ export default function FeaturedMovieCard({ movie, onHover }: MovieCardProps) {
         <img
           src={`https://image.tmdb.org/t/p/w780/${movie.poster_path}`}
           alt={movie.title}
-          className="w-full h-auto rounded-xl brightness-100 group-hover:brightness-85 transition"
+          className="w-full h-full rounded-xl brightness-100 group-hover:brightness-85 transition object-cover"
         />
       </Link>
     </div>
