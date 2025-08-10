@@ -24,7 +24,12 @@ type SpokenLanguage = {
 export type MovieDetails = {
   adult: boolean;
   backdrop_path: string | null;
-  belongs_to_collection: string | null;
+  belongs_to_collection: {
+    id: number;
+    name: string;
+    poster_path: string;
+    backdrop_path: string;
+  } | null;
   budget: number;
   genres: Genre[];
   homepage: string | null;
