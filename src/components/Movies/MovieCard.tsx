@@ -12,10 +12,10 @@ type MovieCardProps = {
 export default function MovieCard({ movie }: MovieCardProps) {
   const location = useLocation();
   const { hasItem, add, remove } = useMovieStore();
-  const genres = useMemo(
-    () => movie.genre_ids.map((id) => getGenreNameById(id)).filter(Boolean),
-    [movie.genre_ids]
-  );
+  const genres = useMemo(() => {
+    if (!movie.genre_ids) return [];
+    return movie.genre_ids.map((id) => getGenreNameById(id)).filter(Boolean);
+  }, [movie.genre_ids]);
 
   return (
     <div
@@ -72,7 +72,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
               <StarSolid size={16} />
             </span>
             <span className="text-base font-semibold ">
-              {movie.vote_average.toFixed(1)}
+              {movie?.vote_average?.toFixed(1)}
             </span>
             <span className="text-sm font-semibold truncate max-w-full">
               {genres.join(' • ')}
