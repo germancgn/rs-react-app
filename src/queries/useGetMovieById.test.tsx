@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import type React from 'react';
 import { getMovieById } from '../services/movie-service';
 import { useGetMovieById } from './useGetMovieById';
-import { movieDetails } from '../__mocks__/movies';
+import { mockMovieDetails } from '../__mocks__/movies';
 
 vi.mock('../services/movie-service', () => ({
   getMovieById: vi.fn(),
@@ -24,7 +24,7 @@ beforeEach(() => {
 
 describe('useGetMovieById', () => {
   it('should return movie data', async () => {
-    vi.mocked(getMovieById).mockResolvedValueOnce(movieDetails);
+    vi.mocked(getMovieById).mockResolvedValueOnce(mockMovieDetails);
 
     const client = new QueryClient({
       defaultOptions: { queries: { retry: false } },
@@ -34,7 +34,7 @@ describe('useGetMovieById', () => {
     const { result } = renderHook(() => useGetMovieById('1'), { wrapper });
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
-    expect(result.current.data).toEqual(movieDetails);
+    expect(result.current.data).toEqual(mockMovieDetails);
   });
 
   it('sets isError to true on failure', async () => {
@@ -53,7 +53,7 @@ describe('useGetMovieById', () => {
   });
 
   it('sets isFetching to true before data resolves', async () => {
-    vi.mocked(getMovieById).mockResolvedValue(movieDetails);
+    vi.mocked(getMovieById).mockResolvedValue(mockMovieDetails);
 
     const client = new QueryClient({
       defaultOptions: { queries: { retry: false } },
@@ -69,12 +69,12 @@ describe('useGetMovieById', () => {
     expect(result.current.data).toBeUndefined();
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
-    expect(result.current.data).toEqual(movieDetails);
+    expect(result.current.data).toEqual(mockMovieDetails);
   });
 
   it('uses cached data on second call without refetch', async () => {
     vi.mocked(getMovieById).mockImplementation(() => {
-      return Promise.resolve(movieDetails);
+      return Promise.resolve(mockMovieDetails);
     });
 
     const client = new QueryClient({
@@ -89,7 +89,7 @@ describe('useGetMovieById', () => {
     const second = renderHook(() => useGetMovieById('1'), { wrapper });
 
     expect(second.result.current.isSuccess).toBe(true);
-    expect(second.result.current.data).toEqual(movieDetails);
+    expect(second.result.current.data).toEqual(mockMovieDetails);
     expect(second.result.current.isFetching).toBe(false);
 
     expect(getMovieById).toHaveBeenCalledTimes(1);
