@@ -1,11 +1,12 @@
 import { it, expect, describe, afterEach, vi } from 'vitest';
 import Header from './Header';
-import { cleanup, render, screen, fireEvent } from '@testing-library/react';
+import { cleanup, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/vitest';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import { mockMovies } from '../../__mocks__/movies';
 import { ThemeProvider } from '../../contexts/ThemeProvider';
+import { renderWithProviders } from '../../__tests__/test-utils/renderWithProviders';
 
 vi.mock('../../services/movie-service', () => ({
   trendingMovies: vi.fn(() =>
@@ -20,14 +21,13 @@ afterEach(() => {
 
 describe('Header', () => {
   it('renders the search input with the correct searchTerm from props', () => {
-    render(
+    renderWithProviders(
       <MemoryRouter>
         <ThemeProvider>
           <Header
             searchTerm="Matrix"
             onSearch={() => {}}
             onInputChange={() => {}}
-            isLoading={false}
             onClearInput={vi.fn()}
           />
         </ThemeProvider>
@@ -42,14 +42,13 @@ describe('Header', () => {
   it('calls onInputChange when typing in the input field', async () => {
     const user = userEvent.setup();
     const mockOnInputChange = vi.fn();
-    render(
+    renderWithProviders(
       <MemoryRouter>
         <ThemeProvider>
           <Header
             searchTerm=""
             onSearch={() => {}}
             onInputChange={mockOnInputChange}
-            isLoading={false}
             onClearInput={vi.fn()}
           />
         </ThemeProvider>
@@ -64,14 +63,13 @@ describe('Header', () => {
 
   it('calls onSearch when the search button is clicked', () => {
     const mockOnSearch = vi.fn();
-    render(
+    renderWithProviders(
       <MemoryRouter>
         <ThemeProvider>
           <Header
             searchTerm="test"
             onSearch={mockOnSearch}
             onInputChange={() => {}}
-            isLoading={false}
             onClearInput={vi.fn()}
           />
         </ThemeProvider>
@@ -88,14 +86,13 @@ describe('Header', () => {
     const mockOnSearch = vi.fn();
     const user = userEvent.setup();
 
-    render(
+    renderWithProviders(
       <MemoryRouter>
         <ThemeProvider>
           <Header
             searchTerm="test"
             onSearch={mockOnSearch}
             onInputChange={() => {}}
-            isLoading={false}
             onClearInput={vi.fn()}
           />
         </ThemeProvider>
@@ -110,14 +107,13 @@ describe('Header', () => {
 
   it('calls onClearInput when clear button is clicked', () => {
     const mockOnClearInput = vi.fn();
-    render(
+    renderWithProviders(
       <MemoryRouter>
         <ThemeProvider>
           <Header
             searchTerm="test query"
             onSearch={() => {}}
             onInputChange={() => {}}
-            isLoading={false}
             onClearInput={mockOnClearInput}
           />
         </ThemeProvider>
@@ -131,14 +127,13 @@ describe('Header', () => {
   });
 
   it('displays FeaturedMovieCard components for trending movies', async () => {
-    render(
+    renderWithProviders(
       <MemoryRouter>
         <ThemeProvider>
           <Header
             searchTerm=""
             onSearch={() => {}}
             onInputChange={() => {}}
-            isLoading={false}
             onClearInput={vi.fn()}
           />
         </ThemeProvider>

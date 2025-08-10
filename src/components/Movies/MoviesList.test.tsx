@@ -1,9 +1,10 @@
 import { it, expect, describe, afterEach, vi } from 'vitest';
 import MoviesList from './MoviesList';
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/vitest';
 import { mockMovies } from '../../__mocks__/movies';
 import { MemoryRouter } from 'react-router-dom';
+import { renderWithProviders } from '../../__tests__/test-utils/renderWithProviders';
 
 afterEach(() => {
   cleanup();
@@ -11,7 +12,7 @@ afterEach(() => {
 
 describe('MoviesList', () => {
   it('passes the correct props to each MovieCard', () => {
-    render(
+    renderWithProviders(
       <MemoryRouter>
         <MoviesList
           movies={mockMovies}
@@ -21,6 +22,7 @@ describe('MoviesList', () => {
           page={1}
           onNextPage={vi.fn()}
           onPrevPage={vi.fn()}
+          onReload={vi.fn()}
         />
       </MemoryRouter>
     );
@@ -32,7 +34,7 @@ describe('MoviesList', () => {
   });
 
   it('renders the correct number of MovieCard components', () => {
-    render(
+    renderWithProviders(
       <MemoryRouter>
         <MoviesList
           movies={mockMovies}
@@ -42,6 +44,7 @@ describe('MoviesList', () => {
           page={1}
           onNextPage={vi.fn()}
           onPrevPage={vi.fn()}
+          onReload={vi.fn()}
         />
       </MemoryRouter>
     );
@@ -51,7 +54,7 @@ describe('MoviesList', () => {
   });
 
   it('renders all MovieCard components in the document', () => {
-    render(
+    renderWithProviders(
       <MemoryRouter>
         <MoviesList
           movies={mockMovies}
@@ -61,6 +64,7 @@ describe('MoviesList', () => {
           page={1}
           onNextPage={vi.fn()}
           onPrevPage={vi.fn()}
+          onReload={vi.fn()}
         />
       </MemoryRouter>
     );

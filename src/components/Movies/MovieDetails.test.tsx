@@ -1,10 +1,11 @@
 import * as movieService from '../../services/movie-service';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { cleanup, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, screen, waitFor } from '@testing-library/react';
 import { fantasticFourDetailsMock } from '../../__mocks__/movies';
 import { MemoryRouter } from 'react-router-dom';
 import '@testing-library/jest-dom/vitest';
 import MovieDetails from './MovieDetails';
+import { renderWithProviders } from '../../__tests__/test-utils/renderWithProviders';
 
 vi.mock('../../services/movie-service', () => {
   return {
@@ -34,7 +35,7 @@ describe('MovieDetails', () => {
       });
     });
 
-    render(
+    renderWithProviders(
       <MemoryRouter>
         <MovieDetails />
       </MemoryRouter>
@@ -80,7 +81,7 @@ describe('MovieDetails', () => {
       });
     });
 
-    render(
+    renderWithProviders(
       <MemoryRouter>
         <MovieDetails />
       </MemoryRouter>

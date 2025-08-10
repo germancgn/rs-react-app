@@ -1,5 +1,5 @@
 import { it, expect, describe, afterEach, vi } from 'vitest';
-import { render, screen, cleanup } from '@testing-library/react';
+import { screen, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom/vitest';
 import { MemoryRouter } from 'react-router-dom';
@@ -7,6 +7,7 @@ import { mockMovies } from '../__mocks__/movies';
 import { searchMovies, fetchPopularMovies } from '../services/movie-service';
 import App from './Home';
 import { ThemeProvider } from '../contexts/ThemeProvider';
+import { renderWithProviders } from '../__tests__/test-utils/renderWithProviders';
 
 vi.mock('../services/movie-service', () => ({
   fetchPopularMovies: vi.fn(() => Promise.resolve({ results: mockMovies })),
@@ -32,10 +33,10 @@ afterEach(() => {
 
 describe('App Rendering Tests', () => {
   it('renders search input and search button', () => {
-    render(
+    renderWithProviders(
       <MemoryRouter>
         <ThemeProvider>
-          <App />
+          <App />)
         </ThemeProvider>
       </MemoryRouter>
     );
@@ -48,11 +49,9 @@ describe('App Rendering Tests', () => {
 
     localStorage.setItem('searchTerm', movieName);
 
-    render(
+    renderWithProviders(
       <MemoryRouter>
-        <ThemeProvider>
-          <App />
-        </ThemeProvider>
+        <App />
       </MemoryRouter>
     );
 
@@ -63,11 +62,9 @@ describe('App Rendering Tests', () => {
   });
 
   it('shows empty input when no saved term exists', () => {
-    render(
+    renderWithProviders(
       <MemoryRouter>
-        <ThemeProvider>
-          <App />
-        </ThemeProvider>
+        <App />
       </MemoryRouter>
     );
     expect(screen.getByPlaceholderText('Search movies...')).toHaveValue('');
@@ -77,11 +74,9 @@ describe('App Rendering Tests', () => {
 describe('User Interaction Tests', () => {
   it('updates input value when user types', async () => {
     const user = userEvent.setup();
-    render(
+    renderWithProviders(
       <MemoryRouter>
-        <ThemeProvider>
-          <App />
-        </ThemeProvider>
+        <App />
       </MemoryRouter>
     );
     const searchInput = screen.getByPlaceholderText('Search movies...');
@@ -95,11 +90,9 @@ describe('User Interaction Tests', () => {
   it('saves search term to localStorage when search button is clicked', async () => {
     const user = userEvent.setup();
 
-    render(
+    renderWithProviders(
       <MemoryRouter>
-        <ThemeProvider>
-          <App />
-        </ThemeProvider>
+        <App />
       </MemoryRouter>
     );
 
@@ -117,11 +110,9 @@ describe('User Interaction Tests', () => {
 
   it('trims whitespace from search input before saving', async () => {
     const user = userEvent.setup();
-    render(
+    renderWithProviders(
       <MemoryRouter>
-        <ThemeProvider>
-          <App />
-        </ThemeProvider>
+        <App />
       </MemoryRouter>
     );
     const searchInput = screen.getByPlaceholderText('Search movies...');
@@ -133,33 +124,11 @@ describe('User Interaction Tests', () => {
     expect(localStorage.getItem('searchTerm')).toBe(movieName.trim());
   });
 
-  it('sets isLoading to true when search button is clicked', async () => {
-    const user = userEvent.setup();
-    render(
-      <MemoryRouter>
-        <ThemeProvider>
-          <App />
-        </ThemeProvider>
-      </MemoryRouter>
-    );
-
-    const searchInput = screen.getByPlaceholderText('Search movies...');
-    const searchButton = screen.getByRole('button', { name: /search/i });
-    const movieName = 'The Edge of Tomorrow';
-
-    await user.type(searchInput, movieName);
-    await user.click(searchButton);
-
-    expect(searchButton).toBeDisabled();
-  });
-
   it('render search results when user types in a movie name and clicks search button', async () => {
     const user = userEvent.setup();
-    render(
+    renderWithProviders(
       <MemoryRouter>
-        <ThemeProvider>
-          <App />
-        </ThemeProvider>
+        <App />
       </MemoryRouter>
     );
 
@@ -175,11 +144,9 @@ describe('User Interaction Tests', () => {
 
   it('does not call searchMovies if searchTerm is empty or whitespace', async () => {
     const user = userEvent.setup();
-    render(
+    renderWithProviders(
       <MemoryRouter>
-        <ThemeProvider>
-          <App />
-        </ThemeProvider>
+        <App />
       </MemoryRouter>
     );
 
@@ -190,8 +157,6 @@ describe('User Interaction Tests', () => {
     await user.click(searchButton);
 
     expect(vi.mocked(searchMovies)).not.toHaveBeenCalled();
-    expect(searchButton).not.toBeDisabled();
-    expect(screen.queryByTestId('spinner')).not.toBeInTheDocument();
   });
 
   it('renders search results MoviesList with correct props when search is performed', async () => {
@@ -202,12 +167,9 @@ describe('User Interaction Tests', () => {
       total_pages: 5,
       page: 1,
     });
-
-    render(
+    renderWithProviders(
       <MemoryRouter>
-        <ThemeProvider>
-          <App />
-        </ThemeProvider>
+        <App />
       </MemoryRouter>
     );
 
@@ -218,18 +180,16 @@ describe('User Interaction Tests', () => {
     await user.type(searchInput, movieName);
     await user.click(searchButton);
 
-    expect(await screen.findByText('Search results')).toBeInTheDocument();
+    expect(await screen.findByText('Search Results')).toBeInTheDocument();
 
     expect(screen.queryByText('Popular movies')).not.toBeInTheDocument();
   });
 
   it('clears search input when clear button is clicked', async () => {
     const user = userEvent.setup();
-    render(
+    renderWithProviders(
       <MemoryRouter>
-        <ThemeProvider>
-          <App />
-        </ThemeProvider>
+        <App />
       </MemoryRouter>
     );
 
@@ -259,11 +219,9 @@ describe('User Interaction Tests', () => {
         page: 2,
       });
 
-    render(
+    renderWithProviders(
       <MemoryRouter>
-        <ThemeProvider>
-          <App />
-        </ThemeProvider>
+        <App />
       </MemoryRouter>
     );
 
@@ -272,7 +230,7 @@ describe('User Interaction Tests', () => {
     await user.type(searchInput, 'test');
     await user.click(searchButton);
 
-    await screen.findByText('Search results');
+    await screen.findByText('Search Results');
     const nextButton = screen.getByTestId('next-page-button');
     await user.click(nextButton);
 
@@ -282,7 +240,7 @@ describe('User Interaction Tests', () => {
   it('handles previous page for search results', async () => {
     const user = userEvent.setup();
 
-    render(
+    renderWithProviders(
       <MemoryRouter initialEntries={['/?searchPage=2']}>
         <ThemeProvider>
           <App />
@@ -307,7 +265,7 @@ describe('User Interaction Tests', () => {
     await user.type(searchInput, 'test');
     await user.click(searchButton);
 
-    await screen.findByText('Search results');
+    await screen.findByText('Search Results');
     const prevButton = screen.getByTestId('next-page-button');
     await user.click(prevButton);
 
@@ -323,11 +281,9 @@ describe('User Interaction Tests', () => {
       page: 2,
     });
 
-    render(
+    renderWithProviders(
       <MemoryRouter>
-        <ThemeProvider>
-          <App />
-        </ThemeProvider>
+        <App />
       </MemoryRouter>
     );
 
