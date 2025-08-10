@@ -1,35 +1,42 @@
-import { useState, useEffect } from 'react';
-import { trendingMovies } from '../../services/movie-service';
+import { useState, useEffect, useMemo } from 'react';
 import type { Movie } from '../../types/movies/Movie';
 import FeaturedMovieCard from '../Movies/FeaturedMovieCard';
 import { MagnifyingGlass, X } from '../Shared/Icon';
 import Navbar from '../Shared/Navbar';
+import { useTrendingMovies } from '../../queries/useTrendingMovies';
 import FeaturedMovieSkeleton from '../Movies/FeaturedMovieSkeleton';
+import MovieListError from '../Movies/MovieListError';
 
 type HeaderProps = {
   searchTerm: string;
   onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onSearch: () => void;
   onClearInput: () => void;
-  isLoading: boolean;
 };
 
 export default function Header({
   searchTerm,
   onInputChange,
   onSearch,
-  isLoading,
   onClearInput,
 }: HeaderProps) {
   const [selectedMovie, setSelectedMovie] = useState<Movie | undefined>();
-  const [movies, setMovies] = useState<Movie[]>([]);
+  const { data, isPending, error, refetch } = useTrendingMovies();
+  const trendingSkeletons = useMemo(() => {
+    return Array.from({ length: 10 }).map((_, i) => (
+      <FeaturedMovieSkeleton key={i} />
+    ));
+  }, []);
+
+  const movies = data?.results || [];
 
   useEffect(() => {
-    trendingMovies().then((data) => {
-      setMovies(data.results);
+    if (!selectedMovie && data?.results && data.results.length > 0) {
       setSelectedMovie(data.results[0]);
-    });
-  }, []);
+    }
+  }, [data, selectedMovie]);
+
+  if (error) return <MovieListError error={error} onRetry={refetch} />;
 
   return (
     <header>
@@ -73,7 +80,6 @@ export default function Header({
             <button
               onClick={onSearch}
               className="py-2 px-4 bg-[#e94560] text-white rounded-full hover:bg-[#d13450] hover:cursor-pointer flex items-center gap-2"
-              disabled={isLoading}
             >
               Search
             </button>
@@ -107,18 +113,14 @@ export default function Header({
           Trending movies
         </h2>
         <div className="flex flex-nowrap p-4 gap-4 bg-blue-950/10 backdrop-blur-md border border-white/10 rounded-2xl featured-cards-shadow custom-scrollbar overflow-auto">
-          {movies.length > 0
-            ? movies
-                .slice()
-                .map((movie) => (
-                  <FeaturedMovieCard
-                    onHover={() => setSelectedMovie(movie)}
-                    key={movie.id}
-                    movie={movie}
-                  />
-                ))
-            : Array.from({ length: 10 }).map((_, i) => (
-                <FeaturedMovieSkeleton key={i} />
+          {isPending
+            ? trendingSkeletons
+            : movies.map((movie) => (
+                <FeaturedMovieCard
+                  onHover={() => setSelectedMovie(movie)}
+                  key={movie.id}
+                  movie={movie}
+                />
               ))}
         </div>
       </div>

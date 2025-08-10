@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import type { Movie } from '../../types/movies/Movie';
 import { getGenreNameById } from '../../utils/movies/genreUtils';
 import { CheckCircleSolid, PlusCircle, StarSolid } from '../Shared/Icon';
@@ -10,6 +10,7 @@ type MovieCardProps = {
 };
 
 export default function MovieCard({ movie }: MovieCardProps) {
+  const location = useLocation();
   const { hasItem, add, remove } = useMovieStore();
   const genres = useMemo(
     () => movie.genre_ids.map((id) => getGenreNameById(id)).filter(Boolean),
@@ -48,7 +49,10 @@ export default function MovieCard({ movie }: MovieCardProps) {
           )}
         </label>
       </div>
-      <Link to={`/details/${movie.id}`}>
+      <Link
+        to={{ pathname: `/details/${movie.id}`, search: location.search }}
+        state={{ from: location }}
+      >
         <img
           src={
             movie.poster_path
