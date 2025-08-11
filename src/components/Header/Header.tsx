@@ -38,6 +38,11 @@ export default function Header({
 
   if (error) return <MovieListError error={error} onRetry={refetch} />;
 
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSearch();
+  };
+
   return (
     <header>
       <div
@@ -50,12 +55,7 @@ export default function Header({
         <div className="rotate-0 max-w-6xl m-auto p-4 flex flex-col gap-4 h-full md:pb-[200px]">
           <div className="flex sm:items-center gap-2">
             <div className="relative w-full max-w-64">
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  onSearch();
-                }}
-              >
+              <form onSubmit={handleSearch}>
                 <input
                   type="search"
                   value={searchTerm}
