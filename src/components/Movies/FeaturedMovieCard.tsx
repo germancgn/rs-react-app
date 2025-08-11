@@ -12,6 +12,14 @@ export default function FeaturedMovieCard({ movie, onHover }: MovieCardProps) {
   const { add, remove, hasItem } = useMovieStore();
   const location = useLocation();
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.checked) {
+      add(movie);
+    } else {
+      remove(movie.id);
+    }
+  };
+
   return (
     <div
       className="relative group flex-shrink-0 max-w-[200px] rounded-2xl border border-gray-700 overflow-hidden shadow-md hover:border-pink-500 hover:shadow-pink-500 hover:cursor-pointer hover:scale-110 transition-all"
@@ -23,13 +31,7 @@ export default function FeaturedMovieCard({ movie, onHover }: MovieCardProps) {
           <input
             type="checkbox"
             checked={hasItem(movie.id)}
-            onChange={(e) => {
-              if (e.target.checked) {
-                add(movie);
-              } else {
-                remove(movie.id);
-              }
-            }}
+            onChange={handleChange}
             className="sr-only"
           />
           {hasItem(movie.id) ? (
