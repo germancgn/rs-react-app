@@ -7,7 +7,7 @@ import PopularMoviesContainer from '../components/Movies/PopularMoviesContainer'
 import SearchMoviesContainer from '../components/Movies/SearchMoviesContainer';
 import { useSearchParams } from 'react-router-dom';
 
-export default function App() {
+export default function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchTerm, setSearchTerm] = useSearch('searchTerm', '');
   const [activeSearchTerm, setActiveSearchTerm] = useState(searchTerm);

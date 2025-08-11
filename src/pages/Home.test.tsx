@@ -5,7 +5,7 @@ import '@testing-library/jest-dom/vitest';
 import { MemoryRouter } from 'react-router-dom';
 import { mockMovies } from '../__mocks__/movies';
 import { searchMovies, fetchPopularMovies } from '../services/movie-service';
-import App from './Home';
+import Home from './Home';
 import { ThemeProvider } from '../contexts/ThemeProvider';
 import { renderWithProviders } from '../__tests__/test-utils/renderWithProviders';
 
@@ -31,12 +31,12 @@ afterEach(() => {
   vi.clearAllMocks();
 });
 
-describe('App Rendering Tests', () => {
+describe('Home Rendering Tests', () => {
   it('renders search input and search button', () => {
     renderWithProviders(
       <MemoryRouter>
         <ThemeProvider>
-          <App />)
+          <Home />)
         </ThemeProvider>
       </MemoryRouter>
     );
@@ -51,7 +51,7 @@ describe('App Rendering Tests', () => {
 
     renderWithProviders(
       <MemoryRouter>
-        <App />
+        <Home />
       </MemoryRouter>
     );
 
@@ -64,7 +64,7 @@ describe('App Rendering Tests', () => {
   it('shows empty input when no saved term exists', () => {
     renderWithProviders(
       <MemoryRouter>
-        <App />
+        <Home />
       </MemoryRouter>
     );
     expect(screen.getByPlaceholderText('Search movies...')).toHaveValue('');
@@ -76,7 +76,7 @@ describe('User Interaction Tests', () => {
     const user = userEvent.setup();
     renderWithProviders(
       <MemoryRouter>
-        <App />
+        <Home />
       </MemoryRouter>
     );
     const searchInput = screen.getByPlaceholderText('Search movies...');
@@ -92,7 +92,7 @@ describe('User Interaction Tests', () => {
 
     renderWithProviders(
       <MemoryRouter>
-        <App />
+        <Home />
       </MemoryRouter>
     );
 
@@ -112,7 +112,7 @@ describe('User Interaction Tests', () => {
     const user = userEvent.setup();
     renderWithProviders(
       <MemoryRouter>
-        <App />
+        <Home />
       </MemoryRouter>
     );
     const searchInput = screen.getByPlaceholderText('Search movies...');
@@ -128,7 +128,7 @@ describe('User Interaction Tests', () => {
     const user = userEvent.setup();
     renderWithProviders(
       <MemoryRouter>
-        <App />
+        <Home />
       </MemoryRouter>
     );
 
@@ -146,7 +146,7 @@ describe('User Interaction Tests', () => {
     const user = userEvent.setup();
     renderWithProviders(
       <MemoryRouter>
-        <App />
+        <Home />
       </MemoryRouter>
     );
 
@@ -169,7 +169,7 @@ describe('User Interaction Tests', () => {
     });
     renderWithProviders(
       <MemoryRouter>
-        <App />
+        <Home />
       </MemoryRouter>
     );
 
@@ -189,7 +189,7 @@ describe('User Interaction Tests', () => {
     const user = userEvent.setup();
     renderWithProviders(
       <MemoryRouter>
-        <App />
+        <Home />
       </MemoryRouter>
     );
 
@@ -221,7 +221,7 @@ describe('User Interaction Tests', () => {
 
     renderWithProviders(
       <MemoryRouter>
-        <App />
+        <Home />
       </MemoryRouter>
     );
 
@@ -243,7 +243,7 @@ describe('User Interaction Tests', () => {
     renderWithProviders(
       <MemoryRouter initialEntries={['/?searchPage=2']}>
         <ThemeProvider>
-          <App />
+          <Home />
         </ThemeProvider>
       </MemoryRouter>
     );
@@ -283,7 +283,7 @@ describe('User Interaction Tests', () => {
 
     renderWithProviders(
       <MemoryRouter>
-        <App />
+        <Home />
       </MemoryRouter>
     );
 
