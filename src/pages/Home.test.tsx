@@ -162,9 +162,10 @@ describe('User Interaction Tests', () => {
   it('renders search results MoviesList with correct props when search is performed', async () => {
     const user = userEvent.setup();
 
+    const movieName = 'How to Train Your Dragon';
     vi.mocked(searchMovies).mockResolvedValueOnce({
-      results: mockMovies.slice(0, 2),
-      total_pages: 5,
+      results: mockMovies.filter((movie) => movie.title === movieName),
+      total_pages: 1,
       page: 1,
     });
     renderWithProviders(
@@ -175,7 +176,6 @@ describe('User Interaction Tests', () => {
 
     const searchInput = screen.getByPlaceholderText('Search movies...');
     const searchButton = screen.getByRole('button', { name: /search/i });
-    const movieName = 'How to Train Your Dragon';
 
     await user.type(searchInput, movieName);
     await user.click(searchButton);
@@ -183,6 +183,9 @@ describe('User Interaction Tests', () => {
     expect(await screen.findByText('Search Results')).toBeInTheDocument();
 
     expect(screen.queryByText('Popular movies')).not.toBeInTheDocument();
+    expect(
+      await screen.findByRole('heading', { name: movieName })
+    ).toBeInTheDocument();
   });
 
   it('clears search input when clear button is clicked', async () => {
