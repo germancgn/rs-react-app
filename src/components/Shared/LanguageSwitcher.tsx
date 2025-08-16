@@ -51,11 +51,12 @@ export default function LanguageSwitcher() {
         onClick={toggleMenu}
         className="navlink py-1 px-2 hover:bg-white/20 border-1 border-white/10 rounded-sm cursor-pointer transition-colors select-none"
       >
-        {currLocale}
+        {locales.find((locale) => locale.code === currLocale)?.label ??
+          'Language'}
       </span>
 
       <ul
-        className={`absolute right-0 z-10 mt-1 border-1 border-white/10 bg-white/20 shadow-xs p-1 rounded-sm transform transition-all duration-200 ease-out ${
+        className={`absolute right-0 z-10 mt-1.5 border-1 border-white/10 bg-white/20 shadow-xs p-1 rounded-sm transform transition-all duration-200 ease-out ${
           showMenu
             ? 'opacity-100 translate-y-0'
             : 'opacity-0 -translate-y-2 pointer-events-none'
