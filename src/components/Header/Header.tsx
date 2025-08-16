@@ -7,6 +7,7 @@ import FeaturedMovieCard from '../Movies/FeaturedMovieCard';
 import { MagnifyingGlass, X } from '../Shared/Icon';
 import Navbar from '../Shared/Navbar';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 type HeaderProps = {
   movies: Movie[];
@@ -19,6 +20,7 @@ export default function Header({ movies }: HeaderProps) {
   const initialQuery = searchParams?.get('search') ?? '';
   const [searchTerm, setSearchTerm] = useState(initialQuery);
   const [selectedMovie, setSelectedMovie] = useState(movies[0]);
+  const t = useTranslations('HomePage');
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,7 +62,7 @@ export default function Header({ movies }: HeaderProps) {
                   type="search"
                   value={searchTerm}
                   onChange={handleOnChange}
-                  placeholder="Search movies..."
+                  placeholder={t('searchInputPlaceholderText')}
                   className="w-full py-2 px-8 bg-blue-950/10 backdrop-blur-md border border-gray-700 text-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#e94560]"
                 />
 
@@ -81,7 +83,7 @@ export default function Header({ movies }: HeaderProps) {
               onClick={handleSearch}
               className="py-2 px-4 bg-[#e94560] text-white rounded-full hover:bg-[#d13450] hover:cursor-pointer flex items-center gap-2"
             >
-              Search
+              {t('searchButtonLabel')}
             </button>
           </div>
           <div className="flex items-center h-full">
@@ -97,10 +99,10 @@ export default function Header({ movies }: HeaderProps) {
               </p>
               <div className="flex gap-4">
                 <button className="cursor-pointer text-white font-semibold bg-blue-500 hover:bg-blue-600 py-2 px-4 rounded-full transition-colors">
-                  Watch now
+                  {t('watchNowButtonLabel')}
                 </button>
                 <button className="cursor-pointer text-gray-300 hover:text-gray-200 font-semibold border-1 border-gray-300 hover:border-gray-200 py-2 px-4 rounded-full">
-                  More info
+                  {t('moreInfoButtonLabel')}
                 </button>
               </div>
             </div>
@@ -110,7 +112,7 @@ export default function Header({ movies }: HeaderProps) {
 
       <div className="m-auto max-w-6xl p-4 md:mt-[-200px]">
         <h2 className="text-2xl text-white max-md:text-gray-800 dark:text-white font-bold mb-8">
-          Trending movies
+          {t('headingTrending')}
         </h2>
         <div className="flex flex-nowrap p-4 gap-4 bg-blue-950/10 backdrop-blur-md border border-white/10 rounded-2xl featured-cards-shadow hidden-scrollbar overflow-auto">
           {movies.map((movie) => (

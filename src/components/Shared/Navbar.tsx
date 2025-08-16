@@ -1,11 +1,13 @@
 'use client';
 
-import Link from 'next/link';
 import { ThemeToggleButton } from './ThemeToggleButton';
-import { usePathname } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+import { usePathname, Link } from '../../i18n/navigation';
+import LanguageSwitcher from './LanguageSwitcher';
 
 export default function Navbar() {
   const pathname = usePathname();
+  const t = useTranslations('NavBar');
 
   return (
     <nav className="flex flex-col max-w-6xl m-auto sm:flex-row items-center justify-between gap-4 p-4 rounded-lg">
@@ -13,33 +15,32 @@ export default function Navbar() {
         <li>
           <Link
             href="/"
-            className={`navlink-style` + (pathname === '/' ? ' active' : '')}
+            className={`navlink` + (pathname === '/' ? ' active' : '')}
           >
-            Home
+            {t('homeLinkLabel')}
           </Link>
         </li>
         <li>
           <Link
             href="/about"
-            className={
-              `navlink-style` + (pathname === '/about' ? ' active' : '')
-            }
+            className={`navlink` + (pathname === '/about' ? ' active' : '')}
           >
-            About
+            {t('aboutLinkLabel')}
           </Link>
         </li>
 
-        <li className="ml-auto navlink-style">
+        <li className="ml-auto">
+          <LanguageSwitcher />
+        </li>
+        <li className="navlink">
           <ThemeToggleButton />
         </li>
         <li>
           <Link
             href="/signin"
-            className={
-              `navlink-style` + (pathname === '/signin' ? ' active' : '')
-            }
+            className={`navlink` + (pathname === '/signin' ? ' active' : '')}
           >
-            Sign in
+            {t('signInLinkLabel')}
           </Link>
         </li>
       </ul>

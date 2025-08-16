@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl';
 import { CaretLeft, CaretRight } from './Icon';
 
 type PaginationProps = {
@@ -13,6 +14,8 @@ export function Pagination({
   onNextPage,
   onPrevPage,
 }: PaginationProps) {
+  const t = useTranslations('HomePage');
+
   return (
     <div className="flex justify-center items-center space-x-4 mt-4">
       <div className="flex items-center bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl not-dark:shadow-2xs p-[1px]">
@@ -25,9 +28,11 @@ export function Pagination({
           <CaretLeft size={20} />
         </button>
         <span className="text-sm text-gray-400 dark:text-gray-300 px-2">
-          <span className="">Page {page}</span>{' '}
+          <span className="">
+            {t('pageText')} {page}
+          </span>{' '}
           <span className="text-gray-300 dark:text-gray-400">
-            of {totalPages}
+            {t('pageOfText')} {totalPages}
           </span>
         </span>
         <button

@@ -1,10 +1,13 @@
 // import { Metadata } from 'next';
-import ErrorBoundary from '../components/ErrorBoundary/ErrorBoundary';
-import Header from '../components/Header/Header';
-import PopularMoviesContainer from '../components/Movies/PopularMoviesContainer';
-import SearchMoviesContainer from '../components/Movies/SearchMoviesContainer';
-import { SelectedMoviesBar } from '../components/Movies/SelectedMoviesBar';
-import { fetchPopularMovies, trendingMovies } from '../services/movie-service';
+import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary';
+import Header from '../../components/Header/Header';
+import PopularMoviesContainer from '../../components/Movies/PopularMoviesContainer';
+import SearchMoviesContainer from '../../components/Movies/SearchMoviesContainer';
+import { SelectedMoviesBar } from '../../components/Movies/SelectedMoviesBar';
+import {
+  fetchPopularMovies,
+  trendingMovies,
+} from '../../services/movie-service';
 
 // export const metadata: Metadata = {
 //   title: 'Home | React Movie Apps',
@@ -12,15 +15,18 @@ import { fetchPopularMovies, trendingMovies } from '../services/movie-service';
 // };
 
 export default async function Home({
+  params,
   searchParams,
 }: {
+  params: { locale: string };
   searchParams: { [key: string]: string | undefined };
 }) {
   const search = searchParams.search;
-
+  const locale = params.locale;
+  console.log({ locale2: locale });
   const [trendingMoviesResponse] = await Promise.all([
-    trendingMovies(),
-    fetchPopularMovies(),
+    trendingMovies(1, locale),
+    fetchPopularMovies(1, locale),
   ]);
 
   return (

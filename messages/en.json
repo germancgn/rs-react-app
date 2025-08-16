@@ -1,0 +1,26 @@
+{
+  "HomePage": {
+    "title": "React Movie Apps",
+    "about": "Watch movies for free on React Movie App",
+    "searchInputPlaceholderText": "Search movies...",
+    "searchButtonLabel": "Search",
+    "watchNowButtonLabel": "Watch now",
+    "moreInfoButtonLabel": "More info",
+    "headingTrending": "Trending movies",
+    "headingPopularMovies": "Popular movies",
+    "invalidateAllText": "Invalidate all queries",
+    "refreshText": "Refresh",
+    "pageText": "Page",
+    "pageOfText": "of"
+  },
+  "NavBar": {
+    "homeLinkLabel": "Home",
+    "aboutLinkLabel": "About",
+    "signInLinkLabel": "Sign in"
+  },
+  "AboutPage": {
+    "aboutHeading": "About This App",
+    "aboutText": "This application was developed by German Bilalov, a junior web developer, as part of the RS School React course.",
+    "learnMoreAtText": "Learn more about the course at"
+  }
+}

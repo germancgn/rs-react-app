@@ -39,11 +39,11 @@ body {
   animation-delay: var(--animation-delay);
 }
 
-.navlink-style {
+.navlink {
   @apply text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white [.header-hero_&]:text-gray-400 [.header-hero_&]:hover:text-white;
 }
 
-.navlink-style.active {
+.navlink.active {
   @apply text-black dark:text-white [.header-hero_&]:text-white;
 }
 

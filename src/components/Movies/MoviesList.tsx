@@ -10,6 +10,7 @@ import { Spinner } from '../Shared/Spinner';
 import { useQueryClient } from '@tanstack/react-query';
 import MovieDetails from './MovieDetails';
 import { useSearchParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 type MoviesListProps = {
   title: string;
@@ -41,6 +42,7 @@ export default function MoviesList({
     () => Array.from({ length: 20 }, (_, i) => <MovieCardSkeleton key={i} />),
     []
   );
+  const t = useTranslations('HomePage');
 
   const handleInvalidateAll = () => {
     queryClient.invalidateQueries({
@@ -64,7 +66,7 @@ export default function MoviesList({
           disabled={isFetching}
         >
           {isFetching ? <Spinner size={20} /> : <ArrowClockwise size={20} />}
-          Refresh
+          {t('refreshText')}
         </button>
 
         <div className="flex text-sm font-normal gap-4 items-center rounded-full bg-white dark:bg-gray-800 cursor-pointer transition-colors px-2">
@@ -76,7 +78,9 @@ export default function MoviesList({
           </button>
           <div className="flex gap-2">
             <span className="text-gray-500 dark:text-gray-300">{page}</span>
-            <span className="text-gray-400">of {totalPages}</span>
+            <span className="text-gray-400">
+              {t('pageOfText')} {totalPages}
+            </span>
           </div>
           <button
             onClick={onNextPage}
@@ -95,7 +99,7 @@ export default function MoviesList({
           >
             <Broom />
           </span>
-          Invalidate all queries
+          {t('invalidateAllText')}
         </button>
       </div>
       <div className="flex gap-4 relative">

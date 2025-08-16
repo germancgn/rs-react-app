@@ -4,11 +4,13 @@ import MoviesList from './MoviesList';
 import { usePopularMovies } from '../../queries/usePopularMovies';
 import MovieListError from './MovieListError';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 export default function PopularMoviesContainer() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const t = useTranslations('HomePage');
 
   const page = Number(searchParams.get('popularPage') ?? 1);
 
@@ -28,7 +30,7 @@ export default function PopularMoviesContainer() {
     <MoviesList
       movies={results}
       isFetching={isFetching}
-      title="Popular movies"
+      title={t('headingPopularMovies')}
       totalPages={total_pages}
       page={page}
       onNextPage={() =>
