@@ -1,3 +1,4 @@
+'use client';
 import { useRef, useState } from 'react';
 import { useMovieStore } from '../../stores/movieStore';
 import { objectToCSV } from '../../utils/csv/csv';
@@ -8,6 +9,8 @@ import {
   SelectionSlash,
 } from '../Shared/Icon';
 import { createBlob } from '../../utils/files/download';
+import Image from 'next/image';
+import NotFoundImage from '../../../public/images/image-not-found.jpg';
 
 export function SelectedMoviesBar() {
   const [isExpanded, setIsExpanded] = useState(true);
@@ -104,15 +107,18 @@ export function SelectedMoviesBar() {
                 className="flex justify-between items-center hover:bg-gray-200 dark:hover:bg-gray-700 p-4 rounded-md"
               >
                 <div className="flex items-center gap-4 min-w-0">
-                  <img
+                  <Image
                     src={
                       movie.poster_path
                         ? `https://image.tmdb.org/t/p/w780/${movie.poster_path}`
-                        : '/images/image-not-found.jpg'
+                        : NotFoundImage
                     }
-                    alt=""
+                    alt={`${movie.title}`}
+                    width={40}
+                    height={40}
                     className="w-10 h-10 bg-cover object-cover rounded"
                   />
+
                   <p className="text-gray-800 dark:text-gray-300 text-sm flex-1 truncate">
                     {movie.title}
                   </p>

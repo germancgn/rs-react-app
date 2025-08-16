@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-type UseStorageReturn = [string, (v: string) => void];
+type UseStorageReturn = [string, (_: string) => void];
 
 export function useSearch(key: string, defaultValue: string): UseStorageReturn {
   const [value, setValue] = useState<string>('');

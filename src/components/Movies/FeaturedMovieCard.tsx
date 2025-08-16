@@ -1,7 +1,11 @@
-import { Link, useLocation } from 'react-router-dom';
+'use client';
+
+import React from 'react';
 import { useMovieStore } from '../../stores/movieStore';
 import type { Movie } from '../../types/movies/Movie';
 import { CheckCircleSolid, PlusCircle } from '../Shared/Icon';
+import Image from 'next/image';
+import NotFoundImage from '../../../public/images/image-not-found.jpg';
 
 type MovieCardProps = {
   movie: Movie;
@@ -10,7 +14,6 @@ type MovieCardProps = {
 
 export default function FeaturedMovieCard({ movie, onHover }: MovieCardProps) {
   const { add, remove, hasItem } = useMovieStore();
-  const location = useLocation();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
@@ -49,13 +52,18 @@ export default function FeaturedMovieCard({ movie, onHover }: MovieCardProps) {
           )}
         </label>
       </div>
-      <Link to={{ pathname: `/details/${movie.id}`, search: location.search }}>
-        <img
-          src={`https://image.tmdb.org/t/p/w780/${movie.poster_path}`}
-          alt={movie.title}
-          className="w-full h-full rounded-xl brightness-100 group-hover:brightness-85 transition object-cover"
-        />
-      </Link>
+
+      <Image
+        src={
+          movie.poster_path
+            ? `https://image.tmdb.org/t/p/w780/${movie.poster_path}`
+            : NotFoundImage
+        }
+        width={780}
+        height={1170}
+        alt={`${movie.title}`}
+        className="w-full h-full rounded-xl brightness-100 group-hover:brightness-85 transition object-cover"
+      />
     </div>
   );
 }

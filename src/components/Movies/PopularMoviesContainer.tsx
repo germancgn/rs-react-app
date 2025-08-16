@@ -1,20 +1,25 @@
-import { useSearchParams } from 'react-router-dom';
+'use client';
+
 import MoviesList from './MoviesList';
 import { usePopularMovies } from '../../queries/usePopularMovies';
 import MovieListError from './MovieListError';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 export default function PopularMoviesContainer() {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const page = Number(searchParams.get('popularPage')) || 1;
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const page = Number(searchParams.get('popularPage') ?? 1);
 
   const { data, isFetching, refetch, error } = usePopularMovies(page);
   const results = data?.results ?? [];
   const total_pages = data?.total_pages ?? 0;
 
   const setPage = (next: number) => {
-    const params = new URLSearchParams(searchParams);
+    const params = new URLSearchParams(searchParams?.toString());
     params.set('popularPage', String(Math.max(1, next)));
-    setSearchParams(params, { replace: true });
+    router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
   if (error) return <MovieListError error={error} onRetry={() => refetch()} />;

@@ -1,4 +1,5 @@
-import { Outlet } from 'react-router-dom';
+'use client';
+
 import type { Movie } from '../../types/movies/Movie';
 import { Pagination } from '../Shared/Pagination';
 import MovieCard from './MovieCard';
@@ -7,6 +8,8 @@ import { useMemo, useRef, useState } from 'react';
 import { ArrowClockwise, Broom, CaretLeft, CaretRight } from '../Shared/Icon';
 import { Spinner } from '../Shared/Spinner';
 import { useQueryClient } from '@tanstack/react-query';
+import MovieDetails from './MovieDetails';
+import { useSearchParams } from 'next/navigation';
 
 type MoviesListProps = {
   title: string;
@@ -32,6 +35,8 @@ export default function MoviesList({
   const broomRef = useRef<HTMLSpanElement | null>(null);
   const [isCleaningCache, setIsCleaningCache] = useState(false);
   const queryClient = useQueryClient();
+  const searchParams = useSearchParams();
+  const details = searchParams.get('details');
   const skeletons = useMemo(
     () => Array.from({ length: 20 }, (_, i) => <MovieCardSkeleton key={i} />),
     []
@@ -103,7 +108,7 @@ export default function MoviesList({
                 ))}
           </div>
         </div>
-        <Outlet />
+        {details && <MovieDetails />}
       </div>
       <Pagination
         page={page}

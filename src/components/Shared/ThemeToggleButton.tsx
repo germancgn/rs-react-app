@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useRef } from 'react';
 import { useThemeContext } from '../../hooks/useTheme';
 import { Moon, Sun } from './Icon';

@@ -1,4 +1,10 @@
-import Navbar from '../components/Shared/Navbar';
+// import { Metadata } from 'next';
+import Navbar from '../../components/Shared/Navbar';
+
+// export const metadata: Metadata = {
+//   title: 'About | React Movie Apps',
+//   description: 'Watch movies for free on React Movie App',
+// };
 
 export default function About() {
   return (

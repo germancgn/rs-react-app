@@ -1,7 +1,9 @@
-import { useParams, Link, useLocation } from 'react-router-dom';
 import { CheckCircleSolid, PlusCircle, X } from '../Shared/Icon';
 import { useMovieStore } from '../../stores/movieStore';
 import { useGetMovieById } from '../../queries/useGetMovieById';
+import Image from 'next/image';
+import NotFoundImage from '../../../public/images/image-not-found.jpg';
+import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 
 function MovieDetailsSkeleton() {
   return (
@@ -36,21 +38,33 @@ function MovieDetailsSkeleton() {
 }
 
 function XButton() {
-  const location = useLocation();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+
+  if (!searchParams) return null;
+
+  const handleClick = () => {
+    const params = new URLSearchParams(searchParams);
+    params.delete('details');
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  };
+
   return (
-    <Link
-      to={{ pathname: '/', search: location.search }}
+    <button
+      onClick={handleClick}
       className=" text-gray-400 hover:text-gray-800 dark:hover:text-gray-100 transition cursor-pointer p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10"
     >
       <span>
         <X size={24} />
       </span>
-    </Link>
+    </button>
   );
 }
 
 export default function MovieDetails() {
-  const { id } = useParams();
+  const searchParams = useSearchParams();
+  const id = searchParams.get('details');
   if (!id) throw new Error("MovieDetails: missing required route param 'id'.");
 
   const { add, remove, hasItem } = useMovieStore();
@@ -82,13 +96,15 @@ export default function MovieDetails() {
         <MovieDetailsSkeleton />
       ) : (
         <div className="max-w-fit p-4 h-fit flex flex-col md:flex-row gap-8 bg-white dark:bg-gray-900 text-white rounded-lg sticky top-4">
-          <img
+          <Image
             src={
               data.poster_path
                 ? `https://image.tmdb.org/t/p/w500${data.poster_path}`
-                : '/images/image-not-found.jpg'
+                : NotFoundImage.src
             }
-            alt={data.title || 'Movie Poster'}
+            width={500}
+            height={750}
+            alt={`${data.title}`}
             className="max-w-[200px] aspect-2/3 rounded-lg object-cover"
           />
           <div className="flex flex-col justify-around gap-8">

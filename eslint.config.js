@@ -7,6 +7,7 @@ import tseslint from 'typescript-eslint';
 import eslintPluginPrettier from 'eslint-plugin-prettier/recommended';
 import reactCompiler from 'eslint-plugin-react-compiler';
 import pluginQuery from '@tanstack/eslint-plugin-query';
+import nextPlugin from '@next/eslint-plugin-next';
 
 export default tseslint.config(
   { ignores: ['dist', 'coverage'] },
@@ -15,6 +16,7 @@ export default tseslint.config(
       js.configs.recommended,
       ...tseslint.configs.strict,
       eslintPluginPrettier,
+      ,
     ],
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
@@ -27,6 +29,7 @@ export default tseslint.config(
       'react-refresh': reactRefresh,
       'react-compiler': reactCompiler,
       '@tanstack/query': pluginQuery,
+      '@next/next': nextPlugin,
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
@@ -37,6 +40,7 @@ export default tseslint.config(
       'react-compiler/react-compiler': 'error',
       ...react.configs.recommended.rules,
       ...react.configs['jsx-runtime'].rules,
+      ...nextPlugin.configs['recommended'].rules,
     },
     settings: {
       react: {

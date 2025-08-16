@@ -1,46 +1,46 @@
-import { useState, useEffect, useMemo } from 'react';
+'use client';
+
+import React from 'react';
+import { useState } from 'react';
 import type { Movie } from '../../types/movies/Movie';
 import FeaturedMovieCard from '../Movies/FeaturedMovieCard';
 import { MagnifyingGlass, X } from '../Shared/Icon';
 import Navbar from '../Shared/Navbar';
-import { useTrendingMovies } from '../../queries/useTrendingMovies';
-import FeaturedMovieSkeleton from '../Movies/FeaturedMovieSkeleton';
-import MovieListError from '../Movies/MovieListError';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 type HeaderProps = {
-  searchTerm: string;
-  onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onSearch: () => void;
-  onClearInput: () => void;
+  movies: Movie[];
 };
 
-export default function Header({
-  searchTerm,
-  onInputChange,
-  onSearch,
-  onClearInput,
-}: HeaderProps) {
-  const [selectedMovie, setSelectedMovie] = useState<Movie | undefined>();
-  const { data, isPending, error, refetch } = useTrendingMovies();
-  const trendingSkeletons = useMemo(() => {
-    return Array.from({ length: 10 }).map((_, i) => (
-      <FeaturedMovieSkeleton key={i} />
-    ));
-  }, []);
-
-  const movies = data?.results || [];
-
-  useEffect(() => {
-    if (!selectedMovie && data?.results && data.results.length > 0) {
-      setSelectedMovie(data.results[0]);
-    }
-  }, [data, selectedMovie]);
-
-  if (error) return <MovieListError error={error} onRetry={refetch} />;
+export default function Header({ movies }: HeaderProps) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const initialQuery = searchParams?.get('search') ?? '';
+  const [searchTerm, setSearchTerm] = useState(initialQuery);
+  const [selectedMovie, setSelectedMovie] = useState(movies[0]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    onSearch();
+    const params = new URLSearchParams(searchParams);
+    if (searchTerm) {
+      params.set('search', searchTerm);
+      params.set('searchPage', '1');
+    } else {
+      params.delete('search');
+    }
+    router.replace(`${pathname}?${params.toString()}`);
+  };
+
+  const handleClearInput = () => {
+    setSearchTerm('');
+    const params = new URLSearchParams(searchParams);
+    params.delete('search');
+    router.push(`/?${params.toString()}`);
+  };
+
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
   };
 
   return (
@@ -59,7 +59,7 @@ export default function Header({
                 <input
                   type="search"
                   value={searchTerm}
-                  onChange={onInputChange}
+                  onChange={handleOnChange}
                   placeholder="Search movies..."
                   className="w-full py-2 px-8 bg-blue-950/10 backdrop-blur-md border border-gray-700 text-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#e94560]"
                 />
@@ -71,14 +71,14 @@ export default function Header({
                 <span
                   data-testid="clear-input-button"
                   className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-400 hover:text-gray-200"
-                  onClick={onClearInput}
+                  onClick={handleClearInput}
                 >
                   {searchTerm && <X size={14} />}
                 </span>
               </form>
             </div>
             <button
-              onClick={onSearch}
+              onClick={handleSearch}
               className="py-2 px-4 bg-[#e94560] text-white rounded-full hover:bg-[#d13450] hover:cursor-pointer flex items-center gap-2"
             >
               Search
@@ -113,15 +113,13 @@ export default function Header({
           Trending movies
         </h2>
         <div className="flex flex-nowrap p-4 gap-4 bg-blue-950/10 backdrop-blur-md border border-white/10 rounded-2xl featured-cards-shadow hidden-scrollbar overflow-auto">
-          {isPending
-            ? trendingSkeletons
-            : movies.map((movie) => (
-                <FeaturedMovieCard
-                  onHover={() => setSelectedMovie(movie)}
-                  key={movie.id}
-                  movie={movie}
-                />
-              ))}
+          {movies.map((movie) => (
+            <FeaturedMovieCard
+              onHover={() => setSelectedMovie(movie)}
+              key={movie.id}
+              movie={movie}
+            />
+          ))}
         </div>
       </div>
     </header>

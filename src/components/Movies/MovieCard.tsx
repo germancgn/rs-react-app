@@ -1,21 +1,32 @@
-import { Link, useLocation } from 'react-router-dom';
 import type { Movie } from '../../types/movies/Movie';
 import { getGenreNameById } from '../../utils/movies/genreUtils';
 import { CheckCircleSolid, PlusCircle, StarSolid } from '../Shared/Icon';
 import { useMovieStore } from '../../stores/movieStore';
 import { useMemo } from 'react';
+import Image from 'next/image';
+import NotFoundImage from '../../../public/images/image-not-found.jpg';
+import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 
 type MovieCardProps = {
   movie: Movie;
 };
 
 export default function MovieCard({ movie }: MovieCardProps) {
-  const location = useLocation();
   const { hasItem, add, remove } = useMovieStore();
   const genres = useMemo(() => {
     if (!movie.genre_ids) return [];
     return movie.genre_ids.map((id) => getGenreNameById(id)).filter(Boolean);
   }, [movie.genre_ids]);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  if (!searchParams) return null;
+
+  const handleClick = () => {
+    const params = new URLSearchParams(searchParams);
+    params.set('details', String(movie.id));
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  };
 
   return (
     <div
@@ -49,16 +60,20 @@ export default function MovieCard({ movie }: MovieCardProps) {
           )}
         </label>
       </div>
-      <Link
-        to={{ pathname: `/details/${movie.id}`, search: location.search }}
-        state={{ from: location }}
+      <button
+        type="button"
+        onClick={handleClick}
+        className="p-0 m-0 border-none bg-transparent w-full text-left"
+        tabIndex={0}
       >
-        <img
+        <Image
           src={
             movie.poster_path
               ? `https://image.tmdb.org/t/p/w780/${movie.poster_path}`
-              : '/images/image-not-found.jpg'
+              : NotFoundImage
           }
+          width={780}
+          height={1170}
           alt={movie.title}
           className="w-full aspect-[2/3] object-cover rounded-xl brightness-100 group-hover:brightness-85 transition"
         />
@@ -79,7 +94,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
             </span>
           </div>
         </div>
-      </Link>
+      </button>
     </div>
   );
 }
