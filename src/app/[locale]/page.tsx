@@ -1,4 +1,5 @@
 // import { Metadata } from 'next';
+import { Metadata } from 'next';
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary';
 import Header from '../../components/Header/Header';
 import PopularMoviesContainer from '../../components/Movies/PopularMoviesContainer';
@@ -9,21 +10,21 @@ import {
   trendingMovies,
 } from '../../services/movie-service';
 
-// export const metadata: Metadata = {
-//   title: 'Home | React Movie Apps',
-//   description: 'Watch movies for free on React Movie App',
-// };
+export const metadata: Metadata = {
+  title: 'Home | React Movie Apps',
+  description: 'Watch movies for free on React Movie App',
+};
 
 export default async function Home({
   params,
   searchParams,
 }: {
-  params: { locale: string };
-  searchParams: { [key: string]: string | undefined };
+  params: Promise<{ locale: string }>;
+  searchParams: Promise<{ [key: string]: string | undefined }>;
 }) {
-  const search = searchParams.search;
-  const popularPage = Number(searchParams.popularPage ?? 1);
-  const locale = params.locale;
+  const search = (await searchParams).search;
+  const popularPage = Number((await searchParams).popularPage ?? 1);
+  const locale = (await params).locale;
 
   const [trendingMoviesResponse, initialPopularMovies] = await Promise.all([
     trendingMovies(1, locale),

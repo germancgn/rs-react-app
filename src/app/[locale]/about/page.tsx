@@ -1,12 +1,12 @@
-// import { Metadata } from 'next';
+import { Metadata } from 'next';
 import { useTranslations } from 'next-intl';
 import Navbar from '../../../components/Shared/Navbar';
 import { Link } from '../../../i18n/navigation';
 
-// export const metadata: Metadata = {
-//   title: 'About | React Movie Apps',
-//   description: 'Watch movies for free on React Movie App',
-// };
+export const metadata: Metadata = {
+  title: 'About | React Movie Apps',
+  description: 'Watch movies for free on React Movie App',
+};
 
 export default function About() {
   const t = useTranslations('AboutPage');
