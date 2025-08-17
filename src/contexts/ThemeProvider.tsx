@@ -1,10 +1,15 @@
-import React, { useEffect, useState } from 'react';
+'use client';
+
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { ThemeContext, type Theme } from './ThemeContext';
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>(() => {
-    return (localStorage.getItem('theme') as Theme) || 'dark';
-  });
+  const [theme, setTheme] = useState<Theme>('dark');
+
+  useLayoutEffect(() => {
+    const theme = (localStorage.getItem('theme') ?? 'dark') as Theme;
+    setTheme(theme);
+  }, []);
 
   function toggleTheme() {
     setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));

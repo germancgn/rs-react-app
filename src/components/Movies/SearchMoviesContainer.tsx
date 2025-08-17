@@ -1,7 +1,10 @@
+'use client';
+
 import MoviesList from './MoviesList';
-import { useSearchParams } from 'react-router-dom';
 import { useSearchMovies } from '../../queries/useSearchMovies';
 import MovieListError from './MovieListError';
+import { usePathname, useRouter } from '../../i18n/navigation';
+import { useSearchParams } from 'next/navigation';
 
 type SearchMoviesContainerProps = {
   searchTerm: string;
@@ -10,8 +13,11 @@ type SearchMoviesContainerProps = {
 export default function SearchMoviesContainer({
   searchTerm,
 }: SearchMoviesContainerProps) {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const searchPage = Number(searchParams.get('searchPage')) || 1;
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const searchPage = Number(searchParams.get('searchPage') ?? 1);
+
   const { data, isFetching, refetch, error } = useSearchMovies(
     searchTerm,
     searchPage
@@ -21,9 +27,9 @@ export default function SearchMoviesContainer({
   const total_pages = data?.total_pages ?? 0;
 
   const setPage = (next: number) => {
-    const params = new URLSearchParams(searchParams);
+    const params = new URLSearchParams(searchParams?.toString());
     params.set('searchPage', String(Math.max(1, next)));
-    setSearchParams(params, { replace: true });
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
   if (error) return <MovieListError error={error} onRetry={() => refetch()} />;

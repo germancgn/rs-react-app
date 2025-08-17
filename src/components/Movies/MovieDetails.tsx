@@ -1,7 +1,11 @@
-import { useParams, Link, useLocation } from 'react-router-dom';
 import { CheckCircleSolid, PlusCircle, X } from '../Shared/Icon';
 import { useMovieStore } from '../../stores/movieStore';
 import { useGetMovieById } from '../../queries/useGetMovieById';
+import Image from 'next/image';
+import NotFoundImage from '../../../public/images/image-not-found.jpg';
+import { useTranslations } from 'next-intl';
+import { usePathname, useRouter } from '../../i18n/navigation';
+import { useSearchParams } from 'next/navigation';
 
 function MovieDetailsSkeleton() {
   return (
@@ -36,22 +40,35 @@ function MovieDetailsSkeleton() {
 }
 
 function XButton() {
-  const location = useLocation();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+
+  if (!searchParams) return null;
+
+  const handleClick = () => {
+    const params = new URLSearchParams(searchParams);
+    params.delete('details');
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  };
+
   return (
-    <Link
-      to={{ pathname: '/', search: location.search }}
+    <button
+      onClick={handleClick}
       className=" text-gray-400 hover:text-gray-800 dark:hover:text-gray-100 transition cursor-pointer p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10"
     >
       <span>
         <X size={24} />
       </span>
-    </Link>
+    </button>
   );
 }
 
 export default function MovieDetails() {
-  const { id } = useParams();
+  const searchParams = useSearchParams();
+  const id = searchParams.get('details');
   if (!id) throw new Error("MovieDetails: missing required route param 'id'.");
+  const t = useTranslations('MovieDetails');
 
   const { add, remove, hasItem } = useMovieStore();
   const { data, error, isFetching, refetch } = useGetMovieById(id);
@@ -63,7 +80,7 @@ export default function MovieDetails() {
         <div className="max-w-full p-4 h-fit flex flex-col gap-6 bg-white dark:bg-gray-900 text-white rounded-lg sticky top-4">
           <div className="flex justify-between items-start">
             <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
-              Could not load movie details
+              {t('couldNotLoadMovieDetailsHeading')}
             </h1>
             <XButton />
           </div>
@@ -82,13 +99,15 @@ export default function MovieDetails() {
         <MovieDetailsSkeleton />
       ) : (
         <div className="max-w-fit p-4 h-fit flex flex-col md:flex-row gap-8 bg-white dark:bg-gray-900 text-white rounded-lg sticky top-4">
-          <img
+          <Image
             src={
               data.poster_path
                 ? `https://image.tmdb.org/t/p/w500${data.poster_path}`
-                : '/images/image-not-found.jpg'
+                : NotFoundImage.src
             }
-            alt={data.title || 'Movie Poster'}
+            width={500}
+            height={750}
+            alt={`${data.title}`}
             className="max-w-[200px] aspect-2/3 rounded-lg object-cover"
           />
           <div className="flex flex-col justify-around gap-8">
@@ -109,20 +128,21 @@ export default function MovieDetails() {
               </p>
               <div className="flex flex-wrap gap-4 text-sm text-gray-600 dark:text-gray-300">
                 <span>
-                  <strong>Release:</strong> {data.release_date || 'N/A'}
+                  <strong>{t('releaseText')}:</strong>{' '}
+                  {data.release_date || 'N/A'}
                 </span>
                 <span>
-                  <strong>Runtime:</strong>{' '}
+                  <strong>{t('runtimeText')}:</strong>{' '}
                   {data.runtime ? `${data.runtime} min` : 'N/A'}
                 </span>
                 <span data-testid="movie-details-genres">
-                  <strong>Genres:</strong>{' '}
+                  <strong>{t('genresText')}:</strong>{' '}
                   {data.genres && data.genres.length > 0
                     ? data.genres.map((g) => g.name).join(', ')
                     : 'N/A'}
                 </span>
                 <span data-testid="movie-details-rating">
-                  <strong>Rating:</strong>{' '}
+                  <strong>{t('ratingText')}:</strong>{' '}
                   {data.vote_average ? `${data.vote_average} / 10` : 'N/A'}
                 </span>
               </div>
@@ -132,14 +152,14 @@ export default function MovieDetails() {
                 onClick={() => refetch()}
                 className="flex items-center gap-2 py-2 px-4 text-sm rounded-full border text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-200 border-gray-600 dark:border-gray-400 hover:border-gray-800 dark:hover:border-gray-200 cursor-pointer transition-colors"
               >
-                Refetch
+                {t('refetchButtonLabel')}
               </button>
               {hasItem(data.id) ? (
                 <button
                   onClick={() => remove(data.id)}
                   className="flex items-center gap-2 py-2 px-4 text-sm rounded-full border border-sky-500 hover:bg-sky-400 cursor-pointer bg-sky-500"
                 >
-                  <span>Selected</span>
+                  <span>{t('selectedMovieButtonLabel')}</span>
                   <span>
                     <CheckCircleSolid size={18} />
                   </span>
@@ -155,7 +175,7 @@ export default function MovieDetails() {
                   }
                   className="flex items-center gap-2 py-2 px-4 text-sm rounded-full border text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-200 border-gray-600 dark:border-gray-400 hover:border-gray-800 dark:hover:border-gray-200 cursor-pointer transition-colors"
                 >
-                  <span>Select movie</span>
+                  <span>{t('selectMovieButtonLabel')}</span>
                   <span>
                     <PlusCircle size={18} />
                   </span>

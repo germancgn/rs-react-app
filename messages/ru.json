@@ -1,0 +1,42 @@
+{
+  "HomePage": {
+    "title": "Приложение React Movie",
+    "about": "Смотрите фильмы бесплатно в приложении React Movie",
+    "searchInputPlaceholderText": "Поиск фильмов...",
+    "searchButtonLabel": "Поиск",
+    "watchNowButtonLabel": "Смотреть сейчас",
+    "moreInfoButtonLabel": "Подробнее",
+    "headingTrending": "Хиты недели",
+    "headingPopularMovies": "Популярные фильмы",
+    "invalidateAllText": "Инвалидировать все запросы",
+    "refreshText": "Обновить",
+    "pageText": "Страница",
+    "pageOfText": "из"
+  },
+  "NavBar": {
+    "homeLinkLabel": "Главная",
+    "aboutLinkLabel": "О приложении",
+    "signInLinkLabel": "Войти"
+  },
+  "AboutPage": {
+    "aboutHeading": "О приложении",
+    "aboutText": "Это приложение разработал Герман Билалов, в рамках курса RS School React.",
+    "learnMoreAtText": "Узнайте больше о курсе на"
+  },
+  "SelectedMoviesBar": {
+    "selectedMoviesHeading": "Выбранные фильмы",
+    "downloadCSVButtonLabel": "Скачать CSV",
+    "unselectAllLabel": "Снять все",
+    "removeButtonLabel": "Удалить"
+  },
+  "MovieDetails": {
+    "couldNotLoadMovieDetailsHeading": "Не удалось загрузить детали фильма",
+    "releaseText": "Дата выхода",
+    "runtimeText": "Продолжительность",
+    "genresText": "Жанры",
+    "ratingText": "Рейтинг",
+    "refetchButtonLabel": "Обновить",
+    "selectedMovieButtonLabel": "Выбран",
+    "selectMovieButtonLabel": "Выбрать фильм"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "HomePage": {
+    "title": "React Movie Apps",
+    "about": "Filme kostenlos in der React Movie App ansehen",
+    "searchInputPlaceholderText": "Filme suchen...",
+    "searchButtonLabel": "Suchen",
+    "watchNowButtonLabel": "Jetzt ansehen",
+    "moreInfoButtonLabel": "Mehr Informationen",
+    "headingTrending": "Trendende Filme",
+    "headingPopularMovies": "Beliebte Filme",
+    "invalidateAllText": "Alle Abfragen ungültig machen",
+    "refreshText": "Aktualisieren",
+    "pageText": "Seite",
+    "pageOfText": "von"
+  },
+  "NavBar": {
+    "homeLinkLabel": "Startseite",
+    "aboutLinkLabel": "Über",
+    "signInLinkLabel": "Anmelden"
+  },
+  "AboutPage": {
+    "aboutHeading": "Über diese App",
+    "aboutText": "Diese Anwendung wurde von German Bilalov, einem Junior-Webentwickler, im Rahmen des RS School React-Kurses entwickelt.",
+    "learnMoreAtText": "Erfahren Sie mehr über den Kurs unter"
+  },
+  "SelectedMoviesBar": {
+    "selectedMoviesHeading": "Ausgewählte Filme",
+    "downloadCSVButtonLabel": "CSV herunterladen",
+    "unselectAllLabel": "Alle abwählen",
+    "removeButtonLabel": "Entfernen"
+  },
+  "MovieDetails": {
+    "couldNotLoadMovieDetailsHeading": "Filmdetails konnten nicht geladen werden",
+    "releaseText": "Veröffentlichung",
+    "runtimeText": "Laufzeit",
+    "genresText": "Genres",
+    "ratingText": "Bewertung",
+    "refetchButtonLabel": "Erneut laden",
+    "selectedMovieButtonLabel": "Ausgewählt",
+    "selectMovieButtonLabel": "Film auswählen"
+  }
+}

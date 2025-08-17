@@ -1,20 +1,39 @@
-import { useSearchParams } from 'react-router-dom';
+'use client';
+
 import MoviesList from './MoviesList';
 import { usePopularMovies } from '../../queries/usePopularMovies';
 import MovieListError from './MovieListError';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+import { MovieResponse } from '../../types/movies/MovieResponse';
 
-export default function PopularMoviesContainer() {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const page = Number(searchParams.get('popularPage')) || 1;
+type PopularMoviesContainerProps = {
+  initialData: MovieResponse;
+  initialPage: number;
+};
 
-  const { data, isFetching, refetch, error } = usePopularMovies(page);
+export default function PopularMoviesContainer({
+  initialData,
+  initialPage,
+}: PopularMoviesContainerProps) {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const t = useTranslations('HomePage');
+
+  const page = Number(searchParams.get('popularPage') ?? 1);
+
+  const { data, isFetching, refetch, error } = usePopularMovies(
+    page,
+    initialData,
+    initialPage
+  );
   const results = data?.results ?? [];
   const total_pages = data?.total_pages ?? 0;
 
   const setPage = (next: number) => {
-    const params = new URLSearchParams(searchParams);
+    const params = new URLSearchParams(searchParams?.toString());
     params.set('popularPage', String(Math.max(1, next)));
-    setSearchParams(params, { replace: true });
+    window.history.replaceState(null, '', `${pathname}?${params.toString()}`);
   };
 
   if (error) return <MovieListError error={error} onRetry={() => refetch()} />;
@@ -23,7 +42,7 @@ export default function PopularMoviesContainer() {
     <MoviesList
       movies={results}
       isFetching={isFetching}
-      title="Popular movies"
+      title={t('headingPopularMovies')}
       totalPages={total_pages}
       page={page}
       onNextPage={() =>

@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from '../../i18n/navigation';
 
 export default function NotFound() {
   return (
@@ -8,7 +8,7 @@ export default function NotFound() {
         The page you are looking for does not exist.
       </p>
       <Link
-        to="/"
+        href="/"
         className="px-4 py-2 bg-pink-500 hover:bg-pink-600 rounded text-white transition"
       >
         Go to Home

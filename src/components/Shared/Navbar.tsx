@@ -1,43 +1,47 @@
-import { NavLink } from 'react-router-dom';
+'use client';
+
 import { ThemeToggleButton } from './ThemeToggleButton';
+import { useTranslations } from 'next-intl';
+import { usePathname, Link } from '../../i18n/navigation';
+import LanguageSwitcher from './LanguageSwitcher';
 
 export default function Navbar() {
+  const pathname = usePathname();
+  const t = useTranslations('NavBar');
+
   return (
     <nav className="flex flex-col max-w-6xl m-auto sm:flex-row items-center justify-between gap-4 p-4 rounded-lg">
-      <ul className="flex gap-8 w-full">
+      <ul className="flex gap-8 w-full items-center">
         <li>
-          <NavLink
-            to="/"
-            className={({ isActive }) =>
-              'navlink-style' + (isActive ? ' active' : '')
-            }
+          <Link
+            href="/"
+            className={`navlink` + (pathname === '/' ? ' active' : '')}
           >
-            Home
-          </NavLink>
+            {t('homeLinkLabel')}
+          </Link>
         </li>
         <li>
-          <NavLink
-            to="/about"
-            className={({ isActive }) =>
-              'navlink-style' + (isActive ? ' active' : '')
-            }
+          <Link
+            href="/about"
+            className={`navlink` + (pathname === '/about' ? ' active' : '')}
           >
-            About
-          </NavLink>
+            {t('aboutLinkLabel')}
+          </Link>
         </li>
 
-        <li className="ml-auto navlink-style">
+        <li className="ml-auto">
+          <LanguageSwitcher />
+        </li>
+        <li className="navlink">
           <ThemeToggleButton />
         </li>
         <li>
-          <NavLink
-            to="/signin"
-            className={({ isActive }) =>
-              'navlink-style' + (isActive ? ' active' : '')
-            }
+          <Link
+            href="/signin"
+            className={`navlink` + (pathname === '/signin' ? ' active' : '')}
           >
-            Sign in
-          </NavLink>
+            {t('signInLinkLabel')}
+          </Link>
         </li>
       </ul>
     </nav>

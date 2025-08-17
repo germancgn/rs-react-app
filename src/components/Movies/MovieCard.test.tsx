@@ -3,7 +3,6 @@ import MovieCard from './MovieCard';
 import { cleanup, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/vitest';
 import { mockMovies } from '../../__mocks__/movies';
-import { MemoryRouter } from 'react-router-dom';
 
 afterEach(() => {
   cleanup();
@@ -13,11 +12,7 @@ const movie = mockMovies[0];
 
 describe('MovieCard', () => {
   it('renders the movie with the title as a heading', () => {
-    render(
-      <MemoryRouter>
-        <MovieCard movie={movie} />
-      </MemoryRouter>
-    );
+    render(<MovieCard movie={movie} />);
     const heading = screen.getByRole('heading', {
       name: new RegExp(movie.title),
     });
@@ -25,11 +20,7 @@ describe('MovieCard', () => {
   });
 
   it('renders the movie poster image', () => {
-    render(
-      <MemoryRouter>
-        <MovieCard movie={movie} />
-      </MemoryRouter>
-    );
+    render(<MovieCard movie={movie} />);
     const posterImage = screen.getByRole('img', {
       name: new RegExp(movie.title),
     });
@@ -43,11 +34,7 @@ describe('MovieCard', () => {
   it('renders fallback image when poster_path is not provided', () => {
     const movieWithoutPoster = { ...movie, poster_path: null };
 
-    render(
-      <MemoryRouter>
-        <MovieCard movie={movieWithoutPoster} />
-      </MemoryRouter>
-    );
+    render(<MovieCard movie={movieWithoutPoster} />);
 
     const posterImage = screen.getByRole('img', {
       name: new RegExp(movie.title),

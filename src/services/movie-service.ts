@@ -6,10 +6,13 @@ import type { MovieDetails } from '../types/movies/MovieDetails';
 const API_KEY = '42f561b23ffd1830a30eaf91afadf039';
 const BASE_URL = 'https://api.themoviedb.org/3';
 
-export async function fetchPopularMovies(page = 1): Promise<MovieResponse> {
+export async function fetchPopularMovies(
+  page = 1,
+  locale: string
+): Promise<MovieResponse> {
   try {
     const response = await fetch(
-      `${BASE_URL}/movie/popular?page=${page}&api_key=${API_KEY}&language=en`
+      `${BASE_URL}/movie/popular?page=${page}&api_key=${API_KEY}&language=${locale}`
     );
     if (!response.ok) {
       throw new HttpError(
@@ -33,11 +36,12 @@ export async function fetchPopularMovies(page = 1): Promise<MovieResponse> {
 
 export async function searchMovies(
   name: string,
-  page = 1
+  page = 1,
+  locale: string
 ): Promise<MovieResponse> {
   try {
     const response = await fetch(
-      `${BASE_URL}/search/movie?query=${encodeURIComponent(name)}&page=${page}&api_key=${API_KEY}&language=en`
+      `${BASE_URL}/search/movie?query=${encodeURIComponent(name)}&page=${page}&api_key=${API_KEY}&language=${locale}`
     );
 
     if (!response.ok) {
@@ -59,10 +63,13 @@ export async function searchMovies(
   }
 }
 
-export async function discoverMovies(page = 1): Promise<MovieResponse> {
+export async function discoverMovies(
+  page = 1,
+  locale: string
+): Promise<MovieResponse> {
   try {
     const response = await fetch(
-      `${BASE_URL}/discover/movie?page=${page}&api_key=${API_KEY}&language=en`
+      `${BASE_URL}/discover/movie?page=${page}&api_key=${API_KEY}&language=${locale}`
     );
 
     if (!response.ok) {
@@ -84,10 +91,13 @@ export async function discoverMovies(page = 1): Promise<MovieResponse> {
   }
 }
 
-export async function trendingMovies(page = 1): Promise<MovieResponse> {
+export async function trendingMovies(
+  page = 1,
+  locale: string
+): Promise<MovieResponse> {
   try {
     const response = await fetch(
-      `${BASE_URL}/trending/movie/week?page=${page}&api_key=${API_KEY}&language=en`
+      `${BASE_URL}/trending/movie/week?page=${page}&api_key=${API_KEY}&language=${locale}`
     );
 
     if (!response.ok) {
@@ -109,10 +119,13 @@ export async function trendingMovies(page = 1): Promise<MovieResponse> {
   }
 }
 
-export async function getMovieById(id: string): Promise<MovieDetails> {
+export async function getMovieById(
+  id: string,
+  locale: string
+): Promise<MovieDetails> {
   try {
     const response = await fetch(
-      `${BASE_URL}/movie/${id}?api_key=${API_KEY}&language=en`
+      `${BASE_URL}/movie/${id}?api_key=${API_KEY}&language=${locale}`
     );
 
     if (!response.ok) {

@@ -1,3 +1,6 @@
+'use client';
+
+import React from 'react';
 import { Component } from 'react';
 import type { ReactNode } from 'react';
 

@@ -1,46 +1,32 @@
+'use client';
 import { useRef, useState } from 'react';
 import { useMovieStore } from '../../stores/movieStore';
-import { objectToCSV } from '../../utils/csv/csv';
 import {
   CaretDown,
   CaretUp,
   DownloadSimple,
   SelectionSlash,
 } from '../Shared/Icon';
-import { createBlob } from '../../utils/files/download';
+import Image from 'next/image';
+import NotFoundImage from '../../../public/images/image-not-found.jpg';
+import { useTranslations } from 'next-intl';
 
 export function SelectedMoviesBar() {
   const [isExpanded, setIsExpanded] = useState(true);
   const { selected, remove, clear } = useMovieStore();
-  const downloadAnchorRef = useRef<HTMLAnchorElement | null>(null);
 
+  const formRef = useRef<HTMLFormElement | null>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const t = useTranslations('SelectedMoviesBar');
   const selectedCount = selected.length;
+
   if (selectedCount === 0) return null;
 
-  const handleDownload = () => {
-    if (!downloadAnchorRef.current) return;
+  const handleDownload = async () => {
+    if (!formRef.current || !inputRef.current) return;
 
-    const csvData = URL.createObjectURL(
-      createBlob(
-        objectToCSV(selected, [
-          'id',
-          'title',
-          'adult',
-          'overview',
-          'popularity',
-          'poster_path',
-          'release_date',
-          'vote_average',
-          'vote_count',
-        ])
-      )
-    );
-
-    if (downloadAnchorRef.current) {
-      downloadAnchorRef.current.href = csvData;
-      downloadAnchorRef.current.download = `${selectedCount}-movies.csv`;
-      downloadAnchorRef.current.click();
-    }
+    inputRef.current.value = JSON.stringify(selected);
+    formRef.current.submit();
   };
 
   return (
@@ -49,7 +35,7 @@ export function SelectedMoviesBar() {
         <div className="flex justify-between items-center py-4 border-b border-gray-200 dark:border-gray-700 gap-2">
           <div className="flex-1">
             <h3 className="text-[min(5vw,18px)] font-bold text-gray-800 dark:text-white">
-              Selected Movies ({selected.length})
+              {t('selectedMoviesHeading')} ({selected.length})
             </h3>
           </div>
           <div className=" flex justify-center">
@@ -68,13 +54,18 @@ export function SelectedMoviesBar() {
               <span>
                 <DownloadSimple size={20} />
               </span>
-              <span className="max-sm:hidden">Download CSV</span>
-              <a
-                ref={downloadAnchorRef}
-                className="hidden"
-                aria-hidden="true"
-              />
+              <span className="max-sm:hidden">
+                {t('downloadCSVButtonLabel')}
+              </span>
             </button>
+            <form
+              ref={formRef}
+              action="/api/export-csv"
+              method="post"
+              className="hidden"
+            >
+              <input ref={inputRef} name="data" type="hidden" />
+            </form>
             <button
               data-testid="button-unselect"
               onClick={() => {
@@ -86,7 +77,7 @@ export function SelectedMoviesBar() {
               <span>
                 <SelectionSlash size={20} />
               </span>
-              <span className="max-sm:hidden">Unselect All</span>
+              <span className="max-sm:hidden">{t('unselectAllLabel')}</span>
             </button>
           </div>
         </div>
@@ -104,15 +95,18 @@ export function SelectedMoviesBar() {
                 className="flex justify-between items-center hover:bg-gray-200 dark:hover:bg-gray-700 p-4 rounded-md"
               >
                 <div className="flex items-center gap-4 min-w-0">
-                  <img
+                  <Image
                     src={
                       movie.poster_path
                         ? `https://image.tmdb.org/t/p/w780/${movie.poster_path}`
-                        : '/images/image-not-found.jpg'
+                        : NotFoundImage
                     }
-                    alt=""
+                    alt={`${movie.title}`}
+                    width={40}
+                    height={40}
                     className="w-10 h-10 bg-cover object-cover rounded"
                   />
+
                   <p className="text-gray-800 dark:text-gray-300 text-sm flex-1 truncate">
                     {movie.title}
                   </p>
@@ -121,7 +115,7 @@ export function SelectedMoviesBar() {
                   onClick={() => remove(movie.id)}
                   className="cursor-pointer text-red-400 dark:text-red-500 hover:text-red-500 dark:hover:text-red-400 font-semibold text-sm"
                 >
-                  Remove
+                  {t('removeButtonLabel')}
                 </button>
               </li>
             ))}
