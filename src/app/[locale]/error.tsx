@@ -2,7 +2,7 @@
 
 import { Link } from '../../i18n/navigation';
 
-export default function NotFound() {
+export default function Error() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-200 dark:bg-gray-900 text-gray-800 dark:text-white">
       <h1 className="text-6xl font-bold mb-4">Something went wrong</h1>
