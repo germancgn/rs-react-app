@@ -8,7 +8,7 @@ export function useSearchMovies(searchTerm: string, page = 1) {
   const locale = useLocale();
 
   return useQuery<MovieResponse>({
-    queryKey: ['searchMovies', searchTerm, page],
+    queryKey: ['searchMovies', locale, searchTerm, page],
     queryFn: () => delay(() => searchMovies(searchTerm, page, locale), 250),
     staleTime: 1000 * 30,
     gcTime: 1000 * 60 * 5,

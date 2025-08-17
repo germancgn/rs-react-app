@@ -9,7 +9,7 @@ export function useGetMovieById(id: string) {
   const locale = useLocale();
 
   return useQuery<MovieDetails>({
-    queryKey: ['getMovieById', id],
+    queryKey: ['getMovieById', locale, id],
     queryFn: () => delay(() => getMovieById(id, locale), 250),
     staleTime: 1000 * 30,
     gcTime: 1000 * 60 * 5,

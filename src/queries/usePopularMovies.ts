@@ -8,7 +8,7 @@ export function usePopularMovies(page = 1) {
   const locale = useLocale();
 
   return useQuery<MovieResponse>({
-    queryKey: ['popularMovies', page],
+    queryKey: ['popularMovies', locale, page],
     queryFn: () => delay(() => fetchPopularMovies(page, locale), 250),
     staleTime: 1000 * 30,
     gcTime: 1000 * 60 * 5,

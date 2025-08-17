@@ -8,7 +8,7 @@ export function useTrendingMovies(page = 1) {
   const locale = useLocale();
   console.log({ locale });
   return useQuery<MovieResponse>({
-    queryKey: ['trendingMovies', page],
+    queryKey: ['trendingMovies', locale, page],
     queryFn: () => delay(() => trendingMovies(page, locale), 250),
     staleTime: 1000 * 30,
     gcTime: 1000 * 60 * 5,
