@@ -3,8 +3,9 @@ import { useMovieStore } from '../../stores/movieStore';
 import { useGetMovieById } from '../../queries/useGetMovieById';
 import Image from 'next/image';
 import NotFoundImage from '../../../public/images/image-not-found.jpg';
-import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
+import { usePathname, useRouter } from '../../i18n/navigation';
+import { useSearchParams } from 'next/navigation';
 
 function MovieDetailsSkeleton() {
   return (

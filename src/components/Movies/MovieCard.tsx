@@ -5,7 +5,8 @@ import { useMovieStore } from '../../stores/movieStore';
 import { useMemo } from 'react';
 import Image from 'next/image';
 import NotFoundImage from '../../../public/images/image-not-found.jpg';
-import { usePathname, useSearchParams, useRouter } from 'next/navigation';
+import { usePathname, useRouter } from '../../i18n/navigation';
+import { useSearchParams } from 'next/navigation';
 
 type MovieCardProps = {
   movie: Movie;

@@ -3,7 +3,8 @@
 import MoviesList from './MoviesList';
 import { useSearchMovies } from '../../queries/useSearchMovies';
 import MovieListError from './MovieListError';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter } from '../../i18n/navigation';
+import { useSearchParams } from 'next/navigation';
 
 type SearchMoviesContainerProps = {
   searchTerm: string;

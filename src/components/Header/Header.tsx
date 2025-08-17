@@ -6,8 +6,9 @@ import type { Movie } from '../../types/movies/Movie';
 import FeaturedMovieCard from '../Movies/FeaturedMovieCard';
 import { MagnifyingGlass, X } from '../Shared/Icon';
 import Navbar from '../Shared/Navbar';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
+import { usePathname, useRouter } from '../../i18n/navigation';
+import { useSearchParams } from 'next/navigation';
 
 type HeaderProps = {
   movies: Movie[];

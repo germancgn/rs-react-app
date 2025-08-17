@@ -3,8 +3,10 @@
 import MoviesList from './MoviesList';
 import { usePopularMovies } from '../../queries/usePopularMovies';
 import MovieListError from './MovieListError';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
+import { usePathname, useRouter } from '../../i18n/navigation';
+import { useSearchParams } from 'next/navigation';
 
 export default function PopularMoviesContainer() {
   const router = useRouter();
