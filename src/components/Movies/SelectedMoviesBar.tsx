@@ -1,14 +1,12 @@
 'use client';
 import { useRef, useState } from 'react';
 import { useMovieStore } from '../../stores/movieStore';
-import { objectToCSV } from '../../utils/csv/csv';
 import {
   CaretDown,
   CaretUp,
   DownloadSimple,
   SelectionSlash,
 } from '../Shared/Icon';
-import { createBlob } from '../../utils/files/download';
 import Image from 'next/image';
 import NotFoundImage from '../../../public/images/image-not-found.jpg';
 import { useTranslations } from 'next-intl';
@@ -22,30 +20,21 @@ export function SelectedMoviesBar() {
 
   if (selectedCount === 0) return null;
 
-  const handleDownload = () => {
+  const handleDownload = async () => {
     if (!downloadAnchorRef.current) return;
 
-    const csvData = URL.createObjectURL(
-      createBlob(
-        objectToCSV(selected, [
-          'id',
-          'title',
-          'adult',
-          'overview',
-          'popularity',
-          'poster_path',
-          'release_date',
-          'vote_average',
-          'vote_count',
-        ])
-      )
-    );
+    const response = await fetch('/api/export-csv', {
+      method: 'POST',
+      body: JSON.stringify(selected),
+    });
 
-    if (downloadAnchorRef.current) {
-      downloadAnchorRef.current.href = csvData;
-      downloadAnchorRef.current.download = `${selectedCount}-movies.csv`;
-      downloadAnchorRef.current.click();
-    }
+    if (!response.ok) return;
+
+    const csvData = URL.createObjectURL(await response.blob());
+
+    downloadAnchorRef.current.href = csvData;
+    downloadAnchorRef.current.download = `${selectedCount}-movies.csv`;
+    downloadAnchorRef.current.click();
   };
 
   return (
@@ -76,12 +65,8 @@ export function SelectedMoviesBar() {
               <span className="max-sm:hidden">
                 {t('downloadCSVButtonLabel')}
               </span>
-              <a
-                ref={downloadAnchorRef}
-                className="hidden"
-                aria-hidden="true"
-              />
             </button>
+            <a ref={downloadAnchorRef} className="hidden" aria-hidden="true" />
             <button
               data-testid="button-unselect"
               onClick={() => {
