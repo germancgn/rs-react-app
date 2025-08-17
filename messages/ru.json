@@ -28,5 +28,15 @@
     "downloadCSVButtonLabel": "Скачать CSV",
     "unselectAllLabel": "Снять все",
     "removeButtonLabel": "Удалить"
+  },
+  "MovieDetails": {
+    "couldNotLoadMovieDetailsHeading": "Не удалось загрузить детали фильма",
+    "releaseText": "Дата выхода",
+    "runtimeText": "Продолжительность",
+    "genresText": "Жанры",
+    "ratingText": "Рейтинг",
+    "refetchButtonLabel": "Обновить",
+    "selectedMovieButtonLabel": "Выбран",
+    "selectMovieButtonLabel": "Выбрать фильм"
   }
 }

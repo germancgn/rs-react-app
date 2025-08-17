@@ -28,5 +28,15 @@
     "downloadCSVButtonLabel": "Download CSV",
     "unselectAllLabel": "Unselect All",
     "removeButtonLabel": "Remove"
+  },
+  "MovieDetails": {
+    "couldNotLoadMovieDetailsHeading": "Could not load movie details",
+    "releaseText": "Release",
+    "runtimeText": "Runtime",
+    "genresText": "Genres",
+    "ratingText": "Rating",
+    "refetchButtonLabel": "Refetch",
+    "selectedMovieButtonLabel": "Selected",
+    "selectMovieButtonLabel": "Select movie"
   }
 }

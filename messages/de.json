@@ -28,5 +28,15 @@
     "downloadCSVButtonLabel": "CSV herunterladen",
     "unselectAllLabel": "Alle abwählen",
     "removeButtonLabel": "Entfernen"
+  },
+  "MovieDetails": {
+    "couldNotLoadMovieDetailsHeading": "Filmdetails konnten nicht geladen werden",
+    "releaseText": "Veröffentlichung",
+    "runtimeText": "Laufzeit",
+    "genresText": "Genres",
+    "ratingText": "Bewertung",
+    "refetchButtonLabel": "Erneut laden",
+    "selectedMovieButtonLabel": "Ausgewählt",
+    "selectMovieButtonLabel": "Film auswählen"
   }
 }
