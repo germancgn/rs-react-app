@@ -22,11 +22,12 @@ export default async function Home({
   searchParams: { [key: string]: string | undefined };
 }) {
   const search = searchParams.search;
+  const popularPage = Number(searchParams.popularPage ?? 1);
   const locale = params.locale;
-  console.log({ locale2: locale });
-  const [trendingMoviesResponse] = await Promise.all([
+
+  const [trendingMoviesResponse, initialPopularMovies] = await Promise.all([
     trendingMovies(1, locale),
-    fetchPopularMovies(1, locale),
+    fetchPopularMovies(popularPage, locale),
   ]);
 
   return (
@@ -36,7 +37,10 @@ export default async function Home({
         {search ? (
           <SearchMoviesContainer searchTerm={search} />
         ) : (
-          <PopularMoviesContainer />
+          <PopularMoviesContainer
+            initialData={initialPopularMovies}
+            initialPage={popularPage}
+          />
         )}
       </ErrorBoundary>
       <SelectedMoviesBar />

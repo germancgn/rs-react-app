@@ -3,27 +3,37 @@
 import MoviesList from './MoviesList';
 import { usePopularMovies } from '../../queries/usePopularMovies';
 import MovieListError from './MovieListError';
-import { useSearchParams } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { usePathname, useRouter } from '../../i18n/navigation';
-import { useSearchParams } from 'next/navigation';
+import { MovieResponse } from '../../types/movies/MovieResponse';
 
-export default function PopularMoviesContainer() {
-  const router = useRouter();
+type PopularMoviesContainerProps = {
+  initialData: MovieResponse;
+  initialPage: number;
+};
+
+export default function PopularMoviesContainer({
+  initialData,
+  initialPage,
+}: PopularMoviesContainerProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const t = useTranslations('HomePage');
 
   const page = Number(searchParams.get('popularPage') ?? 1);
 
-  const { data, isFetching, refetch, error } = usePopularMovies(page);
+  const { data, isFetching, refetch, error } = usePopularMovies(
+    page,
+    initialData,
+    initialPage
+  );
   const results = data?.results ?? [];
   const total_pages = data?.total_pages ?? 0;
 
   const setPage = (next: number) => {
     const params = new URLSearchParams(searchParams?.toString());
     params.set('popularPage', String(Math.max(1, next)));
-    router.push(`${pathname}?${params.toString()}`, { scroll: false });
+    window.history.replaceState(null, '', `${pathname}?${params.toString()}`);
   };
 
   if (error) return <MovieListError error={error} onRetry={() => refetch()} />;
