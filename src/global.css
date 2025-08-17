@@ -120,5 +120,5 @@ input[type='search']::-webkit-search-results-decoration {
 }
 
 .language-switcher-button {
-  @apply flex gap-1 items-center p-1 [.header-hero_&]:hover:bg-white/10 active:bg-black/10 dark:active:bg-white/10 [.header-hero_&]:active:bg-white/20 border-1 border-black/10 dark:border-white/10 [.header-hero_&]:border-white/10 rounded-sm cursor-pointer transition-colors select-none;
+  @apply flex gap-1 items-center p-1 [.header-hero_&]:hover:bg-white/10 active:bg-black/10 active:scale-[.95] dark:active:bg-white/10 [.header-hero_&]:active:bg-white/20 border-1 border-black/10 dark:border-white/10 [.header-hero_&]:border-white/10 rounded-sm cursor-pointer transition-colors select-none;
 }

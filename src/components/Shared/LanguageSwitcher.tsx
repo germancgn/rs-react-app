@@ -50,7 +50,7 @@ export default function LanguageSwitcher() {
     <div className="relative" ref={togglerRef}>
       <button onClick={toggleMenu} className="navlink language-switcher-button">
         <Globe size={18} />
-        <span className="inline-flex leading-0">{currLocale}</span>
+        <span className="inline-flex leading-0 pb-0.5">{currLocale}</span>
       </button>
 
       <ul
