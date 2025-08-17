@@ -22,5 +22,11 @@
     "aboutHeading": "About This App",
     "aboutText": "This application was developed by German Bilalov, a junior web developer, as part of the RS School React course.",
     "learnMoreAtText": "Learn more about the course at"
+  },
+  "SelectedMoviesBar": {
+    "selectedMoviesHeading": "Selected Movies",
+    "downloadCSVButtonLabel": "Download CSV",
+    "unselectAllLabel": "Unselect All",
+    "removeButtonLabel": "Remove"
   }
 }

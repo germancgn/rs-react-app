@@ -11,13 +11,15 @@ import {
 import { createBlob } from '../../utils/files/download';
 import Image from 'next/image';
 import NotFoundImage from '../../../public/images/image-not-found.jpg';
+import { useTranslations } from 'next-intl';
 
 export function SelectedMoviesBar() {
   const [isExpanded, setIsExpanded] = useState(true);
   const { selected, remove, clear } = useMovieStore();
   const downloadAnchorRef = useRef<HTMLAnchorElement | null>(null);
-
+  const t = useTranslations('SelectedMoviesBar');
   const selectedCount = selected.length;
+
   if (selectedCount === 0) return null;
 
   const handleDownload = () => {
@@ -52,7 +54,7 @@ export function SelectedMoviesBar() {
         <div className="flex justify-between items-center py-4 border-b border-gray-200 dark:border-gray-700 gap-2">
           <div className="flex-1">
             <h3 className="text-[min(5vw,18px)] font-bold text-gray-800 dark:text-white">
-              Selected Movies ({selected.length})
+              {t('selectedMoviesHeading')} ({selected.length})
             </h3>
           </div>
           <div className=" flex justify-center">
@@ -71,7 +73,9 @@ export function SelectedMoviesBar() {
               <span>
                 <DownloadSimple size={20} />
               </span>
-              <span className="max-sm:hidden">Download CSV</span>
+              <span className="max-sm:hidden">
+                {t('downloadCSVButtonLabel')}
+              </span>
               <a
                 ref={downloadAnchorRef}
                 className="hidden"
@@ -89,7 +93,7 @@ export function SelectedMoviesBar() {
               <span>
                 <SelectionSlash size={20} />
               </span>
-              <span className="max-sm:hidden">Unselect All</span>
+              <span className="max-sm:hidden">{t('unselectAllLabel')}</span>
             </button>
           </div>
         </div>
@@ -127,7 +131,7 @@ export function SelectedMoviesBar() {
                   onClick={() => remove(movie.id)}
                   className="cursor-pointer text-red-400 dark:text-red-500 hover:text-red-500 dark:hover:text-red-400 font-semibold text-sm"
                 >
-                  Remove
+                  {t('removeButtonLabel')}
                 </button>
               </li>
             ))}

@@ -22,5 +22,11 @@
     "aboutHeading": "О приложении",
     "aboutText": "Это приложение разработал Герман Билалов, в рамках курса RS School React.",
     "learnMoreAtText": "Узнайте больше о курсе на"
+  },
+  "SelectedMoviesBar": {
+    "selectedMoviesHeading": "Выбранные фильмы",
+    "downloadCSVButtonLabel": "Скачать CSV",
+    "unselectAllLabel": "Снять все",
+    "removeButtonLabel": "Удалить"
   }
 }
