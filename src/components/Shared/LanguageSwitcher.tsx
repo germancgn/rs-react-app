@@ -3,6 +3,7 @@
 import { useLocale } from 'next-intl';
 import { useState, useRef, useEffect } from 'react';
 import { redirect, usePathname } from '../../i18n/navigation';
+import { Globe } from './Icon';
 
 type Locale = {
   code: string;
@@ -47,16 +48,13 @@ export default function LanguageSwitcher() {
 
   return (
     <div className="relative" ref={togglerRef}>
-      <span
-        onClick={toggleMenu}
-        className="navlink py-1 px-2 hover:bg-white/20 border-1 border-white/10 rounded-sm cursor-pointer transition-colors select-none"
-      >
-        {locales.find((locale) => locale.code === currLocale)?.label ??
-          'Language'}
-      </span>
+      <button onClick={toggleMenu} className="navlink language-switcher-button">
+        <Globe size={18} />
+        <span className="inline-flex leading-0">{currLocale}</span>
+      </button>
 
       <ul
-        className={`absolute right-0 z-10 mt-1.5 border-1 border-white/10 bg-white/20 shadow-xs p-1 rounded-sm transform transition-all duration-200 ease-out ${
+        className={`language-switcher-menu ${
           showMenu
             ? 'opacity-100 translate-y-0'
             : 'opacity-0 -translate-y-2 pointer-events-none'
@@ -66,7 +64,7 @@ export default function LanguageSwitcher() {
           .filter((locale) => locale.code !== currLocale)
           .map((locale, i) => (
             <li
-              className="text-gray-200 hover:text-white cursor-pointer py-1 px-2 hover:bg-white/30 rounded select-none"
+              className="text-gray-200 hover:text-white cursor-pointer py-1 px-2 hover:bg-white/10 rounded select-none"
               key={i}
               onClick={() => handleLocaleChange(locale)}
             >
