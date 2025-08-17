@@ -14,27 +14,19 @@ import { useTranslations } from 'next-intl';
 export function SelectedMoviesBar() {
   const [isExpanded, setIsExpanded] = useState(true);
   const { selected, remove, clear } = useMovieStore();
-  const downloadAnchorRef = useRef<HTMLAnchorElement | null>(null);
+
+  const formRef = useRef<HTMLFormElement | null>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const t = useTranslations('SelectedMoviesBar');
   const selectedCount = selected.length;
 
   if (selectedCount === 0) return null;
 
   const handleDownload = async () => {
-    if (!downloadAnchorRef.current) return;
+    if (!formRef.current || !inputRef.current) return;
 
-    const response = await fetch('/api/export-csv', {
-      method: 'POST',
-      body: JSON.stringify(selected),
-    });
-
-    if (!response.ok) return;
-
-    const csvData = URL.createObjectURL(await response.blob());
-
-    downloadAnchorRef.current.href = csvData;
-    downloadAnchorRef.current.download = `${selectedCount}-movies.csv`;
-    downloadAnchorRef.current.click();
+    inputRef.current.value = JSON.stringify(selected);
+    formRef.current.submit();
   };
 
   return (
@@ -66,7 +58,14 @@ export function SelectedMoviesBar() {
                 {t('downloadCSVButtonLabel')}
               </span>
             </button>
-            <a ref={downloadAnchorRef} className="hidden" aria-hidden="true" />
+            <form
+              ref={formRef}
+              action="/api/export-csv"
+              method="post"
+              className="hidden"
+            >
+              <input ref={inputRef} name="data" type="hidden" />
+            </form>
             <button
               data-testid="button-unselect"
               onClick={() => {
