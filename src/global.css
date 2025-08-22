@@ -25,7 +25,7 @@ body {
 }
 
 .header-hero {
-  --animation-delay: 250ms;
+  --animation-delay: 50ms;
   --box-shadow-inset: 20px;
   --fade-radius: 50px;
   background-size: cover;
