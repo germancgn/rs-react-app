@@ -42,15 +42,15 @@ export default function UncontrolledForm({ hideModal }: UncontrolledFormProps) {
     const form = e.currentTarget;
     const formData = new FormData(form);
     const data = {
-      name: formData.get('name') as string,
-      age: formData.get('age') as string,
-      email: formData.get('email') as string,
-      password: formData.get('password') as string,
-      repeatPassword: formData.get('repeatPassword') as string,
-      gender: (formData.get('gender') as string) ?? '',
+      name: formData.get('name'),
+      age: formData.get('age'),
+      email: formData.get('email'),
+      password: formData.get('password'),
+      repeatPassword: formData.get('repeatPassword'),
+      gender: formData.get('gender'),
       acceptTerms: formData.get('acceptTerms'),
-      picture: formData.get('picture') as File,
-      country: formData.get('country') as string,
+      picture: formData.get('picture'),
+      country: formData.get('country'),
     };
 
     try {

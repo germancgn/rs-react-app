@@ -1,18 +1,29 @@
 import z from 'zod/v4';
 
-const fileSchema = z
-  .file()
-  .max(5 * 1024 * 1024, {
-    message: 'fileSizeMax',
-  })
-  .mime(['image/png', 'image/jpeg'], {
-    message: 'fileType',
-  })
-  .transform(async (file) => {
-    const buffer = await file.arrayBuffer();
-    const base64 = Buffer.from(buffer).toString('base64');
-    return `data:${file.type};base64,${base64}`;
-  });
+const fileSchema = z.preprocess(
+  (value) => {
+    if (value instanceof File) return value;
+    else if (value instanceof FileList) {
+      if (value && value[0]) return value[0];
+      return new File([], '');
+    }
+  },
+  z
+    .file({
+      message: 'fileType',
+    })
+    .max(5 * 1024 * 1024, {
+      message: 'fileSizeMax',
+    })
+    .mime(['image/png', 'image/jpeg'], {
+      message: 'fileType',
+    })
+    .transform(async (file) => {
+      const buffer = await file.arrayBuffer();
+      const base64 = Buffer.from(buffer).toString('base64');
+      return `data:${file.type};base64,${base64}`;
+    })
+);
 
 const nameSchema = z
   .string()
@@ -25,9 +36,13 @@ const nameSchema = z
 
 const ageSchema = z.preprocess(
   (value) => Number(value),
-  z.number().positive({
-    message: 'agePositiveNumber',
-  })
+  z
+    .number({
+      message: 'agePositiveNumber',
+    })
+    .positive({
+      message: 'agePositiveNumber',
+    })
 );
 
 const emailSchema = z.email({
@@ -43,12 +58,21 @@ const passwordSchema = z
     message: 'passwordMustHaveSpecialSymbol',
   });
 
-const genderSchema = z.string().nonempty({
-  message: 'genderMustBeSelected',
-});
+const genderSchema = z.preprocess(
+  (value) => (value == null ? '' : value),
+  z.string().nonempty({
+    message: 'genderMustBeSelected',
+  })
+);
 
 const termsSchema = z.preprocess(
-  (value) => value === 'on',
+  (value) => {
+    if (typeof value === 'boolean') return value;
+    else if (typeof value === 'string' && value === 'on') {
+      return true;
+    }
+    return false;
+  },
   z.boolean().refine((value) => value === true, {
     message: 'acceptTermsAndConditions',
   })
@@ -78,6 +102,21 @@ const formDataSchema = z
     }
   });
 
+const comparePasswordsSchema = z
+  .object({
+    password: z.string(),
+    repeatPassword: z.string(),
+  })
+  .superRefine(({ repeatPassword, password }, ctx) => {
+    if (repeatPassword !== password) {
+      ctx.addIssue({
+        code: 'custom',
+        message: 'passwordsMustMatch',
+        path: ['repeatPassword'],
+      });
+    }
+  });
+
 export {
   fileSchema,
   nameSchema,
@@ -88,4 +127,5 @@ export {
   termsSchema,
   countrySchema,
   formDataSchema,
+  comparePasswordsSchema,
 };
