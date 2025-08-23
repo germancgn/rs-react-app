@@ -66,6 +66,7 @@ function XButton() {
 
 export default function MovieDetails() {
   const searchParams = useSearchParams();
+  if (!searchParams) return;
   const id = searchParams.get('details');
   if (!id) throw new Error("MovieDetails: missing required route param 'id'.");
   const t = useTranslations('MovieDetails');
