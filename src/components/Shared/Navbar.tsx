@@ -59,21 +59,19 @@ export default function Navbar() {
           )}
         </li>
         <li>
-          <li>
-            {controlledFormData ? (
-              <ProfileButton
-                profileData={controlledFormData}
-                onLogout={clearControlledData}
-              />
-            ) : (
-              <button
-                onClick={() => setIsControlledModalOpen(true)}
-                className="navlink"
-              >
-                {t('signInLinkLabel')}
-              </button>
-            )}
-          </li>
+          {controlledFormData ? (
+            <ProfileButton
+              profileData={controlledFormData}
+              onLogout={clearControlledData}
+            />
+          ) : (
+            <button
+              onClick={() => setIsControlledModalOpen(true)}
+              className="navlink"
+            >
+              {t('signInLinkLabel')}
+            </button>
+          )}
         </li>
       </ul>
       <Modal handleClose={() => setIsModalOpen(false)} isOpen={isModalOpen}>
