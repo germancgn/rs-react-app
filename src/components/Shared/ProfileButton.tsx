@@ -76,7 +76,7 @@ export default function ProfileButton({
           <div className="flex flex-col gap-2">
             <div className="flex flex-col">
               <div className="flex gap-1">
-                <h3 className="font-semibold">German</h3>
+                <h3 className="font-semibold">{profileData.name}</h3>
                 <div className="flex items-center gap-1 hover:bg-white/10 px-1 rounded cursor-pointer">
                   {profileData.gender === 'male' && (
                     <GenderMale
