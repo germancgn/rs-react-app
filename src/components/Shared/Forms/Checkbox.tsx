@@ -7,6 +7,7 @@ type CheckboxProps = {
   errors?: string[] | null;
   defaultValue: boolean;
   checkboxLabel: string;
+  register?: Record<string, unknown>;
 };
 
 export default function Checkbox({
@@ -16,6 +17,7 @@ export default function Checkbox({
   errors,
   defaultValue,
   checkboxLabel,
+  register = {},
 }: CheckboxProps) {
   const t = useTranslations('Forms');
 
@@ -33,6 +35,7 @@ export default function Checkbox({
               id={id}
               name={name}
               defaultChecked={defaultValue}
+              {...register}
             />
             <label className="form-label" htmlFor={id}>
               {checkboxLabel}

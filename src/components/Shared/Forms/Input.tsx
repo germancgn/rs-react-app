@@ -8,6 +8,7 @@ type InputProps = {
   placeholder: string;
   errors?: string[] | null;
   children?: React.ReactNode;
+  register?: Record<string, unknown>;
 };
 
 export default function Input({
@@ -18,6 +19,7 @@ export default function Input({
   errors,
   children,
   placeholder,
+  register = {},
 }: InputProps) {
   const t = useTranslations('Forms');
 
@@ -35,6 +37,7 @@ export default function Input({
             name={name}
             defaultValue=""
             placeholder={placeholder}
+            {...register}
           />
           <div className="form-errors">
             {errors &&

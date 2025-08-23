@@ -6,6 +6,7 @@ type FileInputProps = {
   name: string;
   errors?: string[] | null;
   accept: string;
+  register?: Record<string, unknown>;
 };
 
 export default function FileInput({
@@ -14,6 +15,7 @@ export default function FileInput({
   label,
   errors,
   accept,
+  register = {},
 }: FileInputProps) {
   const t = useTranslations('Forms');
 
@@ -31,7 +33,9 @@ export default function FileInput({
             name={name}
             defaultValue=""
             accept={accept}
+            {...register}
             hidden
+            multiple={false}
           />
 
           <label htmlFor={id} className="form-file-button w-fit">

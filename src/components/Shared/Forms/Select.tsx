@@ -7,6 +7,7 @@ type SelectProps = {
   placeholder: string;
   errors?: string[] | null;
   items: string[];
+  register?: Record<string, unknown>;
 };
 
 export default function Select({
@@ -16,6 +17,7 @@ export default function Select({
   errors,
   items,
   placeholder,
+  register = {},
 }: SelectProps) {
   const t = useTranslations('Forms');
 
@@ -34,6 +36,7 @@ export default function Select({
             list={`${name}-list`}
             defaultValue=""
             placeholder={placeholder}
+            {...register}
           />
           <div className="form-errors">
             {errors &&

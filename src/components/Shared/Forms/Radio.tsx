@@ -11,6 +11,7 @@ type RadioProps = {
   name: string;
   errors?: string[] | null;
   options: RadioOption[];
+  register?: Record<string, unknown>;
 };
 
 export default function Radio({
@@ -19,6 +20,7 @@ export default function Radio({
   label,
   errors,
   options,
+  register = {},
 }: RadioProps) {
   const t = useTranslations('Forms');
 
@@ -38,6 +40,7 @@ export default function Radio({
                   id={`${name}-${option}`}
                   name={name}
                   value={option}
+                  {...register}
                 />
                 <label className="form-label" htmlFor={`${name}-${option}`}>
                   {optionLabel}
