@@ -267,17 +267,25 @@ type FormData = {
 type FormStore = {
   countryList: typeof countryList;
   formData: FormData | null;
+  controlledFormData: FormData | null;
   getCountryList: () => typeof countryList;
   setFormData: (formData: FormData) => void;
+  setControlledFormData: (formData: FormData) => void;
   clearData: () => void;
+  clearControlledData: () => void;
 };
 
 export const useFormStore = create<FormStore>((set, get) => ({
   countryList,
   formData: null,
+  controlledFormData: null,
   getCountryList: () => get().countryList,
   setFormData: (formData) => {
     set({ formData });
   },
+  setControlledFormData: (controlledFormData) => {
+    set({ controlledFormData });
+  },
   clearData: () => set({ formData: null }),
+  clearControlledData: () => set({ controlledFormData: null }),
 }));
