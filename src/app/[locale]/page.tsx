@@ -1,4 +1,3 @@
-// import { Metadata } from 'next';
 import { Metadata } from 'next';
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary';
 import Header from '../../components/Header/Header';
