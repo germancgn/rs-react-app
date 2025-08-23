@@ -1,4 +1,9 @@
 {
+  "Pages": {
+    "notFoundHeading": "404 Nicht gefunden",
+    "pageDoesNotExistText": "Die Seite, die Sie suchen, existiert nicht.",
+    "goToHomeLinkLabel": "Zur Startseite"
+  },
   "HomePage": {
     "title": "React Movie Apps",
     "about": "Filme kostenlos in der React Movie App ansehen",

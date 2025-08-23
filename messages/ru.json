@@ -1,4 +1,9 @@
 {
+  "Pages": {
+    "notFoundHeading": "404 Страница не найдена",
+    "pageDoesNotExistText": "Страница, которую вы ищете, не существует",
+    "goToHomeLinkLabel": "Перейти на главную"
+  },
   "HomePage": {
     "title": "Приложение React Movie",
     "about": "Смотрите фильмы бесплатно в приложении React Movie",

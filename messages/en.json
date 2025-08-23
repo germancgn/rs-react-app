@@ -1,4 +1,9 @@
 {
+  "Pages": {
+    "notFoundHeading": "404 Not Found",
+    "pageDoesNotExistText": "The page you are looking for does not exist.",
+    "goToHomeLinkLabel": "Go to Home"
+  },
   "HomePage": {
     "title": "React Movie Apps",
     "about": "Watch movies for free on React Movie App",
