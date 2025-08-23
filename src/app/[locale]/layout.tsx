@@ -36,6 +36,7 @@ export default async function RootLayout({
       <body>
         <Providers>
           <NextIntlClientProvider>{children}</NextIntlClientProvider>
+          <div id="react-portal-modal-container" />
         </Providers>
       </body>
     </html>
