@@ -271,7 +271,10 @@ export default function ControlledForm({ hideModal }: UncontrolledFormProps) {
         errors={errors && errors.acceptTerms}
         defaultValue={false}
         register={register('acceptTerms', {
-          onChange: (e) => handleFieldChange('acceptTerms', e.target.value),
+          onChange: (e) => {
+            console.log('ch', e.target.checked);
+            handleFieldChange('acceptTerms', e.target.checked);
+          },
         })}
       />
 
