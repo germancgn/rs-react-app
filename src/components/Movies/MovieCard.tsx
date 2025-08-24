@@ -1,3 +1,5 @@
+'use client';
+
 import type { Movie } from '../../types/movies/Movie';
 import { getGenreNameById } from '../../utils/movies/genreUtils';
 import { CheckCircleSolid, PlusCircle, StarSolid } from '../Shared/Icon';
@@ -67,17 +69,23 @@ export default function MovieCard({ movie }: MovieCardProps) {
         className="p-0 m-0 border-none bg-transparent w-full text-left"
         tabIndex={0}
       >
-        <Image
-          src={
-            movie.poster_path
-              ? `https://image.tmdb.org/t/p/w780/${movie.poster_path}`
-              : NotFoundImage
-          }
-          width={780}
-          height={1170}
-          alt={movie.title}
-          className="w-full aspect-[2/3] object-cover rounded-xl brightness-100 group-hover:brightness-85 transition"
-        />
+        {movie.poster_path ? (
+          <Image
+            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+            width={780}
+            height={1170}
+            alt={movie.title}
+            className="w-full aspect-[2/3] object-cover rounded-xl brightness-100 group-hover:brightness-85 transition"
+          />
+        ) : (
+          <Image
+            src={NotFoundImage}
+            width={780}
+            height={1170}
+            alt={movie.title}
+            className="w-full aspect-[2/3] object-cover rounded-xl brightness-100 group-hover:brightness-85 transition"
+          />
+        )}
 
         <div className="flex flex-col gap-2 pt-4 pb-2">
           <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 truncate">

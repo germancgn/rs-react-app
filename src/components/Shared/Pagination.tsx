@@ -17,7 +17,10 @@ export function Pagination({
   const t = useTranslations('HomePage');
 
   return (
-    <div className="flex justify-center items-center space-x-4 mt-4">
+    <div
+      className="flex justify-center items-center space-x-4 mt-4"
+      data-testid="pagination"
+    >
       <div className="flex items-center bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl not-dark:shadow-2xs p-[1px]">
         <button
           data-testid="prev-page-button"

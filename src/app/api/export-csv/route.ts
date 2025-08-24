@@ -6,7 +6,7 @@ import { Movie } from '../../../types/movies/Movie';
 export async function POST(req: Request) {
   const form = await req.formData();
   const data = JSON.parse(form.get('data') as string) as Movie[];
-  console.log('data received', data);
+
   const blob = createBlob(
     objectToCSV(data, [
       'id',
@@ -21,8 +21,6 @@ export async function POST(req: Request) {
     ]),
     'text/csv'
   );
-
-  console.log('returned csv', blob);
 
   return new NextResponse(blob, {
     headers: {

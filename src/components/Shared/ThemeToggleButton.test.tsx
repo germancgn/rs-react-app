@@ -5,16 +5,9 @@ import { ThemeToggleButton } from './ThemeToggleButton';
 import { ThemeProvider } from '../../contexts/ThemeProvider';
 import userEvent from '@testing-library/user-event';
 
-class MockAudio {
-  play = vi.fn().mockResolvedValue(undefined);
-  pause = vi.fn();
-  load = vi.fn();
-  currentTime = 0;
-  addEventListener = vi.fn();
-  removeEventListener = vi.fn();
-}
-
-vi.stubGlobal('Audio', MockAudio);
+vi.spyOn(window.HTMLMediaElement.prototype, 'play').mockImplementation(() =>
+  Promise.resolve()
+);
 
 beforeEach(() => {
   cleanup();

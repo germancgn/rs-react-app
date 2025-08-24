@@ -25,7 +25,7 @@ body {
 }
 
 .header-hero {
-  --animation-delay: 250ms;
+  --animation-delay: 50ms;
   --box-shadow-inset: 20px;
   --fade-radius: 50px;
   background-size: cover;
@@ -40,7 +40,7 @@ body {
 }
 
 .navlink {
-  @apply text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white [.header-hero_&]:text-gray-400 [.header-hero_&]:hover:text-white;
+  @apply text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white [.header-hero_&]:text-gray-400 [.header-hero_&]:hover:text-white cursor-pointer;
 }
 
 .navlink.active {
@@ -91,6 +91,13 @@ input[type='search']::-webkit-search-results-decoration {
   -webkit-appearance: none;
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: all 100000s ease-in-out 0s;
+}
+
 @keyframes broom-shake {
   0%,
   100% {
@@ -116,9 +123,95 @@ input[type='search']::-webkit-search-results-decoration {
 }
 
 .language-switcher-menu {
-  @apply absolute right-0 z-10 mt-2 border-1 border-gray-200 dark:border-gray-800 [.header-hero_&]:border-white/10 bg-black/20 dark:bg-white/10 [.header-hero_&]:bg-white/10 shadow-xs p-1 rounded-sm transform transition-all duration-200 ease-out;
+  @apply absolute right-0 z-10 top-full mt-1 border-1 border-gray-200 dark:border-gray-800 [.header-hero_&]:border-white/10 bg-black/20 dark:bg-white/10 [.header-hero_&]:bg-white/10 shadow-xs p-1 rounded-sm transform transition-all duration-200 ease-out backdrop-blur-xs;
 }
 
 .language-switcher-button {
-  @apply flex gap-1 items-center p-1 [.header-hero_&]:hover:bg-white/10 active:bg-black/10 active:scale-[.95] dark:active:bg-white/10 [.header-hero_&]:active:bg-white/20 border-1 border-black/10 dark:border-white/10 [.header-hero_&]:border-white/10 rounded-sm cursor-pointer transition-colors select-none;
+  @apply flex gap-1 items-center p-1 [.header-hero_&]:hover:bg-white/10 active:bg-black/10 active:scale-[.95] dark:active:bg-white/10 [.header-hero_&]:active:bg-white/20 border-1 border-black/10 dark:border-white/10 [.header-hero_&]:border-white/10 rounded-sm cursor-pointer transition-colors select-none backdrop-blur-xs;
+}
+
+.form-group {
+  @apply flex flex-col items-start;
+}
+
+.form-row {
+  @apply flex flex-col sm:flex-row w-full;
+}
+
+.form-label {
+  @apply w-full sm:w-1/2 text-gray-400 text-sm cursor-pointer;
+}
+
+.input-wrapper {
+  @apply flex flex-col w-full;
+}
+
+.form-input {
+  @apply h-10 w-full pl-4 border-gray-800 bg-white/5 focus:bg-white/20 focus:outline-none focus:ring-1 focus:ring-sky-500 rounded text-gray-200;
+}
+
+.form-checkbox {
+  @apply inline-flex items-center cursor-pointer gap-2 select-none;
+}
+
+.form-checkbox {
+  @apply w-5 h-5 border border-gray-400 rounded-sm bg-white dark:bg-gray-800 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-sky-500 dark:focus:ring-sky-400;
+}
+
+.form-errors {
+  @apply flex flex-col min-h-6 my-1 justify-center;
+}
+
+.form-error {
+  @apply text-sm text-red-400;
+}
+
+.button-submit {
+  @apply px-8 py-2 rounded text-white bg-sky-500 hover:bg-sky-400 cursor-pointer disabled:bg-gray-400 transition-all;
+}
+
+.form-file-button {
+  @apply flex px-4 py-1 bg-sky-500 hover:bg-sky-400 text-gray-200 rounded cursor-pointer;
+}
+
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.modal {
+  @apply fixed inset-0 flex flex-col justify-center items-center bg-black/50 backdrop-blur-md z-[110] w-full overflow-hidden transition-all;
+}
+
+.modal-content {
+  @apply p-8 m-10 rounded w-full max-w-[600px] bg-gray-900/90 backdrop-blur-md overflow-y-auto;
+}
+
+.profile-button {
+  @apply flex gap-2 items-center py-1 px-2 [.header-hero_&]:hover:bg-white/10 active:bg-black/10 active:scale-[.95] dark:active:bg-white/10 [.header-hero_&]:active:bg-white/20 border-1 border-black/10 dark:border-white/10 [.header-hero_&]:border-white/10 rounded-full cursor-pointer transition-colors select-none text-sm text-gray-400 hover:text-gray-200;
+}
+
+.profile-menu {
+  @apply absolute right-0 z-10 top-full mt-1 border-1 border-gray-200 dark:border-gray-800 [.header-hero_&]:border-white/10 bg-black/20 dark:bg-white/10 [.header-hero_&]:bg-white/10 shadow-xs rounded-2xl transform transition-all duration-200 ease-out flex flex-col gap-4 w-max p-4 items-end backdrop-blur-xs;
+}
+
+.password-strength-container {
+  @apply h-1 w-full rounded-full bg-gray-600;
+}
+
+.password-strength-bar.bad {
+  @apply h-1 w-1/4 rounded-full bg-red-400;
+}
+
+.password-strength-bar.average {
+  @apply h-1 w-2/4 rounded-full bg-orange-400;
+}
+
+.password-strength-bar.good {
+  @apply h-1 w-3/4 rounded-full bg-lime-400;
+}
+
+.password-strength-bar.excelent {
+  @apply h-1 w-full rounded-full bg-green-400;
 }

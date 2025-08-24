@@ -23,6 +23,8 @@ export default function Header({ movies }: HeaderProps) {
   const [selectedMovie, setSelectedMovie] = useState(movies[0]);
   const t = useTranslations('HomePage');
 
+  if (!searchParams) return null;
+
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     const params = new URLSearchParams(searchParams);

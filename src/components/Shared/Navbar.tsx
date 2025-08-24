@@ -4,10 +4,24 @@ import { ThemeToggleButton } from './ThemeToggleButton';
 import { useTranslations } from 'next-intl';
 import { usePathname, Link } from '../../i18n/navigation';
 import LanguageSwitcher from './LanguageSwitcher';
+import { useFormStore } from '../../stores/formStore';
+import { useState } from 'react';
+import Modal from '../Modal/Modal';
+import UncontrolledForm from '../Form/UncontrolledForm';
+import ProfileButton from './ProfileButton';
+import ControlledForm from '../Form/ControlledForm';
 
 export default function Navbar() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isControlledModalOpen, setIsControlledModalOpen] = useState(false);
   const pathname = usePathname();
   const t = useTranslations('NavBar');
+  const formData = useFormStore((store) => store.formData);
+  const clearFormData = useFormStore((store) => store.clearData);
+  const controlledFormData = useFormStore((store) => store.controlledFormData);
+  const clearControlledData = useFormStore(
+    (store) => store.clearControlledData
+  );
 
   return (
     <nav className="flex flex-col max-w-6xl m-auto sm:flex-row items-center justify-between gap-4 p-4 rounded-lg">
@@ -36,14 +50,39 @@ export default function Navbar() {
           <ThemeToggleButton />
         </li>
         <li>
-          <Link
-            href="/signin"
-            className={`navlink` + (pathname === '/signin' ? ' active' : '')}
-          >
-            {t('signInLinkLabel')}
-          </Link>
+          {formData ? (
+            <ProfileButton profileData={formData} onLogout={clearFormData} />
+          ) : (
+            <button onClick={() => setIsModalOpen(true)} className="navlink">
+              {t('signInLinkLabel')}
+            </button>
+          )}
+        </li>
+        <li>
+          {controlledFormData ? (
+            <ProfileButton
+              profileData={controlledFormData}
+              onLogout={clearControlledData}
+            />
+          ) : (
+            <button
+              onClick={() => setIsControlledModalOpen(true)}
+              className="navlink"
+            >
+              {t('signInLinkLabel')}
+            </button>
+          )}
         </li>
       </ul>
+      <Modal handleClose={() => setIsModalOpen(false)} isOpen={isModalOpen}>
+        <UncontrolledForm hideModal={() => setIsModalOpen(false)} />
+      </Modal>
+      <Modal
+        handleClose={() => setIsControlledModalOpen(false)}
+        isOpen={isControlledModalOpen}
+      >
+        <ControlledForm hideModal={() => setIsControlledModalOpen(false)} />
+      </Modal>
     </nav>
   );
 }

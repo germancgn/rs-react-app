@@ -1,22 +1,14 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, waitFor } from '@testing-library/react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import type React from 'react';
+import { QueryClient } from '@tanstack/react-query';
 import { getMovieById } from '../services/movie-service';
 import { useGetMovieById } from './useGetMovieById';
 import { mockMovieDetails } from '../__mocks__/movies';
+import { withQueryClient } from '../__tests__/test-utils/withProvidersQueryWrapper';
 
 vi.mock('../services/movie-service', () => ({
   getMovieById: vi.fn(),
 }));
-
-const withQueryClient = (client: QueryClient) => {
-  const QueryClientWrapper = ({ children }: React.PropsWithChildren) => (
-    <QueryClientProvider client={client}>{children}</QueryClientProvider>
-  );
-  QueryClientWrapper.displayName = 'QueryClientWrapper';
-  return QueryClientWrapper;
-};
 
 beforeEach(() => {
   vi.clearAllMocks();
@@ -80,6 +72,7 @@ describe('useGetMovieById', () => {
     const client = new QueryClient({
       defaultOptions: { queries: { retry: false } },
     });
+
     const wrapper = withQueryClient(client);
 
     const first = renderHook(() => useGetMovieById('1'), { wrapper });
