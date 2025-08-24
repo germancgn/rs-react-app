@@ -43,7 +43,7 @@ export default function PasswordStrength({ rules }: PasswordStrengthProps) {
   ];
 
   return (
-    <div className="flex flex-col gap-2 mb-2">
+    <div className="flex flex-col gap-2 mb-2" data-testid="password-strength">
       <div className="password-strength-container">
         <div className={`password-strength-bar ${passwordLevel}`} />
       </div>

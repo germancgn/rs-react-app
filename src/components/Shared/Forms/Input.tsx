@@ -38,6 +38,7 @@ export default function Input({
             defaultValue=""
             placeholder={placeholder}
             {...register}
+            aria-label={label}
           />
           <div className="form-errors">
             {errors &&

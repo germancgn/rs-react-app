@@ -41,6 +41,7 @@ export default function Radio({
                   name={name}
                   value={option}
                   {...register}
+                  aria-label={optionLabel}
                 />
                 <label className="form-label" htmlFor={`${name}-${option}`}>
                   {optionLabel}

@@ -45,6 +45,7 @@
     "selectMovieButtonLabel": "Film auswählen"
   },
   "Forms": {
+    "fieldRequired": "Feld ist erforderlich",
     "fileSizeMax": "Datei darf {size} MB nicht überschreiten",
     "fileType": "Datei muss vom Typ {type} sein",
     "nameStartWithUppercase": "Name muss mit einem Großbuchstaben beginnen",

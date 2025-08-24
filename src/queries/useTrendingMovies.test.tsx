@@ -1,22 +1,14 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, waitFor } from '@testing-library/react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import type React from 'react';
+import { QueryClient } from '@tanstack/react-query';
 import { trendingMovies } from '../services/movie-service';
 import { useTrendingMovies } from './useTrendingMovies';
 import { mockMovieResponse } from '../__mocks__/movies';
+import { withQueryClient } from '../__tests__/test-utils/withProvidersQueryWrapper';
 
 vi.mock('../services/movie-service', () => ({
   trendingMovies: vi.fn(),
 }));
-
-const withQueryClient = (client: QueryClient) => {
-  const QueryClientWrapper = ({ children }: React.PropsWithChildren) => (
-    <QueryClientProvider client={client}>{children}</QueryClientProvider>
-  );
-  QueryClientWrapper.displayName = 'QueryClientWrapper';
-  return QueryClientWrapper;
-};
 
 beforeEach(() => {
   vi.clearAllMocks();

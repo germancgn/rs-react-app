@@ -1,9 +1,10 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { SelectedMoviesBar } from './SelectedMoviesBar';
 import { useMovieStore } from '../../stores/movieStore';
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, screen } from '@testing-library/react';
 import { mockMovies } from '../../__mocks__/movies';
 import userEvent from '@testing-library/user-event';
+import { renderWithProviders } from '../../__tests__/test-utils/renderWithProviders';
 
 beforeEach(() => {
   cleanup();
@@ -15,7 +16,7 @@ describe('SelectedMoviesBar', () => {
     const movies = mockMovies.slice(0, 3);
     movies.forEach((movie) => useMovieStore.getState().add(movie));
 
-    render(<SelectedMoviesBar />);
+    renderWithProviders(<SelectedMoviesBar />);
 
     movies.forEach((movie) => {
       const movieItem = screen.getByText(movie.title);
@@ -27,7 +28,7 @@ describe('SelectedMoviesBar', () => {
     const movies = mockMovies.slice(0, 3);
     movies.forEach((movie) => useMovieStore.getState().add(movie));
 
-    render(<SelectedMoviesBar />);
+    renderWithProviders(<SelectedMoviesBar />);
 
     const unselectBtn = screen.getByTestId('button-unselect');
     await userEvent.click(unselectBtn);

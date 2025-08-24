@@ -45,6 +45,7 @@
     "selectMovieButtonLabel": "Выбрать фильм"
   },
   "Forms": {
+    "fieldRequired": "Поле обязательно для заполнения",
     "fileSizeMax": "Файл не должен превышать {size} МБ",
     "fileType": "Файл должен быть типа {type}",
     "nameStartWithUppercase": "Имя должно начинаться с заглавной буквы",
