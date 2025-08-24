@@ -11,12 +11,7 @@ import z, { ZodError } from 'zod/v4';
 import PasswordStrength from '../Shared/Forms/PasswordStrength';
 import Radio from '../Shared/Forms/Radio';
 import FileInput from '../Shared/Forms/FileInput';
-import {
-  hasDigits,
-  hasLowercase,
-  hasSymbols,
-  hasUppercase,
-} from '../../utils/string/stringValidators';
+import { checkPasswordRules } from '../../utils/string/stringValidators';
 import Checkbox from '../Shared/Forms/Checkbox';
 import Select from '../Shared/Forms/Select';
 
@@ -124,12 +119,7 @@ export default function ControlledForm({ hideModal }: UncontrolledFormProps) {
   };
 
   const checkPasswordStrength = (password: string) => {
-    setPasswordStrength(() => ({
-      uppercase: hasUppercase(password),
-      lowercase: hasLowercase(password),
-      digits: hasDigits(password),
-      symbols: hasSymbols(password),
-    }));
+    setPasswordStrength(() => checkPasswordRules(password));
   };
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
@@ -144,13 +134,7 @@ export default function ControlledForm({ hideModal }: UncontrolledFormProps) {
       if (error instanceof ZodError) {
         const errors = z.flattenError(error);
         setErrors(errors.fieldErrors);
-
-        setPasswordStrength(() => ({
-          uppercase: hasUppercase(data.password),
-          lowercase: hasLowercase(data.password),
-          digits: hasDigits(data.password),
-          symbols: hasSymbols(data.password),
-        }));
+        setPasswordStrength(() => checkPasswordRules(data.password));
       } else {
         throw error;
       }

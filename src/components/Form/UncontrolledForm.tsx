@@ -11,12 +11,7 @@ import Select from '../Shared/Forms/Select';
 import Radio from '../Shared/Forms/Radio';
 import FileInput from '../Shared/Forms/FileInput';
 import Checkbox from '../Shared/Forms/Checkbox';
-import {
-  hasDigits,
-  hasLowercase,
-  hasSymbols,
-  hasUppercase,
-} from '../../utils/string/stringValidators';
+import { checkPasswordRules } from '../../utils/string/stringValidators';
 
 type UncontrolledFormProps = {
   hideModal: () => void;
@@ -65,12 +60,7 @@ export default function UncontrolledForm({ hideModal }: UncontrolledFormProps) {
         setErrors(errors.fieldErrors);
 
         const password = formData.get('password')?.toString() ?? '';
-        setPasswordStrength(() => ({
-          uppercase: hasUppercase(password),
-          lowercase: hasLowercase(password),
-          digits: hasDigits(password),
-          symbols: hasSymbols(password),
-        }));
+        setPasswordStrength(() => checkPasswordRules(password));
       } else {
         throw error;
       }
