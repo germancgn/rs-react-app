@@ -100,17 +100,23 @@ export default function MovieDetails() {
         <MovieDetailsSkeleton />
       ) : (
         <div className="max-w-fit p-4 h-fit flex flex-col md:flex-row gap-8 bg-white dark:bg-gray-900 text-white rounded-lg sticky top-4">
-          <Image
-            src={
-              data.poster_path
-                ? `https://image.tmdb.org/t/p/w500${data.poster_path}`
-                : NotFoundImage.src
-            }
-            width={500}
-            height={750}
-            alt={`${data.title}`}
-            className="max-w-[200px] aspect-2/3 rounded-lg object-cover"
-          />
+          {data.poster_path ? (
+            <Image
+              src={`https://image.tmdb.org/t/p/w500${data.poster_path}`}
+              width={500}
+              height={750}
+              alt={`${data.title}`}
+              className="max-w-[200px] aspect-2/3 rounded-lg object-cover"
+            />
+          ) : (
+            <Image
+              src={NotFoundImage}
+              width={500}
+              height={750}
+              alt={`${data.title}`}
+              className="max-w-[200px] aspect-2/3 rounded-lg object-cover"
+            />
+          )}
           <div className="flex flex-col justify-around gap-8">
             <div className="flex-1 flex flex-col gap-4">
               <div className="flex justify-between items-start">

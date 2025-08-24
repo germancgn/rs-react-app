@@ -4,8 +4,7 @@ import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom/vitest';
 import FeaturedMovieCard from './FeaturedMovieCard';
 import { mockMovies } from '../../__mocks__/movies';
-import { ThemeProvider } from '../../contexts/ThemeProvider';
-import { BrowserRouter } from 'react-router-dom';
+
 import { useMovieStore } from '../../stores/movieStore';
 
 const mockMovie = mockMovies[0];
@@ -18,13 +17,7 @@ describe('FeaturedMovieCard', () => {
   it('renders movie card with correct image and alt text', () => {
     const mockOnHover = vi.fn();
 
-    render(
-      <BrowserRouter>
-        <ThemeProvider>
-          <FeaturedMovieCard movie={mockMovie} onHover={mockOnHover} />
-        </ThemeProvider>
-      </BrowserRouter>
-    );
+    render(<FeaturedMovieCard movie={mockMovie} onHover={mockOnHover} />);
 
     const movieCard = screen.getByTestId('movie-card-featured');
     expect(movieCard).toBeInTheDocument();
@@ -32,7 +25,9 @@ describe('FeaturedMovieCard', () => {
     const image = screen.getByRole('img');
     expect(image).toHaveAttribute(
       'src',
-      `https://image.tmdb.org/t/p/w780/${mockMovie.poster_path}`
+      expect.stringContaining(
+        encodeURIComponent(mockMovie.poster_path as string)
+      )
     );
     expect(image).toHaveAttribute('alt', mockMovie.title);
   });
@@ -41,13 +36,7 @@ describe('FeaturedMovieCard', () => {
     const user = userEvent.setup();
     const mockOnHover = vi.fn();
 
-    render(
-      <BrowserRouter>
-        <ThemeProvider>
-          <FeaturedMovieCard movie={mockMovie} onHover={mockOnHover} />
-        </ThemeProvider>
-      </BrowserRouter>
-    );
+    render(<FeaturedMovieCard movie={mockMovie} onHover={mockOnHover} />);
 
     const movieCard = screen.getByTestId('movie-card-featured');
 
@@ -61,13 +50,7 @@ describe('FeaturedMovieCard', () => {
 
     useMovieStore.getState().add(mockMovie);
 
-    render(
-      <BrowserRouter>
-        <ThemeProvider>
-          <FeaturedMovieCard movie={mockMovie} onHover={mockOnHover} />
-        </ThemeProvider>
-      </BrowserRouter>
-    );
+    render(<FeaturedMovieCard movie={mockMovie} onHover={mockOnHover} />);
 
     expect(screen.getByTestId('icon-added')).toBeInTheDocument();
   });

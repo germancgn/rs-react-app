@@ -1,11 +1,14 @@
 import * as movieService from '../../services/movie-service';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, vi, beforeEach, expect, afterAll } from 'vitest';
 import { cleanup, screen, waitFor } from '@testing-library/react';
-import { fantasticFourDetailsMock } from '../../__mocks__/movies';
-import { MemoryRouter } from 'react-router-dom';
 import '@testing-library/jest-dom/vitest';
-import MovieDetails from './MovieDetails';
+import { fantasticFourDetailsMock } from '../../__mocks__/movies';
 import { renderWithProviders } from '../../__tests__/test-utils/renderWithProviders';
+import MovieDetails from './MovieDetails';
+
+afterAll(() => {
+  vi.resetAllMocks();
+});
 
 vi.mock('../../services/movie-service', () => {
   return {
@@ -13,12 +16,20 @@ vi.mock('../../services/movie-service', () => {
   };
 });
 
-vi.mock('react-router-dom', async () => {
-  const actual = await vi.importActual('react-router-dom');
+vi.mock('../../i18n/navigation', async () => {
   return {
-    ...actual,
-    useParams: vi.fn(() => ({ id: '1' })),
-    useNavigate: vi.fn(() => vi.fn()),
+    usePathname: vi.fn(),
+    useRouter: vi.fn(),
+  };
+});
+
+vi.mock('next/navigation', () => {
+  return {
+    useSearchParams: vi.fn(() => {
+      return {
+        get: vi.fn(() => '1'),
+      };
+    }),
   };
 });
 
@@ -35,11 +46,7 @@ describe('MovieDetails', () => {
       });
     });
 
-    renderWithProviders(
-      <MemoryRouter>
-        <MovieDetails />
-      </MemoryRouter>
-    );
+    renderWithProviders(<MovieDetails />);
 
     expect(screen.getByTestId('movie-details-skeleton')).toBeInTheDocument();
 
@@ -63,7 +70,9 @@ describe('MovieDetails', () => {
       const image = screen.getByRole('img');
       expect(image).toHaveAttribute(
         'src',
-        expect.stringContaining(fantasticFourDetailsMock.poster_path as string)
+        expect.stringContaining(
+          encodeURIComponent(fantasticFourDetailsMock.poster_path as string)
+        )
       );
       expect(image).toHaveAttribute('alt', fantasticFourDetailsMock.title);
     });
@@ -81,17 +90,18 @@ describe('MovieDetails', () => {
       });
     });
 
-    renderWithProviders(
-      <MemoryRouter>
-        <MovieDetails />
-      </MemoryRouter>
-    );
+    renderWithProviders(<MovieDetails />);
 
     await waitFor(() => {
       const poster = screen.getByRole('img', {
         name: fantasticFourDetailsMock.title,
       });
-      expect(poster).toHaveAttribute('src', '/images/image-not-found.jpg');
+      expect(poster).toHaveAttribute(
+        'src',
+        expect.stringContaining(
+          encodeURIComponent('/images/image-not-found.jpg')
+        )
+      );
       expect(screen.getByText(/No tagline available/i)).toBeInTheDocument();
       expect(screen.getByText(/No overview available/i)).toBeInTheDocument();
       expect(screen.getByTestId('movie-details-genres')).toHaveTextContent(

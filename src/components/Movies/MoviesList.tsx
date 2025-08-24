@@ -37,6 +37,7 @@ export default function MoviesList({
   const [isCleaningCache, setIsCleaningCache] = useState(false);
   const queryClient = useQueryClient();
   const searchParams = useSearchParams();
+  if (!searchParams) return null;
   const details = searchParams.get('details');
   const skeletons = useMemo(
     () => Array.from({ length: 20 }, (_, i) => <MovieCardSkeleton key={i} />),

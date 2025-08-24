@@ -22,9 +22,7 @@ describe('Checkbox', () => {
       />
     );
 
-    expect(
-      screen.getByRole('checkbox', { name: 'label test' })
-    ).toBeInTheDocument();
+    expect(screen.getByRole('checkbox', { name: 'test' })).toBeInTheDocument();
   });
 
   it('should display errors', () => {

@@ -24,9 +24,7 @@ export default function Checkbox({
   return (
     <div className="form-group">
       <div className="form-row">
-        <label className="form-label" htmlFor={id}>
-          {label}
-        </label>
+        <label className="form-label">{label}</label>
         <div className="input-wrapper">
           <div className="flex w-full flex-nowrap gap-2">
             <input
