@@ -1,4 +1,4 @@
-import { useState, useEffect, use } from 'react';
+import { useState, useEffect, use, useMemo } from 'react';
 import { fetchEmissions } from '../services/emissionsService';
 import type { EntityEmissions, EmissionRecord } from '../types/emissions';
 import { Check, MafnifyingGlass, SlidersHorizontal } from './Icon';
@@ -100,38 +100,14 @@ const emissionsData = fetchEmissions();
 
 export default function EmissionDataContainer() {
   const data = use<EntityEmissions[]>(emissionsData);
-  const [years, setYears] = useState<number[]>([]);
   const [year, setYear] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
   const [headers, setHeaders] = useState<Header[]>([...DEFAULT_HEADERS]);
   const [view, setView] = useState<ViewMode>('countries');
-  const [filteredData, setFilteredData] = useState<FlattenedData[]>([]);
   const [selectedCountryName, setSelectedCountryName] = useState<string>('');
 
-  useEffect(() => {
-    if (!data || data.length === 0) return;
-
-    const filtered = data
-      .filter(({ iso_code }) => {
-        return view === 'countries' ? !!iso_code : !iso_code;
-      })
-      .filter(({ name }) =>
-        name.toLowerCase().includes(searchTerm.toLowerCase())
-      )
-      .map(({ name, iso_code, data }) => ({
-        name,
-        iso_code,
-        ...data.find((r) => r.year === year),
-      }))
-      .filter((data) => data.year === year) as FlattenedData[];
-    setFilteredData(() => {
-      return [...filtered];
-    });
-  }, [data, year, view, searchTerm]);
-
-  useEffect(() => {
-    if (!data || data.length === 0) return;
-    const yearsArray = [
+  const years = useMemo<number[]>(() => {
+    return [
       ...data.reduce((acc, curr) => {
         curr.data.forEach((data) => {
           if (Number.isFinite(data.year)) {
@@ -141,9 +117,29 @@ export default function EmissionDataContainer() {
         return acc;
       }, new Set<number>()),
     ].sort((a, b) => b - a);
-    setYears(yearsArray);
-    setYear(yearsArray[0]);
   }, [data]);
+
+  const mapped = useMemo<FlattenedData[]>(() => {
+    return data.map(({ name, iso_code, data }) => ({
+      name,
+      iso_code,
+      ...data.find((r) => r.year === year),
+    })) as FlattenedData[];
+  }, [data, year]);
+
+  const filtered = useMemo<FlattenedData[]>(() => {
+    return mapped
+      .filter(({ iso_code }) => {
+        return view === 'countries' ? !!iso_code : !iso_code;
+      })
+      .filter(({ name }) =>
+        name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+  }, [mapped, view, searchTerm]);
+
+  useEffect(() => {
+    setYear(years[0]);
+  }, [years]);
 
   const handleViewChange = (viewMode: ViewMode) => {
     setView(() => viewMode);
@@ -172,9 +168,11 @@ export default function EmissionDataContainer() {
     );
   };
 
-  const selectedCountryData = selectedCountryName
-    ? data.find((row) => row.name === selectedCountryName)
-    : undefined;
+  const selectedCountryData = useMemo<EntityEmissions | undefined>(() => {
+    if (selectedCountryName) {
+      return data.find((row) => row.name === selectedCountryName);
+    }
+  }, [data, selectedCountryName]);
 
   return (
     <>
@@ -327,10 +325,10 @@ export default function EmissionDataContainer() {
             />
           </div>
         ) : (
-          filteredData.length > 0 && (
+          filtered.length > 0 && (
             <Table
               headers={headers.filter(({ selected }) => selected)}
-              rows={filteredData}
+              rows={filtered}
               keyForRow={(row) => row.name + String(row.year)}
               onRowSelect={(row) => setSelectedCountryName(row.name as string)}
             />
