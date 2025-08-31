@@ -7,7 +7,7 @@ type LoadingFallbackProps = {
 export default function LoadingFallback({ title }: LoadingFallbackProps) {
   return (
     <div className="flex justify-center gap-4 items-center min-h-64">
-      <div className="flex flex-col bg-white/5 rounded-2xl py-6 px-4 items-center gap-16">
+      <div className="flex flex-col bg-white/5 rounded-2xl p-8 items-center gap-8 animate-pulse">
         <h3 className="text-2xl font-bold text-gray-200 animate-pulse">
           {title}
         </h3>
