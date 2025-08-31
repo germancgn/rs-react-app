@@ -308,11 +308,13 @@ export default function EmissionDataContainer() {
               headers={headers
                 .filter(({ selected }) => selected)
                 .filter(({ key }) => key !== 'iso_code' && key !== 'name')}
-              rows={selectedCountryData.data.map((data) => ({
-                ...data,
-                name: selectedCountryData.name,
-                iso_code: selectedCountryData.iso_code,
-              }))}
+              rows={selectedCountryData.data
+                .map((data) => ({
+                  ...data,
+                  name: selectedCountryData.name,
+                  iso_code: selectedCountryData.iso_code,
+                }))
+                .sort((a, b) => b.year - a.year)}
               keyForRow={(row) => {
                 console.log({
                   selectedCountry: selectedCountryName,
