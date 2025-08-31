@@ -160,7 +160,7 @@ export default function EmissionDataContainer() {
     setSelectedCountryName('');
   };
 
-  const handleTableHeaderToggle = (key: string) => {
+  const handleHeaderToggle = (key: string) => {
     setHeaders((prev) =>
       prev.map((header) =>
         header.selectable
@@ -216,7 +216,7 @@ export default function EmissionDataContainer() {
                     <li
                       className="flex gap-8 items-center justify-between cursor-pointer whitespace-nowrap hover:bg-gray-600 p-2 rounded-md transition-all group"
                       key={key}
-                      onClick={() => handleTableHeaderToggle(key)}
+                      onClick={() => handleHeaderToggle(key)}
                     >
                       <span className="text-gray-400 group-hover:text-gray-200 select-none">
                         {displayName}
