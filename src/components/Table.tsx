@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { SortAscending, SortDescending } from './Icon';
 
 type TableProps<T extends Record<string, unknown>> = {
@@ -58,7 +58,7 @@ export default function Table<T extends Record<string, unknown>>({
     prevDataKeysRef.current = rows.map((row) => rowKey(row));
   }, [rows, rowKey]);
 
-  const onSort = (key: string) => {
+  const onSort = useCallback((key: string) => {
     setSortBy((prev) => {
       if (prev === null || prev.key !== key) {
         return {
@@ -72,7 +72,7 @@ export default function Table<T extends Record<string, unknown>>({
         };
       }
     });
-  };
+  }, []);
 
   return (
     <table>

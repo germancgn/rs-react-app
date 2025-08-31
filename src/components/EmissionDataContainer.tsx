@@ -1,4 +1,4 @@
-import { useState, useEffect, use, useMemo } from 'react';
+import { useState, useEffect, use, useMemo, useCallback } from 'react';
 import { fetchEmissions } from '../services/emissionsService';
 import type { EntityEmissions, EmissionRecord } from '../types/emissions';
 import { Check, MafnifyingGlass, SlidersHorizontal } from './Icon';
@@ -141,22 +141,25 @@ export default function EmissionDataContainer() {
     setYear(years[0]);
   }, [years]);
 
-  const handleViewChange = (viewMode: ViewMode) => {
+  const handleViewChange = useCallback((viewMode: ViewMode) => {
     setView(() => viewMode);
     setSelectedCountryName('');
-  };
+  }, []);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
-    setSelectedCountryName('');
-  };
+  const handleInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setSearchTerm(e.target.value);
+      setSelectedCountryName('');
+    },
+    []
+  );
 
-  const handleYearChange = (year: number) => {
+  const handleYearChange = useCallback((year: number) => {
     setYear(year);
     setSelectedCountryName('');
-  };
+  }, []);
 
-  const handleHeaderToggle = (key: string) => {
+  const handleHeaderToggle = useCallback((key: string) => {
     setHeaders((prev) =>
       prev.map((header) =>
         header.selectable
@@ -166,7 +169,17 @@ export default function EmissionDataContainer() {
           : header
       )
     );
-  };
+  }, []);
+
+  const handleRowSelect = useCallback(
+    (row: FlattenedData) => setSelectedCountryName(row.name as string),
+    []
+  );
+
+  const getRowKey = useCallback(
+    (row: FlattenedData) => row.name + String(row.year),
+    []
+  );
 
   const selectedCountryData = useMemo<EntityEmissions | undefined>(() => {
     if (selectedCountryName) {
@@ -329,8 +342,8 @@ export default function EmissionDataContainer() {
             <Table
               headers={headers.filter(({ selected }) => selected)}
               rows={filtered}
-              keyForRow={(row) => row.name + String(row.year)}
-              onRowSelect={(row) => setSelectedCountryName(row.name as string)}
+              keyForRow={getRowKey}
+              onRowSelect={handleRowSelect}
             />
           )
         )}
