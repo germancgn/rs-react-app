@@ -325,7 +325,7 @@ export default function EmissionDataContainer() {
             />
           </div>
         ) : (
-          filtered.length > 0 && (
+          filtered && (
             <Table
               headers={headers.filter(({ selected }) => selected)}
               rows={filtered}
