@@ -1,69 +1,43 @@
-# React + TypeScript + Vite
+## Performance Profiling
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Scenarios
 
-Currently, two official plugins are available:
+1. Sort a column (name)
+2. Search for a country "Germany"
+3. Change year (2020)
+4. Remove column (ISO)
+5. Add column (ISO)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Results before optimization
 
-## Expanding the ESLint configuration
+| Scenario         | Render (ms) | Caused update         |
+| ---------------- | ----------- | --------------------- |
+| Sort (name)      | 38.2ms      | Table                 |
+| Search "Germany" | 46.2ms      | EmissionDataContainer |
+| Change year      | 22.8ms      | Dropdown              |
+| Remove column    | 22.7ms      | Dropdown              |
+| Add column       | 28.1ms      | Dropdown              |
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Sort Flamegraph:** ![Screenshot](./screenshots/Sort-Flamegraph.png)
+- **Sort Ranked:** ![Screenshot](./screenshots/Sort-Ranked.png)
+- **Search Flamegraph:** ![Screenshot](./screenshots/Search-Flamegraph.png)
+- **Search Ranked:** ![Screenshot](./screenshots/Search-Ranked.png)
+- **Change year Flamegraph:**
+  ![Screenshot](./screenshots/YearSelection-Flamegraph.png)
+- **Change year Ranked:** ![Screenshot](./screenshots/YearSelection-Ranked.png)
+- **Add column Flamegraph:**
+  ![Screenshot](./screenshots/AddColumn-Flamegraph.png)
+- **Add column Ranked:** ![Screenshot](./screenshots/AddColumn-Ranked.png)
+- **Remove column Flamegraph:**
+  ![Screenshot](./screenshots/RemoveColumn-Flamegraph.png)
+- **Remove column Ranked:** ![Screenshot](./screenshots/RemoveColumn-Ranked.png)
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Results after optimization
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+| Scenario         | Render (ms) | Caused update         |
+| ---------------- | ----------- | --------------------- |
+| Sort (name)      | -           | Table                 |
+| Search "Germany" | -           | EmissionDataContainer |
+| Change year      | —           | Dropdown              |
+| Remove column    | —           | Dropdown              |
+| Add column       | —           | Dropdown              |

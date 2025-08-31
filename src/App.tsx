@@ -1,4 +1,4 @@
-import { Suspense } from 'react';
+import { Profiler, Suspense } from 'react';
 import EmissionDataContainer from './components/EmissionDataContainer';
 import LoadingFallback from './components/LoadingFallback';
 
@@ -9,7 +9,28 @@ function App() {
         <Suspense
           fallback={<LoadingFallback title="Fetching emissions data" />}
         >
-          <EmissionDataContainer />
+          <Profiler
+            id="EmissionDataContainer"
+            onRender={(
+              id,
+              phase,
+              actualDuration,
+              baseDuration,
+              startTime,
+              commitTime
+            ) => {
+              console.log({
+                id,
+                phase,
+                actualDuration,
+                baseDuration,
+                startTime,
+                commitTime,
+              });
+            }}
+          >
+            <EmissionDataContainer />
+          </Profiler>
         </Suspense>
       </div>
     </>
