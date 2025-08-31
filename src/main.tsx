@@ -4,28 +4,28 @@ import './index.css';
 import App from './App.tsx';
 
 createRoot(document.getElementById('root')!).render(
-  // <StrictMode>
-  <Profiler
-    id="App"
-    onRender={(
-      id,
-      phase,
-      actualDuration,
-      baseDuration,
-      startTime,
-      commitTime
-    ) => {
-      console.log({
+  <StrictMode>
+    <Profiler
+      id="App"
+      onRender={(
         id,
         phase,
         actualDuration,
         baseDuration,
         startTime,
-        commitTime,
-      });
-    }}
-  >
-    <App />
-  </Profiler>
-  // </StrictMode>,
+        commitTime
+      ) => {
+        console.log({
+          id,
+          phase,
+          actualDuration,
+          baseDuration,
+          startTime,
+          commitTime,
+        });
+      }}
+    >
+      <App />
+    </Profiler>
+  </StrictMode>
 );
