@@ -15,7 +15,7 @@ createRoot(document.getElementById('root')!).render(
         startTime,
         commitTime
       ) => {
-        console.log({
+        console.info({
           id,
           phase,
           actualDuration,

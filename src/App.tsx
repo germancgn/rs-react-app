@@ -19,7 +19,7 @@ function App() {
               startTime,
               commitTime
             ) => {
-              console.log({
+              console.info({
                 id,
                 phase,
                 actualDuration,

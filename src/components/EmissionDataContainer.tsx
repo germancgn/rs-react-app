@@ -327,12 +327,6 @@ export default function EmissionDataContainer() {
                 }))
                 .sort((a, b) => b.year - a.year)}
               keyForRow={(row) => {
-                console.log({
-                  selectedCountry: selectedCountryName,
-                  name: row.name,
-                  year: row.year,
-                });
-
                 return selectedCountryName + row.year;
               }}
             />
