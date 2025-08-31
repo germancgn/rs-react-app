@@ -1,9 +1,17 @@
+import { Suspense } from 'react';
+import EmissionDataContainer from './components/EmissionDataContainer';
+import LoadingFallback from './components/LoadingFallback';
+
 function App() {
   return (
     <>
-      <h1 className="text-3xl font-bold text-red-500 underline">
-        Hello world!
-      </h1>
+      <div className="max-w-6xl m-auto">
+        <Suspense
+          fallback={<LoadingFallback title="Fetching emissions data" />}
+        >
+          <EmissionDataContainer />
+        </Suspense>
+      </div>
     </>
   );
 }

@@ -1,1 +1,89 @@
 @import 'tailwindcss';
+
+body {
+  @apply bg-gray-900 my-4;
+}
+
+table {
+  @apply text-gray-200 w-full rounded-lg border border-gray-800 border-separate border-spacing-0 overflow-hidden;
+}
+
+td {
+  @apply p-2 text-center text-gray-300 hover:text-white border-t border-l border-gray-800;
+}
+
+td:first-child {
+  @apply border-l-0;
+}
+
+thead th {
+  @apply relative px-8 py-2 cursor-pointer select-none border-t-0 bg-gray-800 hover:bg-gray-700 transition-all;
+}
+
+tbody tr {
+  @apply cursor-pointer;
+}
+
+tbody tr:nth-of-type(even) > td {
+  @apply bg-[#141C2E];
+}
+
+.new:nth-of-type(odd) td {
+  animation: highlight-odd 2s ease-out;
+}
+
+.new:nth-of-type(even) td {
+  animation: highlight-even 2s ease-out;
+}
+
+@keyframes highlight-odd {
+  0% {
+    background-color: rgba(59, 130, 246, 0.3);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+@keyframes highlight-even {
+  0% {
+    background-color: #3b82f64d;
+  }
+  100% {
+    background-color: #141c2e;
+  }
+}
+
+.sort-button {
+  @apply block text-gray-500 hover:text-gray-200 cursor-pointer p-1 rounded-full transition-all;
+}
+
+.sort-button.active {
+  @apply block text-gray-300 hover:text-gray-200 cursor-pointer p-1 rounded-full transition-all;
+}
+
+.close-details-button {
+  animation: border-glow 2s ease-out;
+}
+
+@keyframes spin-gap {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+.spinner {
+  animation: spin-gap 2s steps(8) infinite;
+}
+
+.check-button {
+  @apply flex items-center justify-center border rounded border-gray-400 hover:border-gray-200 w-6 h-6 transition-all cursor-pointer;
+}
+
+.check-button.checked {
+  @apply bg-blue-500 text-gray-300 border-blue-500 hover:bg-blue-400 hover:text-gray-200 hover:border-blue-400;
+}
+
+.check-button.disabled {
+  @apply bg-gray-500 text-gray-200 border-gray-500 hover:bg-gray-500 hover:text-gray-200 hover:border-gray-500;
+}
