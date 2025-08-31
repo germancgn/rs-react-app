@@ -36,8 +36,29 @@
 
 | Scenario         | Render (ms) | Caused update         |
 | ---------------- | ----------- | --------------------- |
-| Sort (name)      | -           | Table                 |
-| Search "Germany" | -           | EmissionDataContainer |
-| Change year      | —           | Dropdown              |
-| Remove column    | —           | Dropdown              |
-| Add column       | —           | Dropdown              |
+| Sort (name)      | 39.6ms      | Table                 |
+| Search "Germany" | 13.1ms      | EmissionDataContainer |
+| Change year      | 22.6ms      | Dropdown              |
+| Remove column    | 22.8ms      | Dropdown              |
+| Add column       | 58.7ms      | Dropdown              |
+
+- **Sort Flamegraph:**
+  ![Screenshot](./screenshots/after-optimization/sort-flamegraph.png)
+- **Sort Ranked:**
+  ![Screenshot](./screenshots/after-optimization/sort-ranked.png)
+- **Search Flamegraph:**
+  ![Screenshot](./screenshots/after-optimization/search-flamegraph.png)
+- **Search Ranked:**
+  ![Screenshot](./screenshots/after-optimization/search-ranked.png)
+- **Change year Flamegraph:**
+  ![Screenshot](./screenshots/after-optimization/year-selection-flamegraph.png)
+- **Change year Ranked:**
+  ![Screenshot](./screenshots/after-optimization/year-selection-ranked.png)
+- **Add column Flamegraph:**
+  ![Screenshot](./screenshots/after-optimization/add-column-flamegraph.png)
+- **Add column Ranked:**
+  ![Screenshot](./screenshots/after-optimization/add-column-ranked.png)
+- **Remove column Flamegraph:**
+  ![Screenshot](./screenshots/after-optimization/remove-column-flamegraph.png)
+- **Remove column Ranked:**
+  ![Screenshot](./screenshots/after-optimization/remove-column-ranked.png)
